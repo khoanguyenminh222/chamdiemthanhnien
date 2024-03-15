@@ -1,0 +1,83 @@
+﻿@model IEnumerable<WebApplication1.Models.bangDiem>
+
+@{
+    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <table class="table table-bordered border-1" id="table">
+        <tr>
+            <th>
+                Điều kiện chấm điểm
+            </th>
+            <th>
+                Nguyên tắc chấm điểm
+            </th>
+            <th>
+                Điểm
+            </th>
+            <th>
+                Chi đoàn tự chấm điểm
+            </th>
+            <th>
+                Cụm trưởng/Huyện/TP chấm điểm
+            </th>
+            <th>
+                Tỉnh đoàn chấm điểm
+            </th>
+            <th>
+                Yêu cầu trong đánh giá kết quả thực hiện
+            </th>
+            <th>
+                Yêu cầu minh chứng
+            </th>
+            <th>
+                Thời gian minh chứng
+            </th>
+            <th>
+                Ban phụ trách
+            </th>
+            <th></th>
+        </tr>
+    @{ 
+        var i = 0;
+    }
+    @foreach (var item in @ViewBag.bangdiem) {
+        <tr>
+            @if (item.chiTieu.iD != i )
+            {
+                <td>
+                    @item.chiTieu.ten
+                </td>
+                i += 1;
+            }
+            else
+            {
+                <td>
+                </td>
+            }
+            
+            <td>
+                @item.chiTietChiTieu.noiDung
+            </td>
+            <td>
+                @item.chiTietChiTieu.diem
+            </td>
+            <td>
+                @item.bangDiem.ycDanhGiaKQ
+            </td>
+            <td>
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

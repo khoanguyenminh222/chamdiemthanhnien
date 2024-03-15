@@ -1,0 +1,655 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="chamdiemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="bangDiem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_giaoChiTieu" Type="int" />
+          <Property Name="diem" Type="int" />
+          <Property Name="ycDanhGiaKQ" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ycMinhChung" Type="nvarchar" MaxLength="1000" />
+          <Property Name="thoiGian" Type="date" />
+          <Property Name="banPhuTrach" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="chiTietChiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="noiDung" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="diem" Type="int" Nullable="false" />
+          <Property Name="fk_loaiChiTieu" Type="int" />
+        </EntityType>
+        <EntityType Name="chiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="fk_loaiChiTieu" Type="int" />
+        </EntityType>
+        <EntityType Name="dm_donVi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_nguoiQuanLy" Type="int" Nullable="false" />
+          <Property Name="cumTruong" Type="bit" />
+          <Property Name="dienThoai" Type="varchar" MaxLength="12" />
+          <Property Name="diaChi" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="donVi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="giaoChiTieuchoDV">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fk_chiTieu" Type="int" />
+          <Property Name="fk_dmDonVi" Type="int" />
+        </EntityType>
+        <EntityType Name="loaiTieuChi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="tongDiem" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="nguoiDung">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="fk_donVi" Type="int" Nullable="false" />
+          <Property Name="chucVu" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="dienThoai" Type="varchar" MaxLength="12" />
+          <Property Name="diaChi" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="nhomChiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="tongDiem" Type="int" Nullable="false" />
+          <Property Name="fk_loaiTieuChi" Type="int" />
+        </EntityType>
+        <EntityType Name="taiKhoan">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ten" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="matKhau" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fk_dmDonVi" Type="int" />
+        </EntityType>
+        <Association Name="FK__bangDiem__fk_gia__4D94879B">
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="0..1" />
+          <End Role="bangDiem" Type="Self.bangDiem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="giaoChiTieuchoDV">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bangDiem">
+              <PropertyRef Name="fk_giaoChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chiTietCh__fk_lo__3F466844">
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="0..1" />
+          <End Role="chiTietChiTieu" Type="Self.chiTietChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="chiTietChiTieu">
+              <PropertyRef Name="fk_loaiChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chiTieu__fk_loai__3C69FB99">
+          <End Role="nhomChiTieu" Type="Self.nhomChiTieu" Multiplicity="0..1" />
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nhomChiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="chiTieu">
+              <PropertyRef Name="fk_loaiChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__dm_donVi__fk_ngu__46E78A0C">
+          <End Role="nguoiDung" Type="Self.nguoiDung" Multiplicity="1" />
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nguoiDung">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="dm_donVi">
+              <PropertyRef Name="fk_nguoiQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__giaoChiTi__fk_ch__49C3F6B7">
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="0..1" />
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="giaoChiTieuchoDV">
+              <PropertyRef Name="fk_chiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__giaoChiTi__fk_dm__4AB81AF0">
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dm_donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="giaoChiTieuchoDV">
+              <PropertyRef Name="fk_dmDonVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__nguoiDung__fk_do__440B1D61">
+          <End Role="donVi" Type="Self.donVi" Multiplicity="1" />
+          <End Role="nguoiDung" Type="Self.nguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="nguoiDung">
+              <PropertyRef Name="fk_donVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__nhomChiTi__fk_lo__398D8EEE">
+          <End Role="loaiTieuChi" Type="Self.loaiTieuChi" Multiplicity="0..1" />
+          <End Role="nhomChiTieu" Type="Self.nhomChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loaiTieuChi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="nhomChiTieu">
+              <PropertyRef Name="fk_loaiTieuChi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__taiKhoan__fk_dmD__5070F446">
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+          <End Role="taiKhoan" Type="Self.taiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dm_donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="taiKhoan">
+              <PropertyRef Name="fk_dmDonVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="chamdiemModelStoreContainer">
+          <EntitySet Name="bangDiem" EntityType="Self.bangDiem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chiTietChiTieu" EntityType="Self.chiTietChiTieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="chiTieu" EntityType="Self.chiTieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dm_donVi" EntityType="Self.dm_donVi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="donVi" EntityType="Self.donVi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="giaoChiTieuchoDV" EntityType="Self.giaoChiTieuchoDV" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="loaiTieuChi" EntityType="Self.loaiTieuChi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nguoiDung" EntityType="Self.nguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="nhomChiTieu" EntityType="Self.nhomChiTieu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taiKhoan" EntityType="Self.taiKhoan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__bangDiem__fk_gia__4D94879B" Association="Self.FK__bangDiem__fk_gia__4D94879B">
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDV" />
+            <End Role="bangDiem" EntitySet="bangDiem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chiTietCh__fk_lo__3F466844" Association="Self.FK__chiTietCh__fk_lo__3F466844">
+            <End Role="chiTieu" EntitySet="chiTieu" />
+            <End Role="chiTietChiTieu" EntitySet="chiTietChiTieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chiTieu__fk_loai__3C69FB99" Association="Self.FK__chiTieu__fk_loai__3C69FB99">
+            <End Role="nhomChiTieu" EntitySet="nhomChiTieu" />
+            <End Role="chiTieu" EntitySet="chiTieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__dm_donVi__fk_ngu__46E78A0C" Association="Self.FK__dm_donVi__fk_ngu__46E78A0C">
+            <End Role="nguoiDung" EntitySet="nguoiDung" />
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__giaoChiTi__fk_ch__49C3F6B7" Association="Self.FK__giaoChiTi__fk_ch__49C3F6B7">
+            <End Role="chiTieu" EntitySet="chiTieu" />
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDV" />
+          </AssociationSet>
+          <AssociationSet Name="FK__giaoChiTi__fk_dm__4AB81AF0" Association="Self.FK__giaoChiTi__fk_dm__4AB81AF0">
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDV" />
+          </AssociationSet>
+          <AssociationSet Name="FK__nguoiDung__fk_do__440B1D61" Association="Self.FK__nguoiDung__fk_do__440B1D61">
+            <End Role="donVi" EntitySet="donVi" />
+            <End Role="nguoiDung" EntitySet="nguoiDung" />
+          </AssociationSet>
+          <AssociationSet Name="FK__nhomChiTi__fk_lo__398D8EEE" Association="Self.FK__nhomChiTi__fk_lo__398D8EEE">
+            <End Role="loaiTieuChi" EntitySet="loaiTieuChi" />
+            <End Role="nhomChiTieu" EntitySet="nhomChiTieu" />
+          </AssociationSet>
+          <AssociationSet Name="FK__taiKhoan__fk_dmD__5070F446" Association="Self.FK__taiKhoan__fk_dmD__5070F446">
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+            <End Role="taiKhoan" EntitySet="taiKhoan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="chamdiemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="bangDiem">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_giaoChiTieu" Type="Int32" />
+          <Property Name="diem" Type="Int32" />
+          <Property Name="ycDanhGiaKQ" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ycMinhChung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="thoiGian" Type="DateTime" Precision="0" />
+          <Property Name="banPhuTrach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="giaoChiTieuchoDV" Relationship="Self.FK__bangDiem__fk_gia__4D94879B" FromRole="bangDiem" ToRole="giaoChiTieuchoDV" />
+        </EntityType>
+        <EntityType Name="chiTietChiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="noiDung" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="diem" Type="Int32" Nullable="false" />
+          <Property Name="fk_loaiChiTieu" Type="Int32" />
+          <NavigationProperty Name="chiTieu" Relationship="Self.FK__chiTietCh__fk_lo__3F466844" FromRole="chiTietChiTieu" ToRole="chiTieu" />
+        </EntityType>
+        <EntityType Name="chiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fk_loaiChiTieu" Type="Int32" />
+          <NavigationProperty Name="chiTietChiTieux" Relationship="Self.FK__chiTietCh__fk_lo__3F466844" FromRole="chiTieu" ToRole="chiTietChiTieu" />
+          <NavigationProperty Name="nhomChiTieu" Relationship="Self.FK__chiTieu__fk_loai__3C69FB99" FromRole="chiTieu" ToRole="nhomChiTieu" />
+          <NavigationProperty Name="giaoChiTieuchoDVs" Relationship="Self.FK__giaoChiTi__fk_ch__49C3F6B7" FromRole="chiTieu" ToRole="giaoChiTieuchoDV" />
+        </EntityType>
+        <EntityType Name="dm_donVi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_nguoiQuanLy" Type="Int32" Nullable="false" />
+          <Property Name="cumTruong" Type="Boolean" />
+          <Property Name="dienThoai" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="diaChi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="nguoiDung" Relationship="Self.FK__dm_donVi__fk_ngu__46E78A0C" FromRole="dm_donVi" ToRole="nguoiDung" />
+          <NavigationProperty Name="giaoChiTieuchoDVs" Relationship="Self.FK__giaoChiTi__fk_dm__4AB81AF0" FromRole="dm_donVi" ToRole="giaoChiTieuchoDV" />
+          <NavigationProperty Name="taiKhoans" Relationship="Self.FK__taiKhoan__fk_dmD__5070F446" FromRole="dm_donVi" ToRole="taiKhoan" />
+        </EntityType>
+        <EntityType Name="donVi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="nguoiDungs" Relationship="Self.FK__nguoiDung__fk_do__440B1D61" FromRole="donVi" ToRole="nguoiDung" />
+        </EntityType>
+        <EntityType Name="giaoChiTieuchoDV">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fk_chiTieu" Type="Int32" />
+          <Property Name="fk_dmDonVi" Type="Int32" />
+          <NavigationProperty Name="bangDiems" Relationship="Self.FK__bangDiem__fk_gia__4D94879B" FromRole="giaoChiTieuchoDV" ToRole="bangDiem" />
+          <NavigationProperty Name="chiTieu" Relationship="Self.FK__giaoChiTi__fk_ch__49C3F6B7" FromRole="giaoChiTieuchoDV" ToRole="chiTieu" />
+          <NavigationProperty Name="dm_donVi" Relationship="Self.FK__giaoChiTi__fk_dm__4AB81AF0" FromRole="giaoChiTieuchoDV" ToRole="dm_donVi" />
+        </EntityType>
+        <EntityType Name="loaiTieuChi">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tongDiem" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="nhomChiTieux" Relationship="Self.FK__nhomChiTi__fk_lo__398D8EEE" FromRole="loaiTieuChi" ToRole="nhomChiTieu" />
+        </EntityType>
+        <EntityType Name="nguoiDung">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="fk_donVi" Type="Int32" Nullable="false" />
+          <Property Name="chucVu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dienThoai" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="diaChi" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="dm_donVi" Relationship="Self.FK__dm_donVi__fk_ngu__46E78A0C" FromRole="nguoiDung" ToRole="dm_donVi" />
+          <NavigationProperty Name="donVi" Relationship="Self.FK__nguoiDung__fk_do__440B1D61" FromRole="nguoiDung" ToRole="donVi" />
+        </EntityType>
+        <EntityType Name="nhomChiTieu">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="tongDiem" Type="Int32" Nullable="false" />
+          <Property Name="fk_loaiTieuChi" Type="Int32" />
+          <NavigationProperty Name="chiTieux" Relationship="Self.FK__chiTieu__fk_loai__3C69FB99" FromRole="nhomChiTieu" ToRole="chiTieu" />
+          <NavigationProperty Name="loaiTieuChi" Relationship="Self.FK__nhomChiTi__fk_lo__398D8EEE" FromRole="nhomChiTieu" ToRole="loaiTieuChi" />
+        </EntityType>
+        <EntityType Name="taiKhoan">
+          <Key>
+            <PropertyRef Name="iD" />
+          </Key>
+          <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ten" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="matKhau" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fk_dmDonVi" Type="Int32" />
+          <NavigationProperty Name="dm_donVi" Relationship="Self.FK__taiKhoan__fk_dmD__5070F446" FromRole="taiKhoan" ToRole="dm_donVi" />
+        </EntityType>
+        <Association Name="FK__bangDiem__fk_gia__4D94879B">
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="0..1" />
+          <End Role="bangDiem" Type="Self.bangDiem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="giaoChiTieuchoDV">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="bangDiem">
+              <PropertyRef Name="fk_giaoChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chiTietCh__fk_lo__3F466844">
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="0..1" />
+          <End Role="chiTietChiTieu" Type="Self.chiTietChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="chiTietChiTieu">
+              <PropertyRef Name="fk_loaiChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chiTieu__fk_loai__3C69FB99">
+          <End Role="nhomChiTieu" Type="Self.nhomChiTieu" Multiplicity="0..1" />
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nhomChiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="chiTieu">
+              <PropertyRef Name="fk_loaiChiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__giaoChiTi__fk_ch__49C3F6B7">
+          <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="0..1" />
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="chiTieu">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="giaoChiTieuchoDV">
+              <PropertyRef Name="fk_chiTieu" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__dm_donVi__fk_ngu__46E78A0C">
+          <End Role="nguoiDung" Type="Self.nguoiDung" Multiplicity="1" />
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="nguoiDung">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="dm_donVi">
+              <PropertyRef Name="fk_nguoiQuanLy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__giaoChiTi__fk_dm__4AB81AF0">
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+          <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dm_donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="giaoChiTieuchoDV">
+              <PropertyRef Name="fk_dmDonVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__taiKhoan__fk_dmD__5070F446">
+          <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+          <End Role="taiKhoan" Type="Self.taiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="dm_donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="taiKhoan">
+              <PropertyRef Name="fk_dmDonVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__nguoiDung__fk_do__440B1D61">
+          <End Role="donVi" Type="Self.donVi" Multiplicity="1" />
+          <End Role="nguoiDung" Type="Self.nguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="donVi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="nguoiDung">
+              <PropertyRef Name="fk_donVi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__nhomChiTi__fk_lo__398D8EEE">
+          <End Role="loaiTieuChi" Type="Self.loaiTieuChi" Multiplicity="0..1" />
+          <End Role="nhomChiTieu" Type="Self.nhomChiTieu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="loaiTieuChi">
+              <PropertyRef Name="iD" />
+            </Principal>
+            <Dependent Role="nhomChiTieu">
+              <PropertyRef Name="fk_loaiTieuChi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="chamdiemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="bangDiems" EntityType="Self.bangDiem" />
+          <EntitySet Name="chiTietChiTieux" EntityType="Self.chiTietChiTieu" />
+          <EntitySet Name="chiTieux" EntityType="Self.chiTieu" />
+          <EntitySet Name="dm_donVi" EntityType="Self.dm_donVi" />
+          <EntitySet Name="donVis" EntityType="Self.donVi" />
+          <EntitySet Name="giaoChiTieuchoDVs" EntityType="Self.giaoChiTieuchoDV" />
+          <EntitySet Name="loaiTieuChis" EntityType="Self.loaiTieuChi" />
+          <EntitySet Name="nguoiDungs" EntityType="Self.nguoiDung" />
+          <EntitySet Name="nhomChiTieux" EntityType="Self.nhomChiTieu" />
+          <EntitySet Name="taiKhoans" EntityType="Self.taiKhoan" />
+          <AssociationSet Name="FK__bangDiem__fk_gia__4D94879B" Association="Self.FK__bangDiem__fk_gia__4D94879B">
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDVs" />
+            <End Role="bangDiem" EntitySet="bangDiems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chiTietCh__fk_lo__3F466844" Association="Self.FK__chiTietCh__fk_lo__3F466844">
+            <End Role="chiTieu" EntitySet="chiTieux" />
+            <End Role="chiTietChiTieu" EntitySet="chiTietChiTieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chiTieu__fk_loai__3C69FB99" Association="Self.FK__chiTieu__fk_loai__3C69FB99">
+            <End Role="nhomChiTieu" EntitySet="nhomChiTieux" />
+            <End Role="chiTieu" EntitySet="chiTieux" />
+          </AssociationSet>
+          <AssociationSet Name="FK__giaoChiTi__fk_ch__49C3F6B7" Association="Self.FK__giaoChiTi__fk_ch__49C3F6B7">
+            <End Role="chiTieu" EntitySet="chiTieux" />
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__dm_donVi__fk_ngu__46E78A0C" Association="Self.FK__dm_donVi__fk_ngu__46E78A0C">
+            <End Role="nguoiDung" EntitySet="nguoiDungs" />
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__giaoChiTi__fk_dm__4AB81AF0" Association="Self.FK__giaoChiTi__fk_dm__4AB81AF0">
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+            <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDVs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__taiKhoan__fk_dmD__5070F446" Association="Self.FK__taiKhoan__fk_dmD__5070F446">
+            <End Role="dm_donVi" EntitySet="dm_donVi" />
+            <End Role="taiKhoan" EntitySet="taiKhoans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__nguoiDung__fk_do__440B1D61" Association="Self.FK__nguoiDung__fk_do__440B1D61">
+            <End Role="donVi" EntitySet="donVis" />
+            <End Role="nguoiDung" EntitySet="nguoiDungs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__nhomChiTi__fk_lo__398D8EEE" Association="Self.FK__nhomChiTi__fk_lo__398D8EEE">
+            <End Role="loaiTieuChi" EntitySet="loaiTieuChis" />
+            <End Role="nhomChiTieu" EntitySet="nhomChiTieux" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="chamdiemModelStoreContainer" CdmEntityContainer="chamdiemEntities">
+          <EntitySetMapping Name="bangDiems">
+            <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
+              <MappingFragment StoreEntitySet="bangDiem">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
+                <ScalarProperty Name="diem" ColumnName="diem" />
+                <ScalarProperty Name="ycDanhGiaKQ" ColumnName="ycDanhGiaKQ" />
+                <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
+                <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+                <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chiTietChiTieux">
+            <EntityTypeMapping TypeName="chamdiemModel.chiTietChiTieu">
+              <MappingFragment StoreEntitySet="chiTietChiTieu">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="noiDung" ColumnName="noiDung" />
+                <ScalarProperty Name="diem" ColumnName="diem" />
+                <ScalarProperty Name="fk_loaiChiTieu" ColumnName="fk_loaiChiTieu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="chiTieux">
+            <EntityTypeMapping TypeName="chamdiemModel.chiTieu">
+              <MappingFragment StoreEntitySet="chiTieu">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="fk_loaiChiTieu" ColumnName="fk_loaiChiTieu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dm_donVi">
+            <EntityTypeMapping TypeName="chamdiemModel.dm_donVi">
+              <MappingFragment StoreEntitySet="dm_donVi">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="fk_nguoiQuanLy" ColumnName="fk_nguoiQuanLy" />
+                <ScalarProperty Name="cumTruong" ColumnName="cumTruong" />
+                <ScalarProperty Name="dienThoai" ColumnName="dienThoai" />
+                <ScalarProperty Name="diaChi" ColumnName="diaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="donVis">
+            <EntityTypeMapping TypeName="chamdiemModel.donVi">
+              <MappingFragment StoreEntitySet="donVi">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="giaoChiTieuchoDVs">
+            <EntityTypeMapping TypeName="chamdiemModel.giaoChiTieuchoDV">
+              <MappingFragment StoreEntitySet="giaoChiTieuchoDV">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="fk_chiTieu" ColumnName="fk_chiTieu" />
+                <ScalarProperty Name="fk_dmDonVi" ColumnName="fk_dmDonVi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="loaiTieuChis">
+            <EntityTypeMapping TypeName="chamdiemModel.loaiTieuChi">
+              <MappingFragment StoreEntitySet="loaiTieuChi">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nguoiDungs">
+            <EntityTypeMapping TypeName="chamdiemModel.nguoiDung">
+              <MappingFragment StoreEntitySet="nguoiDung">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="fk_donVi" ColumnName="fk_donVi" />
+                <ScalarProperty Name="chucVu" ColumnName="chucVu" />
+                <ScalarProperty Name="dienThoai" ColumnName="dienThoai" />
+                <ScalarProperty Name="diaChi" ColumnName="diaChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="nhomChiTieux">
+            <EntityTypeMapping TypeName="chamdiemModel.nhomChiTieu">
+              <MappingFragment StoreEntitySet="nhomChiTieu">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
+                <ScalarProperty Name="fk_loaiTieuChi" ColumnName="fk_loaiTieuChi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taiKhoans">
+            <EntityTypeMapping TypeName="chamdiemModel.taiKhoan">
+              <MappingFragment StoreEntitySet="taiKhoan">
+                <ScalarProperty Name="iD" ColumnName="iD" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="matKhau" ColumnName="matKhau" />
+                <ScalarProperty Name="fk_dmDonVi" ColumnName="fk_dmDonVi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

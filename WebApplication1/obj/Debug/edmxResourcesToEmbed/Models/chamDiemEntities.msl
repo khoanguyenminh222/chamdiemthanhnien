@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="chamdiemModelStoreContainer" CdmEntityContainer="chamdiemEntities">
+    <EntitySetMapping Name="bangDiems">
+      <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
+        <MappingFragment StoreEntitySet="bangDiem">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
+          <ScalarProperty Name="diem" ColumnName="diem" />
+          <ScalarProperty Name="ycDanhGiaKQ" ColumnName="ycDanhGiaKQ" />
+          <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
+          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+          <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="chiTietChiTieux">
+      <EntityTypeMapping TypeName="chamdiemModel.chiTietChiTieu">
+        <MappingFragment StoreEntitySet="chiTietChiTieu">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="noiDung" ColumnName="noiDung" />
+          <ScalarProperty Name="diem" ColumnName="diem" />
+          <ScalarProperty Name="fk_loaiChiTieu" ColumnName="fk_loaiChiTieu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="chiTieux">
+      <EntityTypeMapping TypeName="chamdiemModel.chiTieu">
+        <MappingFragment StoreEntitySet="chiTieu">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="fk_loaiChiTieu" ColumnName="fk_loaiChiTieu" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="dm_donVi">
+      <EntityTypeMapping TypeName="chamdiemModel.dm_donVi">
+        <MappingFragment StoreEntitySet="dm_donVi">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="fk_nguoiQuanLy" ColumnName="fk_nguoiQuanLy" />
+          <ScalarProperty Name="cumTruong" ColumnName="cumTruong" />
+          <ScalarProperty Name="dienThoai" ColumnName="dienThoai" />
+          <ScalarProperty Name="diaChi" ColumnName="diaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="donVis">
+      <EntityTypeMapping TypeName="chamdiemModel.donVi">
+        <MappingFragment StoreEntitySet="donVi">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="giaoChiTieuchoDVs">
+      <EntityTypeMapping TypeName="chamdiemModel.giaoChiTieuchoDV">
+        <MappingFragment StoreEntitySet="giaoChiTieuchoDV">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fk_chiTieu" ColumnName="fk_chiTieu" />
+          <ScalarProperty Name="fk_dmDonVi" ColumnName="fk_dmDonVi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="loaiTieuChis">
+      <EntityTypeMapping TypeName="chamdiemModel.loaiTieuChi">
+        <MappingFragment StoreEntitySet="loaiTieuChi">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="nguoiDungs">
+      <EntityTypeMapping TypeName="chamdiemModel.nguoiDung">
+        <MappingFragment StoreEntitySet="nguoiDung">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="fk_donVi" ColumnName="fk_donVi" />
+          <ScalarProperty Name="chucVu" ColumnName="chucVu" />
+          <ScalarProperty Name="dienThoai" ColumnName="dienThoai" />
+          <ScalarProperty Name="diaChi" ColumnName="diaChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="nhomChiTieux">
+      <EntityTypeMapping TypeName="chamdiemModel.nhomChiTieu">
+        <MappingFragment StoreEntitySet="nhomChiTieu">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
+          <ScalarProperty Name="fk_loaiTieuChi" ColumnName="fk_loaiTieuChi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="taiKhoans">
+      <EntityTypeMapping TypeName="chamdiemModel.taiKhoan">
+        <MappingFragment StoreEntitySet="taiKhoan">
+          <ScalarProperty Name="iD" ColumnName="iD" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="matKhau" ColumnName="matKhau" />
+          <ScalarProperty Name="fk_dmDonVi" ColumnName="fk_dmDonVi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
