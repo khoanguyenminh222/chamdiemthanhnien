@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApplication1.Models.bangDiem>
 
 @{
-    
+
 }
 
 <!DOCTYPE html>
@@ -48,54 +48,88 @@
         </tr>
 
         @{
-            Console.WriteLine(ViewBag.bangdiem);
             var i = 0;
             var j = 0;
             var x = 0;
+            var y = 0;
+            var (diem1, diem2, diem3) = (0,0,0);
+           
         }
-        @foreach (var item in @ViewBag.bangdiem)
+        @foreach (var item in @ViewBag.dataChiTieu)
         {
+
             if (item.loaiTieuChi.iD != j)
             {
                 <tr>
-                    <td colspan="11">@(j+1). @item.loaiTieuChi.ten (@item.loaiTieuChi.tongDiem)</td>
+                    <td colspan="11">@item.loaiTieuChi.iD @item.loaiTieuChi.ten (@item.loaiTieuChi.tongDiem)</td>
                 </tr>
-                j += 1;
+                j = item.loaiTieuChi.iD;
             }
             if (item.nhomChiTieu.iD != x)
             {
                 <tr>
-                    <td colspan="11">@(x+1).  @item.nhomChiTieu.ten (@item.nhomChiTieu.tongDiem)</td>
+                    <td colspan="11">@item.nhomChiTieu.iD @item.nhomChiTieu.ten (@item.nhomChiTieu.tongDiem)</td>
                 </tr>
-                x += 1;
+                x = item.nhomChiTieu.iD;
             }
-            <tr>
-                @if (item.chiTieu.iD != i)
-                {
-                    <td>
-                        @item.chiTieu.ten
-                    </td>
-                    i += 1;
-                }
-                else
-                {
-                    <td>
-                    </td>
-                }
+    <tr>
+        @if (item.chiTieu.iD != i)
+        {
+            <td>
+                @item.chiTieu.ten
+            </td>
+            i = item.chiTieu.iD;
+        }
+        else
+        {
+            <td>
+            </td>
+        }
+        <td>
+            @item.chiTietChiTieu.noiDung
+        </td>
+        <td>
+            @item.chiTietChiTieu.diem
+        </td>
 
-                <td>
-                    @item.chiTietChiTieu.noiDung
-                </td>
-                <td>
-                    @item.chiTietChiTieu.diem
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-            </tr>
+        @foreach (var dataDiem in @ViewBag.dataDiem)
+        {
+            if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
+            {
+                if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1)
+                {
+                    <td>
+                        @dataDiem.bangDiem.diem
+                    </td>
+                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                    diem1 = dataDiem.bangDiem.id;
+                }
+                if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2)
+                {
+                    <td>
+                        @dataDiem.bangDiem.diem
+                    </td>
+                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                    diem2 = dataDiem.bangDiem.id;
+                }
+                if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3)
+                {
+                    <td>
+                        @dataDiem.bangDiem.diem
+                    </td>
+                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                    diem3 = dataDiem.bangDiem.id;
+                }
+            }
         }
 
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+        }
     </table>
 </body>
 </html>
