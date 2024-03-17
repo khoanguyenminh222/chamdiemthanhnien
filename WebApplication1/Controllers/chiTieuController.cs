@@ -10,32 +10,18 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class chiTieuChamDiemController : Controller
+    public class chiTieuController : Controller
     {
         private chamdiemEntities db = new chamdiemEntities();
 
-        // GET: chiTieuChamDiem
+        // GET: chiTieu
         public ActionResult Index()
         {
-            var chiTieuChamDiem = (from bangdiem in db.bangDiems
-                            join giaoChiTieu in db.giaoChiTieuchoDVs
-                                on bangdiem.fk_giaoChiTieu equals giaoChiTieu.id
-                            join chiTieu in db.chiTieux
-                                on giaoChiTieu.fk_chiTieu equals chiTieu.iD
-                            join chiTietChiTieu in db.chiTietChiTieux
-                                on chiTieu.iD equals chiTietChiTieu.fk_loaiChiTieu
-                            
-                            select new dataBangDiem()
-                            {
-                                bangDiem = bangdiem,
-                                chiTieu = chiTieu,
-                                chiTietChiTieu = chiTietChiTieu,
-                            });
             var chiTieux = db.chiTieux.Include(c => c.nhomChiTieu);
             return View(chiTieux.ToList());
         }
 
-        // GET: chiTieuChamDiem/Details/5
+        // GET: chiTieu/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -50,14 +36,14 @@ namespace WebApplication1.Controllers
             return View(chiTieu);
         }
 
-        // GET: chiTieuChamDiem/Create
+        // GET: chiTieu/Create
         public ActionResult Create()
         {
             ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten");
             return View();
         }
 
-        // POST: chiTieuChamDiem/Create
+        // POST: chiTieu/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -75,7 +61,7 @@ namespace WebApplication1.Controllers
             return View(chiTieu);
         }
 
-        // GET: chiTieuChamDiem/Edit/5
+        // GET: chiTieu/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,15 +69,21 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             chiTieu chiTieu = db.chiTieux.Find(id);
+            List<chiTietChiTieu> chiTietChiTieu = db.chiTietChiTieux.Where(c=>c.fk_loaiChiTieu==id).ToList();
             if (chiTieu == null)
             {
                 return HttpNotFound();
             }
             ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
-            return View(chiTieu);
+            chiTieu_chiTiet chiTieu_ChiTiet = new chiTieu_chiTiet
+            {
+                chiTieu = chiTieu,
+                chiTietChiTieu = chiTietChiTieu
+            };
+            return View(chiTieu_ChiTiet);
         }
 
-        // POST: chiTieuChamDiem/Edit/5
+        // POST: chiTieu/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -108,7 +100,7 @@ namespace WebApplication1.Controllers
             return View(chiTieu);
         }
 
-        // GET: chiTieuChamDiem/Delete/5
+        // GET: chiTieu/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -123,7 +115,7 @@ namespace WebApplication1.Controllers
             return View(chiTieu);
         }
 
-        // POST: chiTieuChamDiem/Delete/5
+        // POST: chiTieu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

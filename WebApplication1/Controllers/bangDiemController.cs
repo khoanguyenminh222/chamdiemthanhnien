@@ -18,11 +18,11 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
 
-            var bangDiem = (from bangdiem in db.bangDiems
+            var bangDiem = (from chiTieu in db.chiTieux
                             join giaoChiTieu in db.giaoChiTieuchoDVs
-                                on bangdiem.fk_giaoChiTieu equals giaoChiTieu.id
-                            join chiTieu in db.chiTieux
-                                on giaoChiTieu.fk_chiTieu equals chiTieu.iD
+                                on chiTieu.iD equals giaoChiTieu.fk_chiTieu
+                            join bangdiem in db.bangDiems
+                                on giaoChiTieu.id equals bangdiem.fk_giaoChiTieu
                             join chiTietChiTieu in db.chiTietChiTieux
                                 on chiTieu.iD equals chiTietChiTieu.fk_loaiChiTieu
                             join nhomChiTeu in db.nhomChiTieux
@@ -36,7 +36,7 @@ namespace WebApplication1.Controllers
                                 nhomChiTieu = nhomChiTeu,
                                 chiTieu = chiTieu,
                                 chiTietChiTieu = chiTietChiTieu,
-                            });
+                            }).OrderBy(o => o.chiTieu.iD); ;
             ViewBag.bangdiem = bangDiem.ToList();
             return View();
         }

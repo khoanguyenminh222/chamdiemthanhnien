@@ -131,7 +131,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\bangDiemController.cs" />
-    <Compile Include="Controllers\chiTieuChamDiemController.cs" />
+    <Compile Include="Controllers\chiTieuController.cs" />
+    <Compile Include="Controllers\loaiTieuChiController.cs" />
     <Compile Include="Controllers\nhomChiTieuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,6 +161,7 @@
     <Compile Include="Models\chiTieu.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\chiTieu_chiTiet.cs" />
     <Compile Include="Models\dataBangDiem.cs" />
     <Compile Include="Models\dm_donVi.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
@@ -259,11 +261,16 @@
     <Content Include="Views\bangDiem\Details.cshtml" />
     <Content Include="Views\bangDiem\Edit.cshtml" />
     <Content Include="Views\bangDiem\Index.cshtml" />
-    <Content Include="Views\chiTieuChamDiem\Create.cshtml" />
-    <Content Include="Views\chiTieuChamDiem\Delete.cshtml" />
-    <Content Include="Views\chiTieuChamDiem\Details.cshtml" />
-    <Content Include="Views\chiTieuChamDiem\Edit.cshtml" />
-    <Content Include="Views\chiTieuChamDiem\Index.cshtml" />
+    <Content Include="Views\chiTieu\Create.cshtml" />
+    <Content Include="Views\chiTieu\Delete.cshtml" />
+    <Content Include="Views\chiTieu\Details.cshtml" />
+    <Content Include="Views\chiTieu\Edit.cshtml" />
+    <Content Include="Views\chiTieu\Index.cshtml" />
+    <Content Include="Views\loaiTieuChi\Create.cshtml" />
+    <Content Include="Views\loaiTieuChi\Delete.cshtml" />
+    <Content Include="Views\loaiTieuChi\Details.cshtml" />
+    <Content Include="Views\loaiTieuChi\Edit.cshtml" />
+    <Content Include="Views\loaiTieuChi\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

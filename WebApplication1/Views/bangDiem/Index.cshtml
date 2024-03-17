@@ -51,7 +51,7 @@
             Console.WriteLine(ViewBag.bangdiem);
             var i = 0;
             var j = 0;
-            var x=0;
+            var x = 0;
         }
         @foreach (var item in @ViewBag.bangdiem)
         {
@@ -69,34 +69,33 @@
                 </tr>
                 x += 1;
             }
-                <tr>
-                    @if (item.chiTieu.iD != i)
-                    {
-                        <td>
-                            @item.chiTieu.ten
-                        </td>
-                        i += 1;
-                    }
-                    else
-                    {
-                        <td>
-                        </td>
-                    }
+            <tr>
+                @if (item.chiTieu.iD != i)
+                {
+                    <td>
+                        @item.chiTieu.ten
+                    </td>
+                    i += 1;
+                }
+                else
+                {
+                    <td>
+                    </td>
+                }
 
-                    <td>
-                        @item.chiTietChiTieu.noiDung
-                    </td>
-                    <td>
-                        @item.chiTietChiTieu.diem
-                    </td>
-                    <td>
-                        @item.bangDiem.ycDanhGiaKQ
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            }
+                <td>
+                    @item.chiTietChiTieu.noiDung
+                </td>
+                <td>
+                    @item.chiTietChiTieu.diem
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
 
-        </table>
+    </table>
 </body>
 </html>
