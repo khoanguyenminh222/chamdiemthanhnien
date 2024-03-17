@@ -10,132 +10,126 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class bangDiemController : Controller
+    public class chiTieuChamDiemController : Controller
     {
         private chamdiemEntities db = new chamdiemEntities();
 
-        // GET: bangDiem
+        // GET: chiTieuChamDiem
         public ActionResult Index()
         {
-
-            var bangDiem = (from bangdiem in db.bangDiems
+            var chiTieuChamDiem = (from bangdiem in db.bangDiems
                             join giaoChiTieu in db.giaoChiTieuchoDVs
                                 on bangdiem.fk_giaoChiTieu equals giaoChiTieu.id
                             join chiTieu in db.chiTieux
                                 on giaoChiTieu.fk_chiTieu equals chiTieu.iD
                             join chiTietChiTieu in db.chiTietChiTieux
                                 on chiTieu.iD equals chiTietChiTieu.fk_loaiChiTieu
-                            join nhomChiTeu in db.nhomChiTieux
-                                on chiTieu.fk_loaiChiTieu equals nhomChiTeu.iD
-                            join loaiTieuChi in db.loaiTieuChis
-                                on nhomChiTeu.fk_loaiTieuChi equals loaiTieuChi.iD
+                            
                             select new dataBangDiem()
                             {
                                 bangDiem = bangdiem,
-                                loaiTieuChi = loaiTieuChi,
-                                nhomChiTieu = nhomChiTeu,
                                 chiTieu = chiTieu,
                                 chiTietChiTieu = chiTietChiTieu,
                             });
-            ViewBag.bangdiem = bangDiem.ToList();
-            return View();
+            var chiTieux = db.chiTieux.Include(c => c.nhomChiTieu);
+            return View(chiTieux.ToList());
         }
 
-        // GET: bangDiem/Details/5
+        // GET: chiTieuChamDiem/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            bangDiem bangDiem = db.bangDiems.Find(id);
-            if (bangDiem == null)
+            chiTieu chiTieu = db.chiTieux.Find(id);
+            if (chiTieu == null)
             {
                 return HttpNotFound();
             }
-            return View(bangDiem);
+            return View(chiTieu);
         }
 
-        // GET: bangDiem/Create
+        // GET: chiTieuChamDiem/Create
         public ActionResult Create()
         {
-            ViewBag.fk_giaoChiTieu = new SelectList(db.giaoChiTieuchoDVs, "id", "id");
+            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten");
             return View();
         }
 
-        // POST: bangDiem/Create
+        // POST: chiTieuChamDiem/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem)
+        public ActionResult Create([Bind(Include = "iD,ten,fk_loaiChiTieu")] chiTieu chiTieu)
         {
             if (ModelState.IsValid)
             {
-                db.bangDiems.Add(bangDiem);
+                db.chiTieux.Add(chiTieu);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.fk_giaoChiTieu = new SelectList(db.giaoChiTieuchoDVs, "id", "id", bangDiem.fk_giaoChiTieu);
-            return View(bangDiem);
+            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
+            return View(chiTieu);
         }
 
-        // GET: bangDiem/Edit/5
+        // GET: chiTieuChamDiem/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            bangDiem bangDiem = db.bangDiems.Find(id);
-            if (bangDiem == null)
+            chiTieu chiTieu = db.chiTieux.Find(id);
+            if (chiTieu == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.fk_giaoChiTieu = new SelectList(db.giaoChiTieuchoDVs, "id", "id", bangDiem.fk_giaoChiTieu);
-            return View(bangDiem);
+            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
+            return View(chiTieu);
         }
 
-        // POST: bangDiem/Edit/5
+        // POST: chiTieuChamDiem/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem)
+        public ActionResult Edit([Bind(Include = "iD,ten,fk_loaiChiTieu")] chiTieu chiTieu)
         {
             //if (ModelState.IsValid)
             //{
-            //    db.Entry(bangDiem).State = EntityState.Modified;
+            //    db.Entry(chiTieu).State = EntityState.Modified;
             //    db.SaveChanges();
             //    return RedirectToAction("Index");
             //}
-            //ViewBag.fk_giaoChiTieu = new SelectList(db.giaoChiTieuchoDVs, "id", "id", bangDiem.fk_giaoChiTieu);
-            return View(bangDiem);
+            //ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
+            return View(chiTieu);
         }
 
-        // GET: bangDiem/Delete/5
+        // GET: chiTieuChamDiem/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            bangDiem bangDiem = db.bangDiems.Find(id);
-            if (bangDiem == null)
+            chiTieu chiTieu = db.chiTieux.Find(id);
+            if (chiTieu == null)
             {
                 return HttpNotFound();
             }
-            return View(bangDiem);
+            return View(chiTieu);
         }
 
-        // POST: bangDiem/Delete/5
+        // POST: chiTieuChamDiem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            bangDiem bangDiem = db.bangDiems.Find(id);
-            db.bangDiems.Remove(bangDiem);
+            chiTieu chiTieu = db.chiTieux.Find(id);
+            db.chiTieux.Remove(chiTieu);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

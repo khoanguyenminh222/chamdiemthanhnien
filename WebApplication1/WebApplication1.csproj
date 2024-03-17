@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\bangDiemController.cs" />
+    <Compile Include="Controllers\chiTieuChamDiemController.cs" />
     <Compile Include="Controllers\nhomChiTieuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -258,6 +259,11 @@
     <Content Include="Views\bangDiem\Details.cshtml" />
     <Content Include="Views\bangDiem\Edit.cshtml" />
     <Content Include="Views\bangDiem\Index.cshtml" />
+    <Content Include="Views\chiTieuChamDiem\Create.cshtml" />
+    <Content Include="Views\chiTieuChamDiem\Delete.cshtml" />
+    <Content Include="Views\chiTieuChamDiem\Details.cshtml" />
+    <Content Include="Views\chiTieuChamDiem\Edit.cshtml" />
+    <Content Include="Views\chiTieuChamDiem\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
