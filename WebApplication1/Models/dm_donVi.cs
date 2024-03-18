@@ -19,6 +19,8 @@ namespace WebApplication1.Models
         {
             this.giaoChiTieuchoDVs = new HashSet<giaoChiTieuchoDV>();
             this.taiKhoans = new HashSet<taiKhoan>();
+            this.quanHeDonVis = new HashSet<quanHeDonVi>();
+            this.quanHeDonVis1 = new HashSet<quanHeDonVi>();
         }
     
         public int iD { get; set; }
@@ -32,5 +34,9 @@ namespace WebApplication1.Models
         public virtual ICollection<giaoChiTieuchoDV> giaoChiTieuchoDVs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<taiKhoan> taiKhoans { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quanHeDonVi> quanHeDonVis { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quanHeDonVi> quanHeDonVis1 { get; set; }
     }
 }

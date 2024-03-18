@@ -45,6 +45,7 @@ namespace WebApplication1.Controllers
                             }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD);
 
+
             var dataDiem = (from chTietChiTieu in db.chiTietChiTieux
                             join chiTieu in db.chiTieux
                                 on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD
@@ -128,19 +129,40 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem)
+        public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
+                                      int iD_chiTieu)
         {
             //update bảng điểm
-            //foreach (bangDiem bd in bangDiem)
-            //{
-            //    bangDiem bdExisted = db.bangDiems.Find(bd.id);
-            //    bd.diem = bdExisted.diem;
-            //    bd.ycDanhGiaKQ = bdExisted.ycDanhGiaKQ;
-            //    bd.ycMinhChung = bdExisted.ycMinhChung;
-            //}
+            bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
+            bdExisted.diem = bangDiem.diem;
+            bdExisted.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+            bdExisted.ycMinhChung = bangDiem.ycMinhChung;
+            DateTime date = DateTime.Today;
+            bdExisted.thoiGian = date;
+            db.SaveChanges();
 
-            //db.SaveChanges();
-            Debug.WriteLine(bangDiem);
+            //kiếm đơn vị cha
+            var donVi = Session["dm_DonVi"];
+            var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
+            if (quanHeDonVi==null)
+            {
+               
+            }
+            else
+            {
+                //tạo 1 giao chỉ tiêu cho đơn vị cha
+                giaoChiTieuchoDV giaoChiTieuchoDV = new giaoChiTieuchoDV();
+                giaoChiTieuchoDV.fk_chiTieu = iD_chiTieu;
+                giaoChiTieuchoDV.fk_dmDonVi = quanHeDonVi.donViCha;
+                db.giaoChiTieuchoDVs.Add(giaoChiTieuchoDV);
+                db.SaveChanges();
+
+                //tạo bảng điểm
+                bangDiem bangDiem1 = new bangDiem();
+                bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
+                db.bangDiems.Add(bangDiem1);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
     }

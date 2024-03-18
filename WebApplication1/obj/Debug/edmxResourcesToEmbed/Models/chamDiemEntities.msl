@@ -102,5 +102,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="quanHeDonVis">
+      <EntityTypeMapping TypeName="chamdiemModel.quanHeDonVi">
+        <MappingFragment StoreEntitySet="quanHeDonVi">
+          <ScalarProperty Name="donViCon" ColumnName="donViCon" />
+          <ScalarProperty Name="donViCha" ColumnName="donViCha" />
+          <ScalarProperty Name="iD" ColumnName="iD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

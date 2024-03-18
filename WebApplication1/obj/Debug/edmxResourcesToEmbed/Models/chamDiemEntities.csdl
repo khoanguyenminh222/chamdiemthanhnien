@@ -46,6 +46,8 @@
     <NavigationProperty Name="nguoiDung" Relationship="Self.FK__dm_donVi__fk_ngu__46E78A0C" FromRole="dm_donVi" ToRole="nguoiDung" />
     <NavigationProperty Name="giaoChiTieuchoDVs" Relationship="Self.FK__giaoChiTi__fk_dm__4AB81AF0" FromRole="dm_donVi" ToRole="giaoChiTieuchoDV" />
     <NavigationProperty Name="taiKhoans" Relationship="Self.FK__taiKhoan__fk_dmD__5070F446" FromRole="dm_donVi" ToRole="taiKhoan" />
+    <NavigationProperty Name="quanHeDonVis" Relationship="chamdiemModel.FK__quanHeDon__donVi__5CD6CB2B" FromRole="dm_donVi" ToRole="quanHeDonVi" />
+    <NavigationProperty Name="quanHeDonVis1" Relationship="chamdiemModel.FK__quanHeDon__donVi__5DCAEF64" FromRole="dm_donVi" ToRole="quanHeDonVi" />
   </EntityType>
   <EntityType Name="donVi">
     <Key>
@@ -264,5 +266,48 @@
       <End Role="loaiTieuChi" EntitySet="loaiTieuChis" />
       <End Role="nhomChiTieu" EntitySet="nhomChiTieux" />
     </AssociationSet>
+    <EntitySet Name="quanHeDonVis" EntityType="chamdiemModel.quanHeDonVi" />
+    <AssociationSet Name="FK__quanHeDon__donVi__5CD6CB2B" Association="chamdiemModel.FK__quanHeDon__donVi__5CD6CB2B">
+      <End Role="dm_donVi" EntitySet="dm_donVi" />
+      <End Role="quanHeDonVi" EntitySet="quanHeDonVis" />
+    </AssociationSet>
+    <AssociationSet Name="FK__quanHeDon__donVi__5DCAEF64" Association="chamdiemModel.FK__quanHeDon__donVi__5DCAEF64">
+      <End Role="dm_donVi" EntitySet="dm_donVi" />
+      <End Role="quanHeDonVi" EntitySet="quanHeDonVis" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="quanHeDonVi">
+    <Key>
+      <PropertyRef Name="iD" />
+    </Key>
+    <Property Name="iD" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="donViCha" Type="Int32" />
+    <Property Name="donViCon" Type="Int32" />
+    <NavigationProperty Name="dm_donVi" Relationship="chamdiemModel.FK__quanHeDon__donVi__5CD6CB2B" FromRole="quanHeDonVi" ToRole="dm_donVi" />
+    <NavigationProperty Name="dm_donVi1" Relationship="chamdiemModel.FK__quanHeDon__donVi__5DCAEF64" FromRole="quanHeDonVi" ToRole="dm_donVi" />
+  </EntityType>
+  <Association Name="FK__quanHeDon__donVi__5CD6CB2B">
+    <End Type="chamdiemModel.dm_donVi" Role="dm_donVi" Multiplicity="0..1" />
+    <End Type="chamdiemModel.quanHeDonVi" Role="quanHeDonVi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dm_donVi">
+        <PropertyRef Name="iD" />
+      </Principal>
+      <Dependent Role="quanHeDonVi">
+        <PropertyRef Name="donViCha" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__quanHeDon__donVi__5DCAEF64">
+    <End Type="chamdiemModel.dm_donVi" Role="dm_donVi" Multiplicity="0..1" />
+    <End Type="chamdiemModel.quanHeDonVi" Role="quanHeDonVi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dm_donVi">
+        <PropertyRef Name="iD" />
+      </Principal>
+      <Dependent Role="quanHeDonVi">
+        <PropertyRef Name="donViCon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

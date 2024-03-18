@@ -1,11 +1,4 @@
-﻿
-@{
-
-
-
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -46,12 +39,14 @@
             var (biendem1, biendem2, biendem3, biendem4) = (0, 0, 0, 0);
             var (diem1, diem2, diem3) = (0, 0, 0);
         }
+
+
         @foreach (var item in @ViewBag.dataChiTieu)
         {
             using (Html.BeginForm("chamDiem", "nguoiDung", FormMethod.Post))
             {
-                <input type="hidden" name="id"value="@item.bangDiem.id"/>
                 @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@item.bangDiem.id" class="form-control" />
                 if ((int)Session["dm_DonVi"] == item.giaoChiTieuchoDV.fk_dmDonVi)
                 {
                     if (item.loaiTieuChi.iD != j)
@@ -72,6 +67,7 @@
                         @if (item.chiTieu.iD != i)
                         {
                             <td>
+                                <input type="hidden" name="iD_chiTieu" value="@item.chiTieu.iD" class="form-control" />
                                 @item.chiTieu.ten
                             </td>
                             i = item.chiTieu.iD;
@@ -102,7 +98,7 @@
                                     }
                                     else if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
                                     {
-                                        <td><input type="number" class="form-control" name="diem" /></td>
+                                        <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
                                         y = dataDiem.bangDiem.fk_giaoChiTieu;
                                         diem1 = dataDiem.bangDiem.id;
                                     }
@@ -118,12 +114,6 @@
                                         y = dataDiem.bangDiem.fk_giaoChiTieu;
                                         diem1 = dataDiem.bangDiem.id;
                                     }
-                                    @*else if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
-                                    {
-                                        <td><input type="number" class="form-control" id="diem" /></td>
-                                        y = dataDiem.bangDiem.fk_giaoChiTieu;
-                                        diem1 = dataDiem.bangDiem.id;
-                                    }*@
                                     //kiểm tra điểm người dùng có fk_donvi==2 có chưa
                                     if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
                                     {
@@ -163,34 +153,34 @@
                         }
 
                         @*@if (item.bangDiem.id != biendem1 && item.bangDiem.diem == null)
-                        {
-                            <td><input type="number" class="form-control" id="diem" /></td>
-                            biendem1 = item.bangDiem.id;
-                        }
-                        else if (item.bangDiem.id != biendem1 && item.bangDiem.diem != null)
-                        {
-                            <td>@item.bangDiem.diem</td>
-                            biendem1 = item.bangDiem.id;
-                        }*@
+                            {
+                                <td><input type="number" class="form-control" id="diem" /></td>
+                                biendem1 = item.bangDiem.id;
+                            }
+                            else if (item.bangDiem.id != biendem1 && item.bangDiem.diem != null)
+                            {
+                                <td>@item.bangDiem.diem</td>
+                                biendem1 = item.bangDiem.id;
+                            }*@
                         @if (item.bangDiem.id != biendem2)
                         {
-                            <td><textarea class="form-control" id="danhgia_@item.bangDiem.id">@item.bangDiem.ycDanhGiaKQ</textarea></td>
+                            <td><textarea class="form-control" name="ycDanhGiaKQ">@item.bangDiem.ycDanhGiaKQ</textarea></td>
                             biendem2 = item.bangDiem.id;
                         }
                         @if (item.bangDiem.id != biendem3)
                         {
-                            <td><textarea class="form-control" id="minhchung_@item.bangDiem.id">@item.bangDiem.ycMinhChung</textarea></td>
+                            <td><textarea class="form-control" name="ycMinhChung">@item.bangDiem.ycMinhChung</textarea></td>
                             biendem3 = item.bangDiem.id;
                         }
-                        @if (item.nhomChiTieu.iD != biendem4 && item.bangDiem.diem == null)
+                        @if (item.chiTieu.iD != biendem4 && item.bangDiem.diem == null)
                         {
                             <td><button class="form-control bg-success text-light" type="submit">Chấm điểm</button></td>
-                            biendem4 = item.nhomChiTieu.iD;
+                            biendem4 = item.chiTieu.iD;
                         }
-                        else if (item.nhomChiTieu.iD != biendem4 && item.bangDiem.diem != null)
+                        else if (item.chiTieu.iD != biendem4 && item.bangDiem.diem != null)
                         {
                             <td>Đã chấm</td>
-                            biendem4 = item.nhomChiTieu.iD;
+                            biendem4 = item.chiTieu.iD;
                         }
 
                     </tr>

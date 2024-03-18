@@ -24,6 +24,9 @@
         <AssociationConnector Association="chamdiemModel.FK__taiKhoan__fk_dmD__5070F446" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__nguoiDung__fk_do__440B1D61" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__nhomChiTi__fk_lo__398D8EEE" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="chamdiemModel.quanHeDonVi" Width="1.5" PointX="7.5" PointY="10.625" />
+        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__donVi__5CD6CB2B" />
+        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__donVi__5DCAEF64" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

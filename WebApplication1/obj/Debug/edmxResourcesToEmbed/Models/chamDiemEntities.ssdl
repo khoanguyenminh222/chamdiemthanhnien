@@ -82,6 +82,14 @@
     <Property Name="tongDiem" Type="int" Nullable="false" />
     <Property Name="fk_loaiTieuChi" Type="int" />
   </EntityType>
+  <EntityType Name="quanHeDonVi">
+    <Key>
+      <PropertyRef Name="iD" />
+    </Key>
+    <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="donViCha" Type="int" />
+    <Property Name="donViCon" Type="int" />
+  </EntityType>
   <EntityType Name="taiKhoan">
     <Key>
       <PropertyRef Name="iD" />
@@ -187,6 +195,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__quanHeDon__donVi__5CD6CB2B">
+    <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+    <End Role="quanHeDonVi" Type="Self.quanHeDonVi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dm_donVi">
+        <PropertyRef Name="iD" />
+      </Principal>
+      <Dependent Role="quanHeDonVi">
+        <PropertyRef Name="donViCha" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__quanHeDon__donVi__5DCAEF64">
+    <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
+    <End Role="quanHeDonVi" Type="Self.quanHeDonVi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="dm_donVi">
+        <PropertyRef Name="iD" />
+      </Principal>
+      <Dependent Role="quanHeDonVi">
+        <PropertyRef Name="donViCon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__taiKhoan__fk_dmD__5070F446">
     <End Role="dm_donVi" Type="Self.dm_donVi" Multiplicity="0..1" />
     <End Role="taiKhoan" Type="Self.taiKhoan" Multiplicity="*" />
@@ -209,6 +241,7 @@
     <EntitySet Name="loaiTieuChi" EntityType="Self.loaiTieuChi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="nguoiDung" EntityType="Self.nguoiDung" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="nhomChiTieu" EntityType="Self.nhomChiTieu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="quanHeDonVi" EntityType="Self.quanHeDonVi" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="taiKhoan" EntityType="Self.taiKhoan" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__bangDiem__fk_gia__4D94879B" Association="Self.FK__bangDiem__fk_gia__4D94879B">
       <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDV" />
@@ -241,6 +274,14 @@
     <AssociationSet Name="FK__nhomChiTi__fk_lo__398D8EEE" Association="Self.FK__nhomChiTi__fk_lo__398D8EEE">
       <End Role="loaiTieuChi" EntitySet="loaiTieuChi" />
       <End Role="nhomChiTieu" EntitySet="nhomChiTieu" />
+    </AssociationSet>
+    <AssociationSet Name="FK__quanHeDon__donVi__5CD6CB2B" Association="Self.FK__quanHeDon__donVi__5CD6CB2B">
+      <End Role="dm_donVi" EntitySet="dm_donVi" />
+      <End Role="quanHeDonVi" EntitySet="quanHeDonVi" />
+    </AssociationSet>
+    <AssociationSet Name="FK__quanHeDon__donVi__5DCAEF64" Association="Self.FK__quanHeDon__donVi__5DCAEF64">
+      <End Role="dm_donVi" EntitySet="dm_donVi" />
+      <End Role="quanHeDonVi" EntitySet="quanHeDonVi" />
     </AssociationSet>
     <AssociationSet Name="FK__taiKhoan__fk_dmD__5070F446" Association="Self.FK__taiKhoan__fk_dmD__5070F446">
       <End Role="dm_donVi" EntitySet="dm_donVi" />

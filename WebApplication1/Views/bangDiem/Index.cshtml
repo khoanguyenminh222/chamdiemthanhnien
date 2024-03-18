@@ -12,124 +12,133 @@
     <title>Index</title>
 </head>
 <body>
-    <table class="table table-bordered border-1" id="table">
-        <tr>
-            <th>
-                Điều kiện chấm điểm
-            </th>
-            <th>
-                Nguyên tắc chấm điểm
-            </th>
-            <th>
-                Điểm
-            </th>
-            <th>
-                Chi đoàn tự chấm điểm
-            </th>
-            <th>
-                Cụm trưởng/Huyện/TP chấm điểm
-            </th>
-            <th>
-                Tỉnh đoàn chấm điểm
-            </th>
-            <th>
-                Yêu cầu trong đánh giá kết quả thực hiện
-            </th>
-            <th>
-                Yêu cầu minh chứng
-            </th>
-            <th>
-                Thời gian minh chứng
-            </th>
-            <th>
-                Ban phụ trách
-            </th>
-            <th></th>
-        </tr>
+    <div style="overflow: auto">
+        <table class="table table-bordered border-1" style="width:100%" id="table">
 
-        @{
-            var i = 0;
-            var j = 0;
-            var x = 0;
-            var y = 0;
-            var (diem1, diem2, diem3) = (0,0,0);
-           
-        }
-        @foreach (var item in @ViewBag.dataChiTieu)
-        {
-
-            if (item.loaiTieuChi.iD != j)
-            {
                 <tr>
-                    <td colspan="11">@item.loaiTieuChi.iD. @item.loaiTieuChi.ten (@item.loaiTieuChi.tongDiem)</td>
+                    <th>
+                        Điều kiện chấm điểm
+                    </th>
+                    <th>
+                        Nguyên tắc chấm điểm
+                    </th>
+                    <th>
+                        Điểm
+                    </th>
+                    <th>
+                        Chi đoàn tự chấm điểm
+                    </th>
+                    <th>
+                        Cụm trưởng/Huyện/TP chấm điểm
+                    </th>
+                    <th>
+                        Tỉnh đoàn chấm điểm
+                    </th>
+                    <th>
+                        Yêu cầu trong đánh giá kết quả thực hiện
+                    </th>
+                    <th>
+                        Yêu cầu minh chứng
+                    </th>
+                    <th>
+                        Thời gian minh chứng
+                    </th>
+                    <th>
+                        Ban phụ trách
+                    </th>
                 </tr>
-                j = item.loaiTieuChi.iD;
-            }
-            if (item.nhomChiTieu.iD != x)
-            {
-                <tr>
-                    <td colspan="11">@item.nhomChiTieu.iD. @item.nhomChiTieu.ten (@item.nhomChiTieu.tongDiem)</td>
-                </tr>
-                x = item.nhomChiTieu.iD;
-            }
-    <tr>
-        @if (item.chiTieu.iD != i)
-        {
-            <td>
-                @item.chiTieu.ten
-            </td>
-            i = item.chiTieu.iD;
-        }
-        else
-        {
-            <td>
-            </td>
-        }
-        <td>
-            @item.chiTietChiTieu.noiDung
-        </td>
-        <td>
-            @item.chiTietChiTieu.diem
-        </td>
 
-        @foreach (var dataDiem in @ViewBag.dataDiem)
-        {
-            if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
-            {
-                if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1)
-                {
-                    <td>
-                        @dataDiem.bangDiem.diem
-                    </td>
-                    y = dataDiem.bangDiem.fk_giaoChiTieu;
-                    diem1 = dataDiem.bangDiem.id;
+                @{
+                    var i = 0;
+                    var j = 0;
+                    var x = 0;
+                    var y = 0;
+                    var (diem1, diem2, diem3) = (0, 0, 0);
+                    var (biendem1, biendem2) = (0, 0);
                 }
-                if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2)
+                @foreach (var item in @ViewBag.dataChiTieu)
                 {
-                    <td>
-                        @dataDiem.bangDiem.diem
-                    </td>
-                    y = dataDiem.bangDiem.fk_giaoChiTieu;
-                    diem2 = dataDiem.bangDiem.id;
-                }
-                if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3)
-                {
-                    <td>
-                        @dataDiem.bangDiem.diem
-                    </td>
-                    y = dataDiem.bangDiem.fk_giaoChiTieu;
-                    diem3 = dataDiem.bangDiem.id;
-                }
-            }
-        }
 
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        }
-    </table>
+                    if (item.loaiTieuChi.iD != j)
+                    {
+                        <tr>
+                            <td colspan="11">@item.loaiTieuChi.iD. @item.loaiTieuChi.ten (@item.loaiTieuChi.tongDiem)</td>
+                        </tr>
+                        j = item.loaiTieuChi.iD;
+                    }
+                    if (item.nhomChiTieu.iD != x)
+                    {
+                        <tr>
+                            <td colspan="11">@item.nhomChiTieu.iD. @item.nhomChiTieu.ten (@item.nhomChiTieu.tongDiem)</td>
+                        </tr>
+                        x = item.nhomChiTieu.iD;
+                    }
+                    <tr>
+                        @if (item.chiTieu.iD != i)
+                        {
+                            <td style="width: 200px;">
+                                <div style="width: 200px; overflow-x: auto; ">@item.chiTieu.ten</div>
+                            </td>
+                            i = item.chiTieu.iD;
+                        }
+                        else
+                        {
+                            <td>
+                            </td>
+                        }
+                        <td style="width: 100px;">
+                            <div style="width: 200px; overflow-x: auto; ">@item.chiTietChiTieu.noiDung</div>
+                        </td>
+                        <td>
+                            @item.chiTietChiTieu.diem
+                        </td>
+
+                        @foreach (var dataDiem in @ViewBag.dataDiem)
+                        {
+                            if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
+                            {
+                                if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1)
+                                {
+                                    <td>
+                                        @dataDiem.bangDiem.diem
+                                    </td>
+                                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                    diem1 = dataDiem.bangDiem.id;
+                                }
+                                if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2)
+                                {
+                                    <td>
+                                        @dataDiem.bangDiem.diem
+                                    </td>
+                                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                    diem2 = dataDiem.bangDiem.id;
+                                }
+                                if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3)
+                                {
+                                    <td>
+                                        @dataDiem.bangDiem.diem
+                                    </td>
+                                    y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                    diem3 = dataDiem.bangDiem.id;
+                                }
+                            }
+                        }
+                        @if (item.chiTieu.iD != biendem1)
+                        {
+                            <td style="width: 200px"><div style="width: 200px; overflow-x: auto; ">@item.bangDiem.ycDanhGiaKQ</div></td>
+                            biendem1 = item.chiTieu.iD;
+                        }
+                        @if (item.chiTieu.iD != biendem2)
+                        {
+                            <td style="width: 200px"><div style="width: 200px; overflow-x: auto; ">@item.bangDiem.ycMinhChung</div></td>
+                            biendem2 = item.chiTieu.iD;
+                        }
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                }
+        </table>
+    </div>
 </body>
 </html>

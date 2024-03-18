@@ -183,6 +183,9 @@
     <Compile Include="Models\nhomChiTieu.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\quanHeDonVi.cs">
+      <DependentUpon>chamDiemEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\taiKhoan.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
