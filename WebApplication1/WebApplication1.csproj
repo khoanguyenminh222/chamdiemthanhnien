@@ -133,6 +133,7 @@
     <Compile Include="Controllers\bangDiemController.cs" />
     <Compile Include="Controllers\chiTieuController.cs" />
     <Compile Include="Controllers\loaiTieuChiController.cs" />
+    <Compile Include="Controllers\nguoiDungController.cs" />
     <Compile Include="Controllers\nhomChiTieuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -163,6 +164,7 @@
     </Compile>
     <Compile Include="Models\chiTieu_chiTiet.cs" />
     <Compile Include="Models\dataBangDiem.cs" />
+    <Compile Include="Models\dataNguoiDung.cs" />
     <Compile Include="Models\dm_donVi.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
@@ -271,6 +273,8 @@
     <Content Include="Views\loaiTieuChi\Details.cshtml" />
     <Content Include="Views\loaiTieuChi\Edit.cshtml" />
     <Content Include="Views\loaiTieuChi\Index.cshtml" />
+    <Content Include="Views\nguoiDung\Index.cshtml" />
+    <Content Include="Views\nguoiDung\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
