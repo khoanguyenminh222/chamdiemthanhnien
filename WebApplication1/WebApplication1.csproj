@@ -278,6 +278,7 @@
     <Content Include="Views\loaiTieuChi\Index.cshtml" />
     <Content Include="Views\nguoiDung\Index.cshtml" />
     <Content Include="Views\nguoiDung\Login.cshtml" />
+    <Content Include="Views\nguoiDung\chamDiemLoaiTieuChi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

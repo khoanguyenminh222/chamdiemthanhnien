@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Ajax.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,8 +12,53 @@ namespace WebApplication1.Controllers
     public class nguoiDungController : Controller
     {
         private chamdiemEntities db = new chamdiemEntities();
+
         // GET: nguoiDung
         public ActionResult Index()
+        {
+            
+            var tieuChi_giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                       join chiTieu in db.chiTieux
+                                        on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                       join nhomChiTieu in db.nhomChiTieux
+                                        on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                       join loaiTieuChi in db.loaiTieuChis
+                                        on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                                       join dm_donVi in db.dm_donVi
+                                        on giaoChiTieuchoDV.fk_dmDonVi equals dm_donVi.iD
+                                       join nguoiDung in db.nguoiDungs
+                                        on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
+                                       join donVi in db.donVis
+                                        on nguoiDung.fk_donVi equals donVi.iD
+                                       join bangDiem in db.bangDiems
+                                        on giaoChiTieuchoDV.id equals bangDiem.fk_giaoChiTieu
+                                       select new dataBangDiem
+                                       {
+                                           giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                           bangDiem = bangDiem,
+                                           loaiTieuChi = loaiTieuChi,
+                                           chiTieu = chiTieu,
+                                           dm_DonVi = dm_donVi,
+                                           nguoiDung = nguoiDung,
+                                           donVi = donVi,
+                                       }).DistinctBy(c => c.giaoChiTieuchoDV.fk_chiTieu).DistinctBy(l=>l.loaiTieuChi.iD);
+            var chiTieuTheoLoaiChiTieu = (from chiTieu in db.chiTieux
+                                          join nhomChiTieu in db.nhomChiTieux
+                                               on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                          join loaiTieuChi in db.loaiTieuChis
+                                               on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                                          select new dataBangDiem
+                                          {
+                                              chiTieu = chiTieu,
+                                              loaiTieuChi = loaiTieuChi,
+                                          }).DistinctBy(l=>l.loaiTieuChi.iD);
+            ViewBag.chiTieuTheoLoaiChiTieu = chiTieuTheoLoaiChiTieu.ToList();
+            ViewBag.tieuChi_giaoChiTieu = tieuChi_giaoChiTieu.ToList();
+            return View();
+        }
+
+        // get loại tiêu chí của người dùng
+        public ActionResult chamDiemLoaiTieuChi(int? id)
         {
             var dataChiTieu = (from bangdiem in db.bangDiems
                             join giaoChiTieuchoDV in db.giaoChiTieuchoDVs
@@ -42,7 +88,7 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            }).Where(l=>l.loaiTieuChi.iD == id).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD);
 
 
@@ -74,8 +120,8 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
-                            .ThenBy(o => o.chiTieu.iD);
+                            }).Where(l => l.loaiTieuChi.iD == id).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            .ThenBy(o => o.chiTieu.iD).ThenBy(b=>b.bangDiem.fk_giaoChiTieu);
             ViewBag.dataChiTieu = dataChiTieu.ToList();
             ViewBag.dataDiem = dataDiem.ToList();
             return View();
@@ -130,38 +176,74 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
-                                      int iD_chiTieu)
+                                      int iD_chiTieu, string submit)
         {
-            //update bảng điểm
-            bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
-            bdExisted.diem = bangDiem.diem;
-            bdExisted.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
-            bdExisted.ycMinhChung = bangDiem.ycMinhChung;
-            DateTime date = DateTime.Today;
-            bdExisted.thoiGian = date;
-            db.SaveChanges();
-
-            //kiếm đơn vị cha
-            var donVi = Session["dm_DonVi"];
-            var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
-            if (quanHeDonVi==null)
+            switch (submit)
             {
-               
-            }
-            else
-            {
-                //tạo 1 giao chỉ tiêu cho đơn vị cha
-                giaoChiTieuchoDV giaoChiTieuchoDV = new giaoChiTieuchoDV();
-                giaoChiTieuchoDV.fk_chiTieu = iD_chiTieu;
-                giaoChiTieuchoDV.fk_dmDonVi = quanHeDonVi.donViCha;
-                db.giaoChiTieuchoDVs.Add(giaoChiTieuchoDV);
-                db.SaveChanges();
+                case "submit":
+                    //update bảng điểm
+                    bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
+                    bdExisted.diem = bangDiem.diem;
+                    bdExisted.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+                    bdExisted.ycMinhChung = bangDiem.ycMinhChung;
+                    DateTime date = DateTime.Today;
+                    bdExisted.thoiGian = date;
+                    db.SaveChanges();
 
-                //tạo bảng điểm
-                bangDiem bangDiem1 = new bangDiem();
-                bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
-                db.bangDiems.Add(bangDiem1);
-                db.SaveChanges();
+                    //kiếm đơn vị cha
+                    var donVi = Session["dm_DonVi"];
+                    var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
+                    if (quanHeDonVi == null)
+                    {
+
+                    }
+                    else
+                    {
+                        //tạo 1 giao chỉ tiêu cho đơn vị cha
+                        giaoChiTieuchoDV giaoChiTieuchoDV = new giaoChiTieuchoDV();
+                        giaoChiTieuchoDV.fk_chiTieu = iD_chiTieu;
+                        giaoChiTieuchoDV.fk_dmDonVi = quanHeDonVi.donViCha;
+                        db.giaoChiTieuchoDVs.Add(giaoChiTieuchoDV);
+                        db.SaveChanges();
+
+                        //tạo bảng điểm
+                        bangDiem bangDiem1 = new bangDiem();
+                        bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
+                        bangDiem1.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+                        bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
+                        bangDiem1.thoiGian = date;
+                        db.bangDiems.Add(bangDiem1);
+                        db.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
+                case "edit":
+                    //update bảng điểm của chi đoàn
+                    bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
+                    bdExisted1.diem = bangDiem.diem;
+                    bdExisted1.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+                    bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
+                    DateTime date1 = DateTime.Today;
+                    bdExisted1.thoiGian = date1;
+                    db.SaveChanges();
+
+                    //update bảng điểm của các đon vị cha
+                    var giaoChiTieuList = db.giaoChiTieuchoDVs.Where(g => g.fk_chiTieu == iD_chiTieu).ToList();
+                    foreach(var bd in db.bangDiems)
+                    {
+                        foreach(var giao in giaoChiTieuList)
+                        {
+                            if (bd.fk_giaoChiTieu == giao.id)
+                            {
+                                bd.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+                                bd.ycMinhChung = bangDiem.ycMinhChung;
+                                bd.thoiGian = date1;
+                                db.Entry(bd).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                            }
+                        }
+                    }
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }

@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
   
             ViewBag.tieuChi_loaiTieuChi = tieuChi_loaiTieuChi.ToList();
             ViewBag.tieuChi_giaoChiTieu = tieuChi_giaoChiTieu.ToList();
-            return View(db.loaiTieuChis.ToList());
+            return View();
         }
 
         // GET: loaiTieuChi/Details/5
