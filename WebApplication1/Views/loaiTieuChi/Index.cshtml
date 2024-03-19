@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication1.Models.loaiTieuChi>
+﻿
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -18,30 +18,45 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ten)
+                Loại tiêu chí
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.tongDiem)
+                Tổng điểm
+            </th>
+            <th>
+                Đơn vị tiếp nhận
             </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.tongDiem)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.iD }) |
-                @Html.ActionLink("Details", "Details", new { id=item.iD }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.iD })
-            </td>
-        </tr>
-    }
-    
+        @foreach (var item in ViewBag.tieuChi_loaiTieuChi)
+        {
+            <tr>
+                <td>
+                    @item.loaiTieuChi.ten
+                </td>
+                <td>
+                    @item.loaiTieuChi.tongDiem
+                </td>
+                @foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
+                {
+                    if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
+                    {
+                        if (item1.giaoChiTieuchoDV.fk_chiTieu == item.chiTieu.iD)
+                        {
+                            <td>@item1.nguoiDung.ten / @item1.donVi.ten</td>
+                        }
+                    }
+
+                }
+                
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.loaiTieuChi.iD }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.iD }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>

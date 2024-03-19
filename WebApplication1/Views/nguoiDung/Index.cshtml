@@ -38,11 +38,18 @@
             var (i, j, x, y) = (0, 0, 0, 0);
             var (biendem1, biendem2, biendem3, biendem4) = (0, 0, 0, 0);
             var (diem1, diem2, diem3) = (0, 0, 0);
+            var b1 = 0;
         }
 
 
         @foreach (var item in @ViewBag.dataChiTieu)
         {
+            //if (item.bangDiem.diem == null && item.giaoChiTieuchoDV.fk_chiTieu==item.chiTieu.iD)
+            //        {
+
+            //}
+            //else {
+            //        }
             using (Html.BeginForm("chamDiem", "nguoiDung", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
@@ -123,7 +130,7 @@
                                         y = dataDiem.bangDiem.fk_giaoChiTieu;
                                         diem2 = dataDiem.bangDiem.id;
                                     }
-                                    else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
+                                    else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && item.bangDiem.diem == null)
                                     {
                                         <td><input type="number" class="form-control" id="diem_@dataDiem.chiTieu.iD" /></td>
                                         y = dataDiem.bangDiem.fk_giaoChiTieu;
