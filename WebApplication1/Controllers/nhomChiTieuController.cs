@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         // GET: nhomChiTieu
         public ActionResult Index()
         {
-            var nhomChiTieux = db.nhomChiTieux.Include(n => n.loaiTieuChi);
+            var nhomChiTieux = db.nhomChiTieux.Include(n => n.loaiTieuChi).OrderBy(l=>l.loaiTieuChi.iD);
             return View(nhomChiTieux.ToList());
         }
 

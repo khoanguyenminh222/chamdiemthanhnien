@@ -38,18 +38,11 @@
             var (i, j, x, y) = (0, 0, 0, 0);
             var (biendem1, biendem2, biendem3, biendem4) = (0, 0, 0, 0);
             var (diem1, diem2, diem3) = (0, 0, 0);
-            var b1 = 0;
         }
 
 
         @foreach (var item in @ViewBag.dataChiTieu)
         {
-            //if (item.bangDiem.diem == null && item.giaoChiTieuchoDV.fk_chiTieu==item.chiTieu.iD)
-            //        {
-
-            //}
-            //else {
-            //        }
             using (Html.BeginForm("chamDiem", "nguoiDung", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()

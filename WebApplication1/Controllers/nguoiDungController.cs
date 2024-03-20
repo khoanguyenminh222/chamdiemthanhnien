@@ -16,7 +16,7 @@ namespace WebApplication1.Controllers
         // GET: nguoiDung
         public ActionResult Index()
         {
-            
+            int dm_DonVi = (int)Session["dm_DonVi"];
             var tieuChi_giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
                                        join chiTieu in db.chiTieux
                                         on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
@@ -41,18 +41,62 @@ namespace WebApplication1.Controllers
                                            dm_DonVi = dm_donVi,
                                            nguoiDung = nguoiDung,
                                            donVi = donVi,
-                                       }).DistinctBy(c => c.giaoChiTieuchoDV.fk_chiTieu).DistinctBy(l=>l.loaiTieuChi.iD);
-            var chiTieuTheoLoaiChiTieu = (from chiTieu in db.chiTieux
-                                          join nhomChiTieu in db.nhomChiTieux
-                                               on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                                          join loaiTieuChi in db.loaiTieuChis
-                                               on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
-                                          select new dataBangDiem
-                                          {
-                                              chiTieu = chiTieu,
-                                              loaiTieuChi = loaiTieuChi,
-                                          }).DistinctBy(l=>l.loaiTieuChi.iD);
-            ViewBag.chiTieuTheoLoaiChiTieu = chiTieuTheoLoaiChiTieu.ToList();
+                                       }).Where(g=>g.giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
+                                       .DistinctBy(l=>l.loaiTieuChi.iD)
+                                       .OrderBy(l=>l.loaiTieuChi.iD);
+            var searchDonViCon = (from dm_donVi in db.dm_donVi
+                                  join nguoiDung in db.nguoiDungs
+                                    on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
+                                  join donVi in db.donVis
+                                    on nguoiDung.fk_donVi equals donVi.iD
+                                  join quanHeDonVi in db.quanHeDonVis
+                                    on dm_donVi.iD equals quanHeDonVi.donViCon
+                                  select new dataBangDiem
+                                  {
+                                      dm_DonVi = dm_donVi,
+                                      nguoiDung = nguoiDung,
+                                      donVi = donVi,
+                                      quanHeDonVi = quanHeDonVi,
+                                  }).Where(q => q.quanHeDonVi.donViCha == dm_DonVi);
+            ViewBag.searchDonViCon = searchDonViCon.ToList();
+
+
+            List<int> countLoaiTieuChi1 = new List<int>();
+            foreach (var l in db.loaiTieuChis)
+            {
+                var count = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                        join chiTieu in db.chiTieux
+                                            on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                        join nhomChiTieu in db.nhomChiTieux
+                                            on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                        join loaiTieuChi in db.loaiTieuChis
+                                            on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                                        join quanHeDonVi in db.quanHeDonVis
+                                            on giaoChiTieuchoDV.fk_dmDonVi equals quanHeDonVi.donViCon
+                                        where (loaiTieuChi.iD == l.iD)
+                                        where (giaoChiTieuchoDV.fk_dmDonVi == quanHeDonVi.donViCon || giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
+                                        select giaoChiTieuchoDV).Count();
+                countLoaiTieuChi1.Add(count);
+            }
+
+            
+            List<int> countLoaiTieuChi2 = new List<int>();
+            foreach (var l in db.loaiTieuChis)
+            {
+                var count = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                             join chiTieu in db.chiTieux
+                                 on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                             join nhomChiTieu in db.nhomChiTieux
+                                 on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                             join loaiTieuChi in db.loaiTieuChis
+                                 on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                             where (loaiTieuChi.iD == l.iD)
+                             where (giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
+                             select giaoChiTieuchoDV).Count();
+                countLoaiTieuChi2.Add(count);
+            }
+            ViewBag.countLoaiTieuChi1 = countLoaiTieuChi1;
+            ViewBag.countLoaiTieuChi2 = countLoaiTieuChi2;
             ViewBag.tieuChi_giaoChiTieu = tieuChi_giaoChiTieu.ToList();
             return View();
         }
@@ -60,6 +104,7 @@ namespace WebApplication1.Controllers
         // get loại tiêu chí của người dùng
         public ActionResult chamDiemLoaiTieuChi(int? id)
         {
+            Session["idLoaiTieuChi"] = id;
             var dataChiTieu = (from bangdiem in db.bangDiems
                             join giaoChiTieuchoDV in db.giaoChiTieuchoDVs
                                 on bangdiem.fk_giaoChiTieu equals giaoChiTieuchoDV.id
@@ -178,6 +223,7 @@ namespace WebApplication1.Controllers
         public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
                                       int iD_chiTieu, string submit)
         {
+            var id = Session["idLoaiTieuChi"];
             switch (submit)
             {
                 case "submit":
@@ -215,7 +261,7 @@ namespace WebApplication1.Controllers
                         db.bangDiems.Add(bangDiem1);
                         db.SaveChanges();
                     }
-                    return RedirectToAction("Index");
+                    return RedirectToAction("chamDiemLoaiTieuChi", new { id = id });
                 case "edit":
                     //update bảng điểm của chi đoàn
                     bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
@@ -243,7 +289,7 @@ namespace WebApplication1.Controllers
                     }
                     db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("chamDiemLoaiTieuChi", new {id = id });
             }
             return RedirectToAction("Index");
         }

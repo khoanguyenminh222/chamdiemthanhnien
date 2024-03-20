@@ -9,6 +9,7 @@ namespace WebApplication1.Models
     {
         public bangDiem bangDiem;
         public giaoChiTieuchoDV giaoChiTieuchoDV;
+        public quanHeDonVi quanHeDonVi;
         public loaiTieuChi loaiTieuChi;
         public nhomChiTieu nhomChiTieu;
         public chiTieu chiTieu;

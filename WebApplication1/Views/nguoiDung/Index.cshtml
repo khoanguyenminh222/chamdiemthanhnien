@@ -25,69 +25,46 @@
             </th>
             <th></th>
         </tr>
+        @{
+            int biendem = 0;
+        }
         @foreach (var item in ViewBag.tieuChi_giaoChiTieu)
         {
-            foreach (var loaiCT in ViewBag.chiTieuTheoLoaiChiTieu)
-            {
-                if ((int)Session["dm_DonVi"] != 1)
-                {
-                    if (loaiCT.loaiTieuChi.iD == item.loaiTieuChi.iD)
+                <tr>
+                    <td>
+                        @item.loaiTieuChi.ten
+                    </td>
+                    <td>
+                        @item.loaiTieuChi.tongDiem
+                    </td>
+                    @foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
                     {
-
-                        if (item.bangDiem.diem != null)
+                        if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
                         {
-
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    @item.loaiTieuChi.ten
-                                </td>
-                                <td>
-                                    @item.loaiTieuChi.tongDiem
-                                </td>
-                                @foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
-                                {
-                                    if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
-                                    {
-                                        <td>@item.nguoiDung.ten / @item.donVi.ten</td>
-                                    }
-
-                                }
-
-                                <td>
-                                    @Html.ActionLink("Chưa chấm xong", "chamDiemLoaiTieuChi", new { id = item.loaiTieuChi.iD })
-                                </td>
-                            </tr>
+                            <td>@item.nguoiDung.ten / @item.donVi.ten</td>
                         }
 
                     }
-                }
 
-            }
-            <tr>
-                <td>
-                    @item.loaiTieuChi.ten
-                </td>
-                <td>
-                    @item.loaiTieuChi.tongDiem
-                </td>
-                @foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
-                {
-                    if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
+
+                    @if (ViewBag.countLoaiTieuChi1[biendem] == ViewBag.countLoaiTieuChi2[biendem])
                     {
-                        <td>@item.nguoiDung.ten / @item.donVi.ten</td>
+                        <td>
+                            @Html.ActionLink("Chấm điểm", "chamDiemLoaiTieuChi", new { id = item.loaiTieuChi.iD })
+                        </td>
                     }
+                    @if (ViewBag.countLoaiTieuChi1[biendem] > ViewBag.countLoaiTieuChi2[biendem])
+                    {
+                        <td>
+                            @Html.ActionLink("Đơn vị tiếp nhận chưa chấm xong", "chamDiemLoaiTieuChi", new { id = item.loaiTieuChi.iD })
+                        </td>
+                    }
+                </tr>
+                biendem += 1;
+            
 
-                }
 
-                <td>
-                    @Html.ActionLink("Chấm điểm", "chamDiemLoaiTieuChi", new { id = item.loaiTieuChi.iD }) |
-                    @*@Html.ActionLink("Details", "Details", new { id = item.iD }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
-                </td>
-            </tr>
+
         }
 
     </table>
