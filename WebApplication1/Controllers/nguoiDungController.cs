@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             int dm_DonVi = (int)Session["dm_DonVi"];
+            var dm_DonViCon = db.quanHeDonVis.Where(q => q.donViCha == dm_DonVi).Select(q => q.donViCon).SingleOrDefault();
             var tieuChi_giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
                                        join chiTieu in db.chiTieux
                                         on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
@@ -62,23 +63,41 @@ namespace WebApplication1.Controllers
 
 
             List<int> countLoaiTieuChi1 = new List<int>();
-            foreach (var l in db.loaiTieuChis)
+            if (dm_DonViCon != null)
             {
-                var count = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
-                                        join chiTieu in db.chiTieux
-                                            on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                                        join nhomChiTieu in db.nhomChiTieux
-                                            on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                                        join loaiTieuChi in db.loaiTieuChis
-                                            on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
-                                        join quanHeDonVi in db.quanHeDonVis
-                                            on giaoChiTieuchoDV.fk_dmDonVi equals quanHeDonVi.donViCon
-                                        where (loaiTieuChi.iD == l.iD)
-                                        where (giaoChiTieuchoDV.fk_dmDonVi == quanHeDonVi.donViCon || giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
-                                        select giaoChiTieuchoDV).Count();
-                countLoaiTieuChi1.Add(count);
-            }
+                foreach (var l in db.loaiTieuChis)
+                {
+                    var count = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                 join chiTieu in db.chiTieux
+                                     on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                 join nhomChiTieu in db.nhomChiTieux
+                                     on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                 join loaiTieuChi in db.loaiTieuChis
+                                     on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                                 where (loaiTieuChi.iD == l.iD)
+                                 where (giaoChiTieuchoDV.fk_dmDonVi == dm_DonViCon)
+                                 select giaoChiTieuchoDV).Count();
+                    countLoaiTieuChi1.Add(count);
 
+                }
+            }
+            else
+            {
+                foreach (var l in db.loaiTieuChis)
+                {
+                    var count = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                 join chiTieu in db.chiTieux
+                                     on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                 join nhomChiTieu in db.nhomChiTieux
+                                     on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                 join loaiTieuChi in db.loaiTieuChis
+                                     on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
+                                 where (loaiTieuChi.iD == l.iD)
+                                 where (giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
+                                 select giaoChiTieuchoDV).Count();
+                    countLoaiTieuChi1.Add(count);
+                }
+            }    
             
             List<int> countLoaiTieuChi2 = new List<int>();
             foreach (var l in db.loaiTieuChis)
@@ -94,6 +113,7 @@ namespace WebApplication1.Controllers
                              where (giaoChiTieuchoDV.fk_dmDonVi == dm_DonVi)
                              select giaoChiTieuchoDV).Count();
                 countLoaiTieuChi2.Add(count);
+
             }
             ViewBag.countLoaiTieuChi1 = countLoaiTieuChi1;
             ViewBag.countLoaiTieuChi2 = countLoaiTieuChi2;
@@ -201,12 +221,15 @@ namespace WebApplication1.Controllers
                                 donVi = donVi,
                                 nguoiDung = nguoiDung,
                             });
-                Console.WriteLine(data.ToList());
                 if (data.Count() > 0)
                 {
                     Session["dm_DonVi"] = data.FirstOrDefault().taiKhoan.fk_dmDonVi;
                     Session["name"] = data.FirstOrDefault().taiKhoan.ten;
                     Session["donvi"] = data.FirstOrDefault().nguoiDung.fk_donVi;
+                    if ((int)Session["donvi"] == 4)
+                    {
+                        return RedirectToAction("Index", "bangDiem");
+                    }
                     return RedirectToAction("Index", "nguoiDung");
                 }
                 else if (data.Count() <= 0)
@@ -241,7 +264,13 @@ namespace WebApplication1.Controllers
                     var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
                     if (quanHeDonVi == null)
                     {
-
+                        // nếu như không có đơn vị cha thì cập nhật điẻm
+                        bangDiem bd = db.bangDiems.Find(bangDiem.id);
+                        bd.diem = bangDiem.diem;
+                        bd.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
+                        bd.ycMinhChung = bangDiem.ycMinhChung;
+                        bd.thoiGian = date;
+                        db.SaveChanges();
                     }
                     else
                     {

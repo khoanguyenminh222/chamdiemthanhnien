@@ -10,16 +10,42 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Bảng điểm", "Index", "bangDiem", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            @*admin*@
+            @if ((int)Session["donvi"] == 4)
+            {
+                @Html.ActionLink("Bảng điểm", "Index", "bangDiem", new { area = "" }, new { @class = "navbar-brand" })
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li>@Html.ActionLink("Loại tiêu chí", "Index", "loaiTieuChi", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Nhóm chỉ tiêu", "Index", "nhomChiTieu", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Chỉ tiêu", "Index", "chiTieu", new { area = "" }, new { @class = "nav-link" })</li>
+                    </ul>
+                </div>
+            }
+            <div class="d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Loại tiêu chí", "Index", "loaiTieuChi", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Nhóm chỉ tiêu", "Index", "nhomChiTieu", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Chỉ tiêu", "Index", "chiTieu", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="text-white nav-link">Tài khoản: @Session["name"]</li>
+                    @if ((int)Session["donvi"] == 1)
+                    {
+                        <li class="text-white nav-link">Đơn vị: Chi đoàn</li>
+                    }
+                    @if ((int)Session["donvi"] == 2)
+                    {
+                        <li class="text-white nav-link">Đơn vị: Thành đoàn</li>
+                    }
+                    @if ((int)Session["donvi"] == 3)
+                    {
+                        <li class="text-white nav-link">Đơn vị: Tỉnh đoàn</li>
+                    }
+                    @if ((int)Session["donvi"] == 4)
+                    {
+                        <li class="text-white nav-link">Đơn vị: admin</li>
+                    }
+
                 </ul>
             </div>
         </div>
