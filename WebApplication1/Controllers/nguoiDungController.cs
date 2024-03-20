@@ -16,6 +16,10 @@ namespace WebApplication1.Controllers
         // GET: nguoiDung
         public ActionResult Index()
         {
+            if (Session["dm_DonVi"]== null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
             int dm_DonVi = (int)Session["dm_DonVi"];
             var dm_DonViCon = db.quanHeDonVis.Where(q => q.donViCha == dm_DonVi).Select(q => q.donViCon).SingleOrDefault();
             var tieuChi_giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
@@ -124,6 +128,10 @@ namespace WebApplication1.Controllers
         // get loại tiêu chí của người dùng
         public ActionResult chamDiemLoaiTieuChi(int? id)
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
             Session["idLoaiTieuChi"] = id;
             var dataChiTieu = (from bangdiem in db.bangDiems
                             join giaoChiTieuchoDV in db.giaoChiTieuchoDVs

@@ -137,34 +137,54 @@ namespace WebApplication1.Controllers
                 //kiểm tra chỉ tiêu có nằm trong bảng giaoChiTieuchoDV, nếu có thì không tạo mới
                 foreach (var chi in chiTieu)
                 {
-                    foreach (var giaoChiTieu in giaoChiTieuchoDV)
+                    if(giaoChiTieuchoDV.Count == 0)
                     {
-                        if (chi.iD == giaoChiTieu.fk_chiTieu)
-                        {
-                            //id bằng nghĩa là có trong bảng giaoChiTieu rồi
-                            //update fk_dm đơn vị thôi
-                            giaoChiTieu.fk_dmDonVi = dm_DonVi;
-                            db.SaveChanges();
-                            break;
-                        }
-                        else
-                        {
-                            // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
-                            
-                            giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
-                            newGiao.fk_chiTieu = chi.iD;
-                            newGiao.fk_dmDonVi = dm_DonVi;
-                            db.giaoChiTieuchoDVs.Add(newGiao);
-                            db.SaveChanges();
+                        // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
 
-                            //tạo bảng điểm
-                            bangDiem newBang = new bangDiem();
-                            newBang.fk_giaoChiTieu = newGiao.id;
-                            db.bangDiems.Add(newBang);
-                            db.SaveChanges();
-                            break;
+                        giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
+                        newGiao.fk_chiTieu = chi.iD;
+                        newGiao.fk_dmDonVi = dm_DonVi;
+                        db.giaoChiTieuchoDVs.Add(newGiao);
+                        db.SaveChanges();
+
+                        //tạo bảng điểm
+                        bangDiem newBang = new bangDiem();
+                        newBang.fk_giaoChiTieu = newGiao.id;
+                        db.bangDiems.Add(newBang);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        foreach (var giaoChiTieu in giaoChiTieuchoDV)
+                        {
+                            if (chi.iD == giaoChiTieu.fk_chiTieu)
+                            {
+                                //id bằng nghĩa là có trong bảng giaoChiTieu rồi
+                                //update fk_dm đơn vị thôi
+                                giaoChiTieu.fk_dmDonVi = dm_DonVi;
+                                db.SaveChanges();
+                                break;
+                            }
+                            else
+                            {
+                                // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
+
+                                giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
+                                newGiao.fk_chiTieu = chi.iD;
+                                newGiao.fk_dmDonVi = dm_DonVi;
+                                db.giaoChiTieuchoDVs.Add(newGiao);
+                                db.SaveChanges();
+
+                                //tạo bảng điểm
+                                bangDiem newBang = new bangDiem();
+                                newBang.fk_giaoChiTieu = newGiao.id;
+                                db.bangDiems.Add(newBang);
+                                db.SaveChanges();
+                                break;
+                            }
                         }
                     }
+                    
                 }
             }
             return RedirectToAction("Index");

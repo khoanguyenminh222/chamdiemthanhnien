@@ -18,7 +18,10 @@ namespace WebApplication1.Controllers
         // GET: bangDiem
         public ActionResult Index()
         {
-
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
             var dataChiTieu = (from chTietChiTieu in db.chiTietChiTieux
                             join chiTieu in db.chiTieux
                                 on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD
@@ -79,7 +82,8 @@ namespace WebApplication1.Controllers
                                    nguoiDung = nguoiDung,
                                    donVi = donVi,
                                }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
-                            .ThenBy(o => o.chiTieu.iD);
+                            .ThenBy(o => o.chiTieu.iD).ThenBy(g=>g.giaoChiTieuchoDV.fk_dmDonVi);
+            
 
             ViewBag.dataChiTieu = dataChiTieu.ToList();
             ViewBag.dataDiem = dataDiem.ToList();

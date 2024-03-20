@@ -77,7 +77,7 @@
         {
             <td>
                 <input type="hidden" name="iD_chiTieu" value="@item.chiTieu.iD" class="form-control" />
-                @item.giaoChiTieuchoDV.id @item.chiTieu.ten
+                @item.chiTieu.ten
             </td>
             i = item.chiTieu.iD;
         }
@@ -95,7 +95,7 @@
             if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
             {
                 //kiểm tra điểm người dùng có fk_donvi==1 có chưa
-                if ((int)Session["dm_DonVi"] == 1)
+                if ((int)Session["donvi"] == 1)
                 {
                     if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
                     {
@@ -111,7 +111,7 @@
                     }
                 }
 
-                if ((int)Session["dm_DonVi"] == 2)
+                if ((int)Session["donvi"] == 2)
                 {
                     if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
                     {
@@ -139,7 +139,7 @@
                     }
                 }
 
-                if ((int)Session["dm_DonVi"] == 3)
+                if ((int)Session["donvi"] == 3)
                 {
                     if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
                     {

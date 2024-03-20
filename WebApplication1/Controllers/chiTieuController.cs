@@ -17,6 +17,10 @@ namespace WebApplication1.Controllers
         // GET: chiTieu
         public ActionResult Index()
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
             var chiTieux = db.chiTieux.Include(c => c.nhomChiTieu);
             return View(chiTieux.ToList());
         }

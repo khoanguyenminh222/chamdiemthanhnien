@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApplication1.Models.bangDiem>
 
 @{
-    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -53,8 +53,9 @@
                 var j = 0;
                 var x = 0;
                 var y = 0;
-                var (diem1, diem2, diem3) = (0, 0, 0);
-                var (biendem1, biendem2) = (0, 0);
+                var y1 = 0;
+                var (diem1, diem2, diem3, diem4) = (0, 0, 0, 0);
+                var (biendem1, biendem2, biendem3) = (0, 0, 0);
             }
             @foreach (var item in @ViewBag.dataChiTieu)
             {
@@ -95,6 +96,7 @@
 
                     @foreach (var dataDiem in @ViewBag.dataDiem)
                     {
+
                         if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
                         {
                             if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1)
@@ -105,7 +107,7 @@
                                 y = dataDiem.bangDiem.fk_giaoChiTieu;
                                 diem1 = dataDiem.bangDiem.id;
                             }
-                            if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2)
+                            else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2)
                             {
                                 <td>
                                     @dataDiem.bangDiem.diem
@@ -113,7 +115,7 @@
                                 y = dataDiem.bangDiem.fk_giaoChiTieu;
                                 diem2 = dataDiem.bangDiem.id;
                             }
-                            if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3)
+                            else if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3)
                             {
                                 <td>
                                     @dataDiem.bangDiem.diem
@@ -122,24 +124,45 @@
                                 diem3 = dataDiem.bangDiem.id;
                             }
                         }
+
+
+
                     }
+
                     @if (item.chiTieu.iD != biendem1)
                     {
-                        <td style="width: 200px"><div style="width: 200px; overflow-x: auto; ">@item.bangDiem.ycDanhGiaKQ</div></td>
+                        <td class="tdTable"><div style="width: 200px; overflow-x:auto">@item.bangDiem.ycDanhGiaKQ</div></td>
                         biendem1 = item.chiTieu.iD;
                     }
                     @if (item.chiTieu.iD != biendem2)
                     {
-                        <td style="width: 200px"><div style="width: 200px; overflow-x: auto; ">@item.bangDiem.ycMinhChung</div></td>
+                        <td><div style="width: 200px; overflow-x:auto">@item.bangDiem.ycMinhChung</div></td>
                         biendem2 = item.chiTieu.iD;
                     }
-                    <td></td>
-                    <td></td>
+                    @if (item.chiTieu.iD != biendem3)
+                    {
+                        <td>@item.bangDiem.thoiGian</td>
+                        biendem3 = item.chiTieu.iD;
+                    }
+
                     <td></td>
                 </tr>
             }
         </table>
     </div>
-        
+
 </body>
 </html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    $("table").each(function () {
+        console.log($(this))
+        var td = $("td:nth-child(6)").text()
+        //$("td").insertBefore($("td:nth-child(6)"));
+        
+        console.log($("td:eq(7)"))
+        
+    });
+    
+</script>
