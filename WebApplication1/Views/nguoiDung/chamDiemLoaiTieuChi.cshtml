@@ -56,7 +56,7 @@
 
             @foreach (var item in @ViewBag.dataChiTieu)
             {
-                using (Html.BeginForm("chamDiem", "nguoiDung", FormMethod.Post))
+                using (Html.BeginForm("chamDiem", "nguoiDung", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
                     <input type="hidden" name="id" value="@item.bangDiem.id" class="form-control" />
@@ -76,138 +76,156 @@
                             </tr>
                             x = item.nhomChiTieu.iD;
                         }
-        <tr class="trTable">
-            @if (item.chiTieu.iD != i)
-            {
-                <td>
-                    <input type="hidden" name="iD_chiTieu" value="@item.chiTieu.iD" class="form-control" />
-                    <div style="width: 400px; overflow-x:auto">@item.chiTieu.ten</div>
-                </td>
-                i = item.chiTieu.iD;
-            }
-            else
-            {
-                <td>
-                </td>
-            }
-            <td>@item.chiTietChiTieu.noiDung</td>
-            <td>@item.chiTietChiTieu.diem</td>
+                        <tr class="trTable">
+                            @if (item.chiTieu.iD != i)
+                            {
+                                <td>
+                                    <input type="hidden" name="iD_chiTieu" value="@item.chiTieu.iD" class="form-control" />
+                                    <div style="width: 400px; overflow-x:auto">@item.chiTieu.ten</div>
+                                </td>
+                                i = item.chiTieu.iD;
+                            }
+                            else
+                            {
+                                <td>
+                                </td>
+                            }
+                            <td>@item.chiTietChiTieu.noiDung</td>
+                            <td>@item.chiTietChiTieu.diem</td>
 
-            @foreach (var dataDiem in @ViewBag.dataDiem)
-            {
-                //kiểm tra bảng chỉ tiêu trùng, để in ra không bị trùng chỉ tiêu
-                if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
-                {
-                    //kiểm tra điểm người dùng có fk_donvi==1 có chưa
-                    if ((int)Session["donvi"] == 1)
-                    {
-                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem1 = dataDiem.bangDiem.id;
-                        }
-                        else if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
-                        {
-                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem1 = dataDiem.bangDiem.id;
-                        }
-                    }
+                            @foreach (var dataDiem in @ViewBag.dataDiem)
+                            {
+                                //kiểm tra bảng chỉ tiêu trùng, để in ra không bị trùng chỉ tiêu
+                                if (dataDiem.giaoChiTieuchoDV.fk_chiTieu == item.giaoChiTieuchoDV.fk_chiTieu && dataDiem.bangDiem.fk_giaoChiTieu != y)
+                                {
+                                    //kiểm tra điểm người dùng có fk_donvi==1 có chưa
+                                    if ((int)Session["donvi"] == 1)
+                                    {
+                                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem1 = dataDiem.bangDiem.id;
+                                        }
+                                        else if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
+                                        {
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem1 = dataDiem.bangDiem.id;
+                                        }
+                                    }
 
-                    if ((int)Session["donvi"] == 2)
-                    {
-                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td>
-                                @dataDiem.bangDiem.diem
-                            </td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem1 = dataDiem.bangDiem.id;
-                        }
-                        //kiểm tra điểm người dùng có fk_donvi==2 có chưa
-                        if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td>
-                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
-                            </td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem2 = dataDiem.bangDiem.id;
-                        }
-                        else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && item.bangDiem.diem == null)
-                        {
-                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem2 = dataDiem.bangDiem.id;
+                                    if ((int)Session["donvi"] == 2)
+                                    {
+                                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td>
+                                                @dataDiem.bangDiem.diem
+                                            </td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem1 = dataDiem.bangDiem.id;
+                                        }
+                                        //kiểm tra điểm người dùng có fk_donvi==2 có chưa
+                                        if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td>
+                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
+                                            </td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem2 = dataDiem.bangDiem.id;
+                                        }
+                                        else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && item.bangDiem.diem == null)
+                                        {
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem2 = dataDiem.bangDiem.id;
 
-                        }
-                    }
+                                        }
+                                    }
 
-                    if ((int)Session["donvi"] == 3)
-                    {
-                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td>
-                                @dataDiem.bangDiem.diem
-                            </td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem1 = dataDiem.bangDiem.id;
-                        }
-                        //kiểm tra điểm người dùng có fk_donvi==2 có chưa
-                        if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td>
-                                @dataDiem.bangDiem.diem
-                            </td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem2 = dataDiem.bangDiem.id;
-                        }
-                        //kiểm tra điểm người dùng có fk_donvi==3 có chưa
-                        if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && dataDiem.bangDiem.diem != null)
-                        {
-                            <td>
-                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
-                            </td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem3 = dataDiem.bangDiem.id;
-                        }
-                        else if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && item.bangDiem.diem == null)
-                        {
-                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
-                            y = dataDiem.bangDiem.fk_giaoChiTieu;
-                            diem3 = dataDiem.bangDiem.id;
-                        }
-                    }
-                }
-            }
+                                    if ((int)Session["donvi"] == 3)
+                                    {
+                                        if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td>
+                                                @dataDiem.bangDiem.diem
+                                            </td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem1 = dataDiem.bangDiem.id;
+                                        }
+                                        //kiểm tra điểm người dùng có fk_donvi==2 có chưa
+                                        if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td>
+                                                @dataDiem.bangDiem.diem
+                                            </td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem2 = dataDiem.bangDiem.id;
+                                        }
+                                        //kiểm tra điểm người dùng có fk_donvi==3 có chưa
+                                        if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && dataDiem.bangDiem.diem != null)
+                                        {
+                                            <td>
+                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
+                                            </td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem3 = dataDiem.bangDiem.id;
+                                        }
+                                        else if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && item.bangDiem.diem == null)
+                                        {
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            y = dataDiem.bangDiem.fk_giaoChiTieu;
+                                            diem3 = dataDiem.bangDiem.id;
+                                        }
+                                    }
+                                }
+                            }
 
-            @if (item.bangDiem.id != biendem2)
-            {
-                <td class="tdDanhGia"><div class="divDanhGia" style="width: 400px; overflow-x:auto">@item.chiTieu.ycDanhGiaKQ</div></td>
-                biendem2 = item.bangDiem.id;
-            }
-            @if (item.bangDiem.id != biendem3)
-            {
-                <td><textarea style="width: 500px; height:200px; overflow-x:auto" class="form-control" name="ycMinhChung">@item.bangDiem.ycMinhChung</textarea></td>
-                biendem3 = item.bangDiem.id;
-            }
-            @if (item.bangDiem.id != biendem5)
-            {
-                <td><textarea style="width: 200px; height:100px; overflow-x:auto" class="form-control" name="banPhuTrach">@item.bangDiem.banPhuTrach</textarea></td>
-                biendem5 = item.bangDiem.id;
-            }
-            @if (item.chiTieu.iD != biendem4 && item.bangDiem.diem == null)
-            {
-                <td><button class="form-control bg-success text-light" type="submit" name="submit" value="submit">Chấm điểm</button></td>
-                biendem4 = item.chiTieu.iD;
-            }
-            else if (item.chiTieu.iD != biendem4 && item.bangDiem.diem != null)
-            {
-                <td><button class="form-control bg-success text-light" type="submit" name="submit" value="edit">Sửa</button></td>
-                biendem4 = item.chiTieu.iD;
-            }
+                            @if (item.bangDiem.id != biendem2)
+                            {
+                                <td class="tdDanhGia"><div class="divDanhGia" style="width: 400px; overflow-x:auto">@item.chiTieu.ycDanhGiaKQ</div></td>
+                                biendem2 = item.bangDiem.id;
+                            }
+                            @if (item.bangDiem.id != biendem3)
+                            {
+                                <td style="text-align:center">
+                                    <textarea style="width: 500px; height:200px; overflow-x:auto" class="form-control" name="ycMinhChung">@item.bangDiem.ycMinhChung</textarea>
+                                    @if (item.bangDiem.hinhAnh != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(item.bangDiem.hinhAnh);
+                                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                                        <img id="@item.bangDiem.id" width="100" height="100" style="object-fit:cover; text-align:center" src="@imgsrc" onclick="imgClick(@item.bangDiem.id)" />
+                                        <input accept="image/*" type="file" id="@item.bangDiem.id" name="hinhAnh" style="text-align:center"
+                                               onchange="document.getElementById(@item.bangDiem.id).src = window.URL.createObjectURL(this.files[0])">
+                                    }
+                                    else
+                                    {
+                                        <img id="@item.bangDiem.id" width="100" height="100" style="object-fit:cover; text-align:center" onclick="imgClick(@item.bangDiem.id)" />
+                                        <input accept="image/*" type="file" id="@item.bangDiem.id" name="hinhAnh" style="text-align:center"
+                                               onchange="document.getElementById(@item.bangDiem.id).src = window.URL.createObjectURL(this.files[0])">
+                                    }
+                                </td>
+                                biendem3 = item.bangDiem.id;
+                            }
+                            @if (item.bangDiem.id != biendem5)
+                            {
+                                <td>
+                                    <textarea style="width: 200px; height:100px; overflow-x:auto" class="form-control" name="banPhuTrach">@item.bangDiem.banPhuTrach</textarea>
+                                </td>
+                                biendem5 = item.bangDiem.id;
+                            }
+                            @if (item.chiTieu.iD != biendem4 && item.bangDiem.diem == null)
+                            {
+                                <td><button class="form-control bg-success text-light" type="submit" name="submit" value="submit">Chấm điểm</button></td>
+                                biendem4 = item.chiTieu.iD;
+                            }
+                            else if (item.chiTieu.iD != biendem4 && item.bangDiem.diem != null)
+                            {
+                                <td><button class="form-control bg-success text-light" type="submit" name="submit" value="edit">Sửa</button></td>
+                                biendem4 = item.chiTieu.iD;
+                            }
 
-        </tr>
+                        </tr>
                     }
                 }
 
@@ -215,7 +233,19 @@
             }
         </table>
     </div>
-
+    @*Create model image*@
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Hình ảnh</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" id="imagepreview" style="width: 100%; height: 400px; object-fit:cover">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -232,4 +262,8 @@
         var urlText = urlify(e.innerHTML);
         e.innerHTML = urlText
     });
+    function imgClick(hinhanh) {
+        $('#imagepreview').attr('src', $(`#${hinhanh}`).attr('src'));
+        $('#imagemodal').modal('show');
+    }
 </script>

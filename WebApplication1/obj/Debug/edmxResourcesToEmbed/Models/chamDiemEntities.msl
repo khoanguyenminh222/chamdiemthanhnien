@@ -102,6 +102,7 @@
     <EntitySetMapping Name="bangDiems">
       <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
         <MappingFragment StoreEntitySet="bangDiem">
+          <ScalarProperty Name="hinhAnh" ColumnName="hinhAnh" />
           <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
           <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
           <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />

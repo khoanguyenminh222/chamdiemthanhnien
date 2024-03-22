@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -252,7 +253,7 @@ namespace WebApplication1.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
-                                      int iD_chiTieu, string submit)
+                                      int iD_chiTieu, string submit, HttpPostedFileBase hinhAnh)
         {
             var id = Session["idLoaiTieuChi"];
             switch (submit)
@@ -262,6 +263,11 @@ namespace WebApplication1.Controllers
                     bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
                     bdExisted.diem = bangDiem.diem;
                     bdExisted.ycMinhChung = bangDiem.ycMinhChung;
+                    if (hinhAnh != null)
+                    {
+                        bdExisted.hinhAnh = new byte[hinhAnh.ContentLength];
+                        hinhAnh.InputStream.Read(bdExisted.hinhAnh, 0, hinhAnh.ContentLength);
+                    }
                     DateTime date = DateTime.Today;
                     bdExisted.thoiGian = date;
                     bdExisted.banPhuTrach = bangDiem.banPhuTrach;
@@ -276,6 +282,11 @@ namespace WebApplication1.Controllers
                         bangDiem bd = db.bangDiems.Find(bangDiem.id);
                         bd.diem = bangDiem.diem;
                         bd.ycMinhChung = bangDiem.ycMinhChung;
+                        if (hinhAnh != null)
+                        {
+                            bd.hinhAnh = new byte[hinhAnh.ContentLength];
+                            hinhAnh.InputStream.Read(bd.hinhAnh, 0, hinhAnh.ContentLength);
+                        }
                         bd.thoiGian = date;
                         bd.banPhuTrach = bangDiem.banPhuTrach;
                         db.SaveChanges();
@@ -293,6 +304,11 @@ namespace WebApplication1.Controllers
                         bangDiem bangDiem1 = new bangDiem();
                         bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
                         bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
+                        if (hinhAnh != null)
+                        {
+                            bangDiem1.hinhAnh = new byte[hinhAnh.ContentLength];
+                            hinhAnh.InputStream.Read(bangDiem1.hinhAnh, 0, hinhAnh.ContentLength);
+                        }
                         bangDiem1.thoiGian = date;
                         db.bangDiems.Add(bangDiem1);
                         db.SaveChanges();
@@ -303,6 +319,11 @@ namespace WebApplication1.Controllers
                     bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
                     bdExisted1.diem = bangDiem.diem;
                     bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
+                    if (hinhAnh != null)
+                    {
+                        bdExisted1.hinhAnh = new byte[hinhAnh.ContentLength];
+                        hinhAnh.InputStream.Read(bdExisted1.hinhAnh, 0, hinhAnh.ContentLength);
+                    }
                     DateTime date1 = DateTime.Today;
                     bdExisted1.thoiGian = date1;
                     bdExisted1.banPhuTrach = bangDiem.banPhuTrach;
@@ -317,6 +338,11 @@ namespace WebApplication1.Controllers
                             if (bd.fk_giaoChiTieu == giao.id)
                             {
                                 bd.ycMinhChung = bangDiem.ycMinhChung;
+                                if (hinhAnh != null)
+                                {
+                                    bd.hinhAnh = new byte[hinhAnh.ContentLength];
+                                    hinhAnh.InputStream.Read(bd.hinhAnh, 0, hinhAnh.ContentLength);
+                                }
                                 bd.thoiGian = date1;
                                 bd.banPhuTrach = bangDiem.banPhuTrach;
                                 db.Entry(bd).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;

@@ -20,6 +20,7 @@ namespace WebApplication1.Models
         public string ycMinhChung { get; set; }
         public Nullable<System.DateTime> thoiGian { get; set; }
         public string banPhuTrach { get; set; }
+        public byte[] hinhAnh { get; set; }
     
         public virtual giaoChiTieuchoDV giaoChiTieuchoDV { get; set; }
     }

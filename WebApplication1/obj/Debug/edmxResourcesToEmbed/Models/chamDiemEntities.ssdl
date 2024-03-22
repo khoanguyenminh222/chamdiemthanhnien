@@ -10,6 +10,7 @@
     <Property Name="ycMinhChung" Type="nvarchar" MaxLength="1000" />
     <Property Name="thoiGian" Type="date" />
     <Property Name="banPhuTrach" Type="nvarchar" MaxLength="50" />
+    <Property Name="hinhAnh" Type="image" />
   </EntityType>
   <EntityType Name="chiTietChiTieu">
     <Key>

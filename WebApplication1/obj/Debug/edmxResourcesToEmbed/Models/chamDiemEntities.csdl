@@ -297,6 +297,7 @@
     <Property Name="thoiGian" Type="DateTime" Precision="0" />
     <Property Name="banPhuTrach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="giaoChiTieuchoDV" Relationship="chamdiemModel.FK__bangDiem__fk_gia__4D94879B" FromRole="bangDiem" ToRole="giaoChiTieuchoDV" />
+    <Property Name="hinhAnh" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <Association Name="FK__bangDiem__fk_gia__4D94879B">
     <End Type="chamdiemModel.giaoChiTieuchoDV" Role="giaoChiTieuchoDV" Multiplicity="0..1" />
