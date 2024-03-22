@@ -7,15 +7,12 @@
       "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\bangdiem\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\controllers\\bangdiemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\bangdiemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DESKTOP_U3VQCBH/chamdiem/True/SqlTable/dbo.bangDiem.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\views\\nguoidung\\chamdiemloaitieuchi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\nguoidung\\chamdiemloaitieuchi.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|ViewDataWindow_MSSQL__/DESKTOP_U3VQCBH/chamdiem/True/SqlTable/dbo.giaoChiTieuchoDV.sql||{0058A1F7-65F3-4DB9-B3D0-CA7E64DD73CD}"
@@ -33,21 +30,24 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "dbo.bangDiem [Data]",
-              "DocumentMoniker": "ViewDataWindow_MSSQL__/DESKTOP_U3VQCBH/chamdiem/True/SqlTable/dbo.bangDiem.sql",
-              "ToolTip": "dbo.bangDiem [Data]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-03-20T14:48:45.129Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "dbo.giaoChiTieuchoDV [Data]",
               "DocumentMoniker": "ViewDataWindow_MSSQL__/DESKTOP_U3VQCBH/chamdiem/True/SqlTable/dbo.giaoChiTieuchoDV.sql",
               "ToolTip": "dbo.giaoChiTieuchoDV [Data]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-03-20T14:48:28.703Z",
+              "WhenOpened": "2024-03-21T04:18:35.954Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "chamDiemLoaiTieuChi.cshtml",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\chamDiemLoaiTieuChi.cshtml",
+              "RelativeDocumentMoniker": "WebApplication1\\Views\\nguoiDung\\chamDiemLoaiTieuChi.cshtml",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\chamDiemLoaiTieuChi.cshtml",
+              "RelativeToolTip": "WebApplication1\\Views\\nguoiDung\\chamDiemLoaiTieuChi.cshtml",
+              "ViewState": "AQIAALAAAAAAAAAAAAAAAMQAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-03-21T02:37:31.644Z",
               "EditorCaption": ""
             },
             {
@@ -58,7 +58,7 @@
               "RelativeDocumentMoniker": "WebApplication1\\Views\\bangDiem\\Index.cshtml",
               "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\bangDiem\\Index.cshtml",
               "RelativeToolTip": "WebApplication1\\Views\\bangDiem\\Index.cshtml",
-              "ViewState": "AQIAAIcAAAAAAAAAAAAAAKMAAAAeAAAA",
+              "ViewState": "AQIAABwAAAAAAAAAAAAAAC4AAAAtAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-03-20T14:28:41.652Z",
               "EditorCaption": ""
@@ -71,22 +71,9 @@
               "RelativeDocumentMoniker": "WebApplication1\\Controllers\\nguoiDungController.cs",
               "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\nguoiDungController.cs",
               "RelativeToolTip": "WebApplication1\\Controllers\\nguoiDungController.cs",
-              "ViewState": "AQIAAOUAAAAAAAAAAAAYwOsAAAAiAAAA",
+              "ViewState": "AQIAAC0BAAAAAAAAAAAAwEABAABGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-20T14:18:52.802Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "bangDiemController.cs",
-              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\bangDiemController.cs",
-              "RelativeDocumentMoniker": "WebApplication1\\Controllers\\bangDiemController.cs",
-              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\bangDiemController.cs",
-              "RelativeToolTip": "WebApplication1\\Controllers\\bangDiemController.cs",
-              "ViewState": "AQIAAEUAAAAAAAAAAAAAAFUAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-20T14:02:24.082Z",
               "EditorCaption": ""
             }
           ]

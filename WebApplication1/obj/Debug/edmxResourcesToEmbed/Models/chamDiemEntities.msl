@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="chamdiemModelStoreContainer" CdmEntityContainer="chamdiemEntities">
-    <EntitySetMapping Name="bangDiems">
-      <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
-        <MappingFragment StoreEntitySet="bangDiem">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
-          <ScalarProperty Name="diem" ColumnName="diem" />
-          <ScalarProperty Name="ycDanhGiaKQ" ColumnName="ycDanhGiaKQ" />
-          <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
-          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
-          <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="chiTietChiTieux">
       <EntityTypeMapping TypeName="chamdiemModel.chiTietChiTieu">
         <MappingFragment StoreEntitySet="chiTietChiTieu">
@@ -27,6 +14,7 @@
     <EntitySetMapping Name="chiTieux">
       <EntityTypeMapping TypeName="chamdiemModel.chiTieu">
         <MappingFragment StoreEntitySet="chiTieu">
+          <ScalarProperty Name="ycDanhGiaKQ" ColumnName="ycDanhGiaKQ" />
           <ScalarProperty Name="iD" ColumnName="iD" />
           <ScalarProperty Name="ten" ColumnName="ten" />
           <ScalarProperty Name="fk_loaiChiTieu" ColumnName="fk_loaiChiTieu" />
@@ -108,6 +96,18 @@
           <ScalarProperty Name="donViCon" ColumnName="donViCon" />
           <ScalarProperty Name="donViCha" ColumnName="donViCha" />
           <ScalarProperty Name="iD" ColumnName="iD" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="bangDiems">
+      <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
+        <MappingFragment StoreEntitySet="bangDiem">
+          <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
+          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+          <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
+          <ScalarProperty Name="diem" ColumnName="diem" />
+          <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

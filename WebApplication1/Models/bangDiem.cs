@@ -17,7 +17,6 @@ namespace WebApplication1.Models
         public int id { get; set; }
         public Nullable<int> fk_giaoChiTieu { get; set; }
         public Nullable<int> diem { get; set; }
-        public string ycDanhGiaKQ { get; set; }
         public string ycMinhChung { get; set; }
         public Nullable<System.DateTime> thoiGian { get; set; }
         public string banPhuTrach { get; set; }

@@ -7,7 +7,6 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="fk_giaoChiTieu" Type="int" />
     <Property Name="diem" Type="int" />
-    <Property Name="ycDanhGiaKQ" Type="nvarchar" MaxLength="1000" />
     <Property Name="ycMinhChung" Type="nvarchar" MaxLength="1000" />
     <Property Name="thoiGian" Type="date" />
     <Property Name="banPhuTrach" Type="nvarchar" MaxLength="50" />
@@ -28,6 +27,7 @@
     <Property Name="iD" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ten" Type="nvarchar" MaxLength="4000" Nullable="false" />
     <Property Name="fk_loaiChiTieu" Type="int" />
+    <Property Name="ycDanhGiaKQ" Type="nvarchar" MaxLength="1000" />
   </EntityType>
   <EntityType Name="dm_donVi">
     <Key>

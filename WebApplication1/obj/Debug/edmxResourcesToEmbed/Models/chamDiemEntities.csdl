@@ -1,18 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="chamdiemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="bangDiem">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="fk_giaoChiTieu" Type="Int32" />
-    <Property Name="diem" Type="Int32" />
-    <Property Name="ycDanhGiaKQ" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="ycMinhChung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-    <Property Name="thoiGian" Type="DateTime" Precision="0" />
-    <Property Name="banPhuTrach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="giaoChiTieuchoDV" Relationship="Self.FK__bangDiem__fk_gia__4D94879B" FromRole="bangDiem" ToRole="giaoChiTieuchoDV" />
-  </EntityType>
   <EntityType Name="chiTietChiTieu">
     <Key>
       <PropertyRef Name="iD" />
@@ -33,6 +20,7 @@
     <NavigationProperty Name="chiTietChiTieux" Relationship="Self.FK__chiTietCh__fk_lo__3F466844" FromRole="chiTieu" ToRole="chiTietChiTieu" />
     <NavigationProperty Name="nhomChiTieu" Relationship="Self.FK__chiTieu__fk_loai__3C69FB99" FromRole="chiTieu" ToRole="nhomChiTieu" />
     <NavigationProperty Name="giaoChiTieuchoDVs" Relationship="Self.FK__giaoChiTi__fk_ch__49C3F6B7" FromRole="chiTieu" ToRole="giaoChiTieuchoDV" />
+    <Property Name="ycDanhGiaKQ" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="dm_donVi">
     <Key>
@@ -64,9 +52,9 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="fk_chiTieu" Type="Int32" />
     <Property Name="fk_dmDonVi" Type="Int32" />
-    <NavigationProperty Name="bangDiems" Relationship="Self.FK__bangDiem__fk_gia__4D94879B" FromRole="giaoChiTieuchoDV" ToRole="bangDiem" />
     <NavigationProperty Name="chiTieu" Relationship="Self.FK__giaoChiTi__fk_ch__49C3F6B7" FromRole="giaoChiTieuchoDV" ToRole="chiTieu" />
     <NavigationProperty Name="dm_donVi" Relationship="Self.FK__giaoChiTi__fk_dm__4AB81AF0" FromRole="giaoChiTieuchoDV" ToRole="dm_donVi" />
+    <NavigationProperty Name="bangDiems" Relationship="chamdiemModel.FK__bangDiem__fk_gia__4D94879B" FromRole="giaoChiTieuchoDV" ToRole="bangDiem" />
   </EntityType>
   <EntityType Name="loaiTieuChi">
     <Key>
@@ -111,18 +99,6 @@
     <Property Name="fk_dmDonVi" Type="Int32" />
     <NavigationProperty Name="dm_donVi" Relationship="Self.FK__taiKhoan__fk_dmD__5070F446" FromRole="taiKhoan" ToRole="dm_donVi" />
   </EntityType>
-  <Association Name="FK__bangDiem__fk_gia__4D94879B">
-    <End Role="giaoChiTieuchoDV" Type="Self.giaoChiTieuchoDV" Multiplicity="0..1" />
-    <End Role="bangDiem" Type="Self.bangDiem" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="giaoChiTieuchoDV">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="bangDiem">
-        <PropertyRef Name="fk_giaoChiTieu" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK__chiTietCh__fk_lo__3F466844">
     <End Role="chiTieu" Type="Self.chiTieu" Multiplicity="0..1" />
     <End Role="chiTietChiTieu" Type="Self.chiTietChiTieu" Multiplicity="*" />
@@ -220,7 +196,6 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="chamdiemEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="bangDiems" EntityType="Self.bangDiem" />
     <EntitySet Name="chiTietChiTieux" EntityType="Self.chiTietChiTieu" />
     <EntitySet Name="chiTieux" EntityType="Self.chiTieu" />
     <EntitySet Name="dm_donVi" EntityType="Self.dm_donVi" />
@@ -230,10 +205,6 @@
     <EntitySet Name="nguoiDungs" EntityType="Self.nguoiDung" />
     <EntitySet Name="nhomChiTieux" EntityType="Self.nhomChiTieu" />
     <EntitySet Name="taiKhoans" EntityType="Self.taiKhoan" />
-    <AssociationSet Name="FK__bangDiem__fk_gia__4D94879B" Association="Self.FK__bangDiem__fk_gia__4D94879B">
-      <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDVs" />
-      <End Role="bangDiem" EntitySet="bangDiems" />
-    </AssociationSet>
     <AssociationSet Name="FK__chiTietCh__fk_lo__3F466844" Association="Self.FK__chiTietCh__fk_lo__3F466844">
       <End Role="chiTieu" EntitySet="chiTieux" />
       <End Role="chiTietChiTieu" EntitySet="chiTietChiTieux" />
@@ -275,6 +246,11 @@
       <End Role="dm_donVi" EntitySet="dm_donVi" />
       <End Role="quanHeDonVi" EntitySet="quanHeDonVis" />
     </AssociationSet>
+    <EntitySet Name="bangDiems" EntityType="chamdiemModel.bangDiem" />
+    <AssociationSet Name="FK__bangDiem__fk_gia__4D94879B" Association="chamdiemModel.FK__bangDiem__fk_gia__4D94879B">
+      <End Role="giaoChiTieuchoDV" EntitySet="giaoChiTieuchoDVs" />
+      <End Role="bangDiem" EntitySet="bangDiems" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="quanHeDonVi">
     <Key>
@@ -307,6 +283,30 @@
       </Principal>
       <Dependent Role="quanHeDonVi">
         <PropertyRef Name="donViCon" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="bangDiem">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fk_giaoChiTieu" Type="Int32" />
+    <Property Name="diem" Type="Int32" />
+    <Property Name="ycMinhChung" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="thoiGian" Type="DateTime" Precision="0" />
+    <Property Name="banPhuTrach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="giaoChiTieuchoDV" Relationship="chamdiemModel.FK__bangDiem__fk_gia__4D94879B" FromRole="bangDiem" ToRole="giaoChiTieuchoDV" />
+  </EntityType>
+  <Association Name="FK__bangDiem__fk_gia__4D94879B">
+    <End Type="chamdiemModel.giaoChiTieuchoDV" Role="giaoChiTieuchoDV" Multiplicity="0..1" />
+    <End Type="chamdiemModel.bangDiem" Role="bangDiem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="giaoChiTieuchoDV">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="bangDiem">
+        <PropertyRef Name="fk_giaoChiTieu" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

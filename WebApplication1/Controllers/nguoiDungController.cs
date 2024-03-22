@@ -251,7 +251,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycDanhGiaKQ,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
+        public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
                                       int iD_chiTieu, string submit)
         {
             var id = Session["idLoaiTieuChi"];
@@ -261,10 +261,10 @@ namespace WebApplication1.Controllers
                     //update bảng điểm
                     bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
                     bdExisted.diem = bangDiem.diem;
-                    bdExisted.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
                     bdExisted.ycMinhChung = bangDiem.ycMinhChung;
                     DateTime date = DateTime.Today;
                     bdExisted.thoiGian = date;
+                    bdExisted.banPhuTrach = bangDiem.banPhuTrach;
                     db.SaveChanges();
 
                     //kiếm đơn vị cha
@@ -275,9 +275,9 @@ namespace WebApplication1.Controllers
                         // nếu như không có đơn vị cha thì cập nhật điẻm
                         bangDiem bd = db.bangDiems.Find(bangDiem.id);
                         bd.diem = bangDiem.diem;
-                        bd.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
                         bd.ycMinhChung = bangDiem.ycMinhChung;
                         bd.thoiGian = date;
+                        bd.banPhuTrach = bangDiem.banPhuTrach;
                         db.SaveChanges();
                     }
                     else
@@ -292,7 +292,6 @@ namespace WebApplication1.Controllers
                         //tạo bảng điểm
                         bangDiem bangDiem1 = new bangDiem();
                         bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
-                        bangDiem1.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
                         bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
                         bangDiem1.thoiGian = date;
                         db.bangDiems.Add(bangDiem1);
@@ -303,10 +302,10 @@ namespace WebApplication1.Controllers
                     //update bảng điểm của chi đoàn
                     bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
                     bdExisted1.diem = bangDiem.diem;
-                    bdExisted1.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
                     bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
                     DateTime date1 = DateTime.Today;
                     bdExisted1.thoiGian = date1;
+                    bdExisted1.banPhuTrach = bangDiem.banPhuTrach;
                     db.SaveChanges();
 
                     //update bảng điểm của các đon vị cha
@@ -317,9 +316,9 @@ namespace WebApplication1.Controllers
                         {
                             if (bd.fk_giaoChiTieu == giao.id)
                             {
-                                bd.ycDanhGiaKQ = bangDiem.ycDanhGiaKQ;
                                 bd.ycMinhChung = bangDiem.ycMinhChung;
                                 bd.thoiGian = date1;
+                                bd.banPhuTrach = bangDiem.banPhuTrach;
                                 db.Entry(bd).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
                             }
                         }
