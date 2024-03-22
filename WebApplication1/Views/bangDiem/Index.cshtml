@@ -27,13 +27,13 @@
                     </th>
                     <th style="white-space: nowrap; ">
                         <div style="width: 60px; overflow-x: auto">Chi đoàn tự chấm điểm</div>
-</th>
+                    </th>
                     <th style="white-space: nowrap; ">
                         <div style="width: 60px; overflow-x: auto">Cụm trưởng/Huyện/TP chấm điểm</div>
-</th>
+                    </th>
                     <th style="white-space: nowrap; ">
                         <div style="width: 60px; overflow-x: auto">Tỉnh đoàn chấm điểm</div>
-</th>
+                    </th>
                     <th>
                         Yêu cầu trong đánh giá kết quả thực hiện
                     </th>
@@ -41,7 +41,7 @@
                         Yêu cầu minh chứng
                     </th>
                     <th>
-                        Thời gian minh chứng
+                        <div style="width:90px">Thời gian minh chứng</div>
                     </th>
                     <th>
                         <div style="width: 100px; overflow-x: auto">Ban phụ trách</div>
@@ -136,13 +136,32 @@
             }
             @if (item.chiTieu.iD != biendem2)
             {
-                <td class="tdMinhChung"><div style="width: 200px; overflow-x:auto">@item.bangDiem.ycMinhChung</div></td>
+                <td class="tdMinhChung">
+                    <div style="width: 200px; overflow-x:auto">@item.bangDiem.ycMinhChung</div>
+                    @if (item.bangDiem.hinhAnh != null)
+                    {
+                        var base64 = Convert.ToBase64String(item.bangDiem.hinhAnh);
+                        var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                        <img id="@item.bangDiem.id" width="100" height="100" style="object-fit:cover; text-align:center" src="@imgsrc" onclick="imgClick(@item.bangDiem.id)" />
+
+                    }
+                </td>
                 biendem2 = item.chiTieu.iD;
             }
+
             @if (item.chiTieu.iD != biendem3)
             {
-                <td>@item.bangDiem.thoiGian</td>
-                biendem3 = item.chiTieu.iD;
+                if (item.bangDiem.thoiGian != null)
+                {
+                    <td>@item.bangDiem.thoiGian.ToString("dd-MM-yyyy")</td>
+                    biendem3 = item.chiTieu.iD;
+                }
+                else
+                {
+                    <td>@item.bangDiem.thoiGian</td>
+                    biendem3 = item.chiTieu.iD;
+                }
+
             }
             @if (item.chiTieu.iD != biendem4)
             {
@@ -154,7 +173,19 @@
             }
         </table>
     </div>
-
+    @*Create model image*@
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Hình ảnh</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="" id="imagepreview" style="width: 100%; height: 400px; object-fit:cover">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
@@ -189,4 +220,9 @@
         var urlText = urlify(e.innerHTML);
         e.innerHTML = urlText
     });
+    function imgClick(hinhanh) {
+        $('#imagepreview').attr('src', $(`#${hinhanh}`).attr('src'));
+        $('#imagemodal').modal('show');
+    }
+    
 </script>

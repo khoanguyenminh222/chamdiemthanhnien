@@ -265,8 +265,10 @@ namespace WebApplication1.Controllers
                     bdExisted.ycMinhChung = bangDiem.ycMinhChung;
                     if (hinhAnh != null)
                     {
-                        bdExisted.hinhAnh = new byte[hinhAnh.ContentLength];
-                        hinhAnh.InputStream.Read(bdExisted.hinhAnh, 0, hinhAnh.ContentLength);
+                        bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
+                        hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
+                        Console.WriteLine(bangDiem.hinhAnh);
+                        bdExisted.hinhAnh = bangDiem.hinhAnh;
                     }
                     DateTime date = DateTime.Today;
                     bdExisted.thoiGian = date;
@@ -284,8 +286,9 @@ namespace WebApplication1.Controllers
                         bd.ycMinhChung = bangDiem.ycMinhChung;
                         if (hinhAnh != null)
                         {
-                            bd.hinhAnh = new byte[hinhAnh.ContentLength];
-                            hinhAnh.InputStream.Read(bd.hinhAnh, 0, hinhAnh.ContentLength);
+                            
+                            Console.WriteLine(bangDiem.hinhAnh);
+                            bd.hinhAnh = bangDiem.hinhAnh;
                         }
                         bd.thoiGian = date;
                         bd.banPhuTrach = bangDiem.banPhuTrach;
@@ -306,8 +309,9 @@ namespace WebApplication1.Controllers
                         bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
                         if (hinhAnh != null)
                         {
-                            bangDiem1.hinhAnh = new byte[hinhAnh.ContentLength];
-                            hinhAnh.InputStream.Read(bangDiem1.hinhAnh, 0, hinhAnh.ContentLength);
+                            
+                            Console.WriteLine(bangDiem.hinhAnh);
+                            bangDiem1.hinhAnh = bangDiem.hinhAnh;
                         }
                         bangDiem1.thoiGian = date;
                         db.bangDiems.Add(bangDiem1);
@@ -321,8 +325,10 @@ namespace WebApplication1.Controllers
                     bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
                     if (hinhAnh != null)
                     {
-                        bdExisted1.hinhAnh = new byte[hinhAnh.ContentLength];
-                        hinhAnh.InputStream.Read(bdExisted1.hinhAnh, 0, hinhAnh.ContentLength);
+                        bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
+                        hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
+                        Console.WriteLine(bangDiem.hinhAnh);
+                        bdExisted1.hinhAnh = bangDiem.hinhAnh;
                     }
                     DateTime date1 = DateTime.Today;
                     bdExisted1.thoiGian = date1;
@@ -340,8 +346,9 @@ namespace WebApplication1.Controllers
                                 bd.ycMinhChung = bangDiem.ycMinhChung;
                                 if (hinhAnh != null)
                                 {
-                                    bd.hinhAnh = new byte[hinhAnh.ContentLength];
-                                    hinhAnh.InputStream.Read(bd.hinhAnh, 0, hinhAnh.ContentLength);
+                                    
+                                    Console.WriteLine(bangDiem.hinhAnh);
+                                    bd.hinhAnh = bangDiem.hinhAnh;
                                 }
                                 bd.thoiGian = date1;
                                 bd.banPhuTrach = bangDiem.banPhuTrach;

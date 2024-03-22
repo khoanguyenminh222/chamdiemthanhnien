@@ -103,13 +103,13 @@
                                     {
                                         if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && dataDiem.bangDiem.diem != null)
                                         {
-                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/></td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem1 = dataDiem.bangDiem.id;
                                         }
                                         else if (dataDiem.nguoiDung.fk_donVi == 1 && dataDiem.bangDiem.id != diem1 && item.bangDiem.diem == null)
                                         {
-                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/></td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem1 = dataDiem.bangDiem.id;
                                         }
@@ -129,14 +129,14 @@
                                         if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && dataDiem.bangDiem.diem != null)
                                         {
                                             <td>
-                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
+                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/>
                                             </td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem2 = dataDiem.bangDiem.id;
                                         }
                                         else if (dataDiem.nguoiDung.fk_donVi == 2 && dataDiem.bangDiem.id != diem2 && item.bangDiem.diem == null)
                                         {
-                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/></td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem2 = dataDiem.bangDiem.id;
 
@@ -166,14 +166,14 @@
                                         if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && dataDiem.bangDiem.diem != null)
                                         {
                                             <td>
-                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" />
+                                                <input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/>
                                             </td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem3 = dataDiem.bangDiem.id;
                                         }
                                         else if (dataDiem.nguoiDung.fk_donVi == 3 && dataDiem.bangDiem.id != diem3 && item.bangDiem.diem == null)
                                         {
-                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" /></td>
+                                            <td><input type="number" class="form-control" name="diem" value="@item.bangDiem.diem" required/></td>
                                             y = dataDiem.bangDiem.fk_giaoChiTieu;
                                             diem3 = dataDiem.bangDiem.id;
                                         }
