@@ -133,6 +133,23 @@ namespace WebApplication1.Controllers
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
+            var dmDonvi = Session["dm_DonVi"];
+            var getThanhDoan = db.quanHeDonVis.Where(q => q.donViCha == (int)dmDonvi).FirstOrDefault();
+            var getChiDoan = getThanhDoan;
+            if (getThanhDoan == null)
+            {
+                getChiDoan = db.quanHeDonVis.Where(q => q.donViCon == (int)dmDonvi).FirstOrDefault();
+            }
+            else
+            {
+                getChiDoan = db.quanHeDonVis.Where(q => q.donViCha == getThanhDoan.donViCon).FirstOrDefault();
+                if (getChiDoan == null)
+                {
+                    getChiDoan = getThanhDoan;
+                }
+            }
+            
+
             Session["idLoaiTieuChi"] = id;
             var dataChiTieu = (from bangdiem in db.bangDiems
                             join giaoChiTieuchoDV in db.giaoChiTieuchoDVs
@@ -162,7 +179,9 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).Where(l=>l.loaiTieuChi.iD == id).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            }).Where(l=>l.loaiTieuChi.iD == id)
+                            .Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi ==(int)dmDonvi || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCha)
+                            .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD);
 
 
@@ -194,7 +213,10 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).Where(l => l.loaiTieuChi.iD == id).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            }).Where(l => l.loaiTieuChi.iD == id)
+                            .Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCha)
+                            
+                            .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD).ThenBy(b=>b.bangDiem.fk_giaoChiTieu);
             ViewBag.dataChiTieu = dataChiTieu.ToList();
             ViewBag.dataDiem = dataDiem.ToList();
@@ -235,7 +257,8 @@ namespace WebApplication1.Controllers
                     Session["dm_DonVi"] = data.FirstOrDefault().taiKhoan.fk_dmDonVi;
                     Session["name"] = data.FirstOrDefault().taiKhoan.ten;
                     Session["donvi"] = data.FirstOrDefault().nguoiDung.fk_donVi;
-                    if ((int)Session["donvi"] == 4)
+                    Session["cumTruong"] = data.FirstOrDefault().dm_DonVi.cumTruong;
+                    if ((int)Session["donvi"] == 3 || (bool)Session["cumTruong"]==true)
                     {
                         return RedirectToAction("Index", "bangDiem");
                     }
@@ -314,6 +337,7 @@ namespace WebApplication1.Controllers
                             bangDiem1.hinhAnh = bangDiem.hinhAnh;
                         }
                         bangDiem1.thoiGian = date;
+                        bangDiem1.banPhuTrach = bangDiem.banPhuTrach;
                         db.bangDiems.Add(bangDiem1);
                         db.SaveChanges();
                     }

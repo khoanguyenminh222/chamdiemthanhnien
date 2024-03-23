@@ -28,6 +28,13 @@ namespace WebApplication1.Controllers
                                           chiTieu = chiTieu,
                                           loaiTieuChi = loaiTieuChi,
                                       }).OrderBy(l=>l.loaiTieuChi.iD).DistinctBy(l=>l.loaiTieuChi.iD);
+            var dmDonvi = Session["dm_DonVi"];
+            var getThanhDoan = db.quanHeDonVis.Where(q => q.donViCha == (int)dmDonvi).FirstOrDefault();
+            var getChiDoan = db.quanHeDonVis.Where(q => q.donViCha == getThanhDoan.donViCon).FirstOrDefault();
+            if (getChiDoan == null)
+            {
+                getChiDoan = getThanhDoan;
+            }
             var tieuChi_giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
                                        join chiTieu in db.chiTieux
                                         on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
@@ -49,7 +56,8 @@ namespace WebApplication1.Controllers
                                            dm_DonVi = dm_donVi,
                                            nguoiDung = nguoiDung,
                                            donVi = donVi,
-                                       }).DistinctBy(c=>c.giaoChiTieuchoDV.fk_chiTieu);
+                                       }).Where(g=>g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon)
+                                       .DistinctBy(c=>c.giaoChiTieuchoDV.fk_chiTieu);
   
             ViewBag.tieuChi_loaiTieuChi = tieuChi_loaiTieuChi.ToList();
             ViewBag.tieuChi_giaoChiTieu = tieuChi_giaoChiTieu.ToList();
@@ -106,11 +114,19 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
+            var dmDonvi = Session["dm_DonVi"];
+            var getThanhDoan = db.quanHeDonVis.Where(q => q.donViCha == (int)dmDonvi).FirstOrDefault();
+            var getChiDoan = db.quanHeDonVis.Where(q => q.donViCha == getThanhDoan.donViCon).FirstOrDefault();
+            if(getChiDoan == null)
+            {
+                getChiDoan = getThanhDoan;
+            }
             var nguoiDungList = (from dm_donVi in db.dm_donVi
                                  join nguoiDung in db.nguoiDungs
                                     on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
                                  join donVi in db.donVis
                                     on nguoiDung.fk_donVi equals donVi.iD
+                                 where(dm_donVi.iD == getChiDoan.donViCon)
                                  select new
                                  {
                                      iD = dm_donVi.iD,
@@ -137,8 +153,8 @@ namespace WebApplication1.Controllers
                 //kiểm tra chỉ tiêu có nằm trong bảng giaoChiTieuchoDV, nếu có thì không tạo mới
                 foreach (var chi in chiTieu)
                 {
-                    if(giaoChiTieuchoDV.Count == 0)
-                    {
+                    //if(giaoChiTieuchoDV.Count == 0)
+                    //{
                         // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
 
                         giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
@@ -152,38 +168,38 @@ namespace WebApplication1.Controllers
                         newBang.fk_giaoChiTieu = newGiao.id;
                         db.bangDiems.Add(newBang);
                         db.SaveChanges();
-                    }
-                    else
-                    {
-                        foreach (var giaoChiTieu in giaoChiTieuchoDV)
-                        {
-                            if (chi.iD == giaoChiTieu.fk_chiTieu)
-                            {
-                                //id bằng nghĩa là có trong bảng giaoChiTieu rồi
-                                //update fk_dm đơn vị thôi
-                                giaoChiTieu.fk_dmDonVi = dm_DonVi;
-                                db.SaveChanges();
-                                break;
-                            }
-                            else
-                            {
-                                // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
+                    //}
+                    //else
+                    //{
+                    //    foreach (var giaoChiTieu in giaoChiTieuchoDV)
+                    //    {
+                    //        if (chi.iD == giaoChiTieu.fk_chiTieu)
+                    //        {
+                    //            //id bằng nghĩa là có trong bảng giaoChiTieu rồi
+                    //            //update fk_dm đơn vị thôi
+                    //            giaoChiTieu.fk_dmDonVi = dm_DonVi;
+                    //            db.SaveChanges();
+                    //            break;
+                    //        }
+                    //        else
+                    //        {
+                    //            // tạo nhiều giaoChiTieuchoDV với nhiều chỉ tiêu
 
-                                giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
-                                newGiao.fk_chiTieu = chi.iD;
-                                newGiao.fk_dmDonVi = dm_DonVi;
-                                db.giaoChiTieuchoDVs.Add(newGiao);
-                                db.SaveChanges();
+                    //            giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
+                    //            newGiao.fk_chiTieu = chi.iD;
+                    //            newGiao.fk_dmDonVi = dm_DonVi;
+                    //            db.giaoChiTieuchoDVs.Add(newGiao);
+                    //            db.SaveChanges();
 
-                                //tạo bảng điểm
-                                bangDiem newBang = new bangDiem();
-                                newBang.fk_giaoChiTieu = newGiao.id;
-                                db.bangDiems.Add(newBang);
-                                db.SaveChanges();
-                                break;
-                            }
-                        }
-                    }
+                    //            //tạo bảng điểm
+                    //            bangDiem newBang = new bangDiem();
+                    //            newBang.fk_giaoChiTieu = newGiao.id;
+                    //            db.bangDiems.Add(newBang);
+                    //            db.SaveChanges();
+                    //            break;
+                    //        }
+                    //    }
+                    //}
                     
                 }
             }

@@ -22,6 +22,15 @@ namespace WebApplication1.Controllers
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
+            var dmDonvi = Session["dm_DonVi"];
+
+            var getThanhDoan = db.quanHeDonVis.Where(q => q.donViCha == (int)dmDonvi).FirstOrDefault();
+            var getChiDoan = db.quanHeDonVis.Where(q => q.donViCha == getThanhDoan.donViCon).FirstOrDefault();
+            if(getChiDoan == null)
+            {
+                getChiDoan = getThanhDoan;
+            }
+
             var dataChiTieu = (from chTietChiTieu in db.chiTietChiTieux
                             join chiTieu in db.chiTieux
                                 on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD
@@ -50,41 +59,42 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
+                            .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD).DistinctBy(x=>x.chiTietChiTieu.iD);
 
             var dataDiem = (from chTietChiTieu in db.chiTietChiTieux
-                               join chiTieu in db.chiTieux
-                                   on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD
-                               join giaoChiTieu in db.giaoChiTieuchoDVs
-                                   on chiTieu.iD equals giaoChiTieu.fk_chiTieu
-                               join bangdiem in db.bangDiems
-                                   on giaoChiTieu.id equals bangdiem.fk_giaoChiTieu
-                               join nhomChiTeu in db.nhomChiTieux
-                                   on chiTieu.fk_loaiChiTieu equals nhomChiTeu.iD
-                               join loaiTieuChi in db.loaiTieuChis
-                                   on nhomChiTeu.fk_loaiTieuChi equals loaiTieuChi.iD
-                               join dm_donVi in db.dm_donVi
-                                   on giaoChiTieu.fk_dmDonVi equals dm_donVi.iD
-                               join nguoiDung in db.nguoiDungs
-                                   on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
-                               join donVi in db.donVis
-                                   on nguoiDung.fk_donVi equals donVi.iD
-                               select new dataBangDiem()
-                               {
-                                   bangDiem = bangdiem,
-                                   giaoChiTieuchoDV = giaoChiTieu,
-                                   loaiTieuChi = loaiTieuChi,
-                                   nhomChiTieu = nhomChiTeu,
-                                   chiTieu = chiTieu,
-                                   chiTietChiTieu = chTietChiTieu,
-                                   dm_DonVi = dm_donVi,
-                                   nguoiDung = nguoiDung,
-                                   donVi = donVi,
-                               }).OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
-                            .ThenBy(o => o.chiTieu.iD).ThenBy(g=>g.giaoChiTieuchoDV.fk_dmDonVi);
-            
-
+                            join chiTieu in db.chiTieux
+                                on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD
+                            join giaoChiTieu in db.giaoChiTieuchoDVs
+                                on chiTieu.iD equals giaoChiTieu.fk_chiTieu
+                            join bangdiem in db.bangDiems
+                                on giaoChiTieu.id equals bangdiem.fk_giaoChiTieu
+                            join nhomChiTeu in db.nhomChiTieux
+                                on chiTieu.fk_loaiChiTieu equals nhomChiTeu.iD
+                            join loaiTieuChi in db.loaiTieuChis
+                                on nhomChiTeu.fk_loaiTieuChi equals loaiTieuChi.iD
+                            join dm_donVi in db.dm_donVi
+                                on giaoChiTieu.fk_dmDonVi equals dm_donVi.iD
+                            join nguoiDung in db.nguoiDungs
+                                on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
+                            join donVi in db.donVis
+                                on nguoiDung.fk_donVi equals donVi.iD
+                            select new dataBangDiem()
+                            {
+                                bangDiem = bangdiem,
+                                giaoChiTieuchoDV = giaoChiTieu,
+                                loaiTieuChi = loaiTieuChi,
+                                nhomChiTieu = nhomChiTeu,
+                                chiTieu = chiTieu,
+                                chiTietChiTieu = chTietChiTieu,
+                                dm_DonVi = dm_donVi,
+                                nguoiDung = nguoiDung,
+                                donVi = donVi,
+                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi ==getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
+                               .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
+                            .ThenBy(o => o.chiTieu.iD).ThenBy(g => g.giaoChiTieuchoDV.fk_dmDonVi);
+                            
             ViewBag.dataChiTieu = dataChiTieu.ToList();
             ViewBag.dataDiem = dataDiem.ToList();
             return View();

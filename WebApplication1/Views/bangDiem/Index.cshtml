@@ -193,6 +193,10 @@
 <script>
 
     $("table .trTable").each(function () {
+        $(this).find("td:nth-child(4) .divdanhGia").each(function () {
+            console.log($(this).parent());
+            $(this).parent().before("<td></td>")
+        });
         $(this).find("td:nth-child(5) .divdanhGia").each(function () {
             console.log($(this).parent());
             $(this).parent().before("<td></td>")

@@ -10,8 +10,8 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
         <div class="container">
-            @*admin*@
-            @if ((int)Session["donvi"] == 4)
+            
+            @if ((int)Session["donvi"] == 3 || (bool)Session["cumTruong"] == true)
             {
                 @Html.ActionLink("Bảng điểm", "Index", "bangDiem", new { area = "" }, new { @class = "navbar-brand" })
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
@@ -23,6 +23,7 @@
                         <li>@Html.ActionLink("Loại tiêu chí", "Index", "loaiTieuChi", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Nhóm chỉ tiêu", "Index", "nhomChiTieu", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Chỉ tiêu", "Index", "chiTieu", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Chấm điểm", "Index", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                 </div>
             }
