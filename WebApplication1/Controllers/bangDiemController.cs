@@ -23,10 +23,15 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Login", "nguoiDung");
             }
             var dmDonvi = Session["dm_DonVi"];
-
+            var getTinhDoan = db.quanHeDonVis.Where(q=>q.donViCon==(int)dmDonvi).FirstOrDefault();
+            
             var getThanhDoan = db.quanHeDonVis.Where(q => q.donViCha == (int)dmDonvi).FirstOrDefault();
             var getChiDoan = db.quanHeDonVis.Where(q => q.donViCha == getThanhDoan.donViCon).FirstOrDefault();
-            if(getChiDoan == null)
+            if (getTinhDoan == null)
+            {
+                getTinhDoan = getThanhDoan;
+            }
+            if (getChiDoan == null)
             {
                 getChiDoan = getThanhDoan;
             }
@@ -59,7 +64,7 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
+                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getTinhDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
                             .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD).DistinctBy(x=>x.chiTietChiTieu.iD);
 
@@ -91,7 +96,7 @@ namespace WebApplication1.Controllers
                                 dm_DonVi = dm_donVi,
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
-                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi ==getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
+                            }).Where(g => g.giaoChiTieuchoDV.fk_dmDonVi == getTinhDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == getChiDoan.donViCon || g.giaoChiTieuchoDV.fk_dmDonVi ==getChiDoan.donViCha || g.giaoChiTieuchoDV.fk_dmDonVi == (int)dmDonvi)
                                .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD).ThenBy(g => g.giaoChiTieuchoDV.fk_dmDonVi);
                             
