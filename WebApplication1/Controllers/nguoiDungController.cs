@@ -273,6 +273,12 @@ namespace WebApplication1.Controllers
             return View();
         }
 
+        public ActionResult logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Login");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
