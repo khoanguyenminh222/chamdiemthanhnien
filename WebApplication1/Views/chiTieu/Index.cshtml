@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<WebApplication1.Models.chiTieu>
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <!DOCTYPE html>
@@ -13,35 +13,67 @@
 </head>
 <body>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Tạo mới", "Create")
     </p>
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
-            <th>
-                Chỉ tiêu
-            </th>
             <th>
                 Nhóm chỉ tiêu
             </th>
+            <th>
+                Tên chỉ tiêu
+            </th>
+            <th>
+                Yêu cầu đánh giá
+            </th>
             <th></th>
         </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.nhomChiTieu.ten)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.iD }) |
-                @Html.ActionLink("Details", "Details", new { id=item.iD }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.iD })
-            </td>
-        </tr>
-    }
-    
+        @{
+            var biendem = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr class="trTable">
+                @if (item.nhomChiTieu.iD != biendem)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nhomChiTieu.ten)
+                    </td>
+                    biendem = item.nhomChiTieu.iD;
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.ten)
+                </td>
+                <td class="tddanhGia">
+                    <div class="divdanhGia" style="width: 300px; overflow-x:auto">@item.ycDanhGiaKQ</div>
+                </td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.iD }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.iD })
+                </td>
+            </tr>
+        }
+
     </table>
 </body>
 </html>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function (url) {
+            return '<a href="' + url + '">' + url + '</a>';
+        })
+    }
+    $("table .trTable .tddanhGia").each(function (i, e) {
+
+        var urlText = urlify(e.innerHTML);
+        e.innerHTML = urlText
+    });
+</script>

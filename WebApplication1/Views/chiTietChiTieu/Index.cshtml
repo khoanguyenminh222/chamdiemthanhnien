@@ -1,0 +1,68 @@
+﻿@model IEnumerable<WebApplication1.Models.chiTietChiTieu>
+
+@{
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Thêm", "Create")
+    </p>
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                Tên chỉ tiêu
+            </th>
+            <th>
+                Nội dung chi tiết chỉ tiêu
+            </th>
+            <th>
+                Điểm
+            </th>
+
+            <th></th>
+        </tr>
+        @{
+            var biendem = 0;
+        }
+        @foreach (var item in Model)
+        {
+
+
+            <tr>
+                @if (biendem != item.chiTieu.iD)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.chiTieu.ten)
+                    </td>
+                    biendem = item.chiTieu.iD;
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.noiDung)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.diem)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.iD }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.iD })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

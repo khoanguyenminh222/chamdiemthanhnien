@@ -13,9 +13,9 @@
 </head>
 <body>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        @Html.ActionLink("Thêm", "Create")
     </p>
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
             <th>
                 Loại tiêu chí
@@ -50,7 +50,7 @@
                 }
                 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.loaiTieuChi.iD }) |
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.loaiTieuChi.iD })
                     @*@Html.ActionLink("Details", "Details", new { id = item.iD }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
                 </td>

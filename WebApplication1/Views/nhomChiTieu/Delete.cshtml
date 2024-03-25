@@ -5,15 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bạn chắc chắn muốn xoá?</h3>
 <div>
-    <h4>nhomChiTieu</h4>
+    <h4>Nhóm tiêu chí</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ten)
+            Loại tiêu chí
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.loaiTieuChi.ten)
+        </dd>
+        <dt>
+            Nhóm chỉ tiêu
         </dt>
 
         <dd>
@@ -21,20 +26,14 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.tongDiem)
+            Tổng điểm
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.tongDiem)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.loaiTieuChi.ten)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.loaiTieuChi.ten)
-        </dd>
 
     </dl>
 
@@ -42,8 +41,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Xoá" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay lại", "Index")
         </div>
     }
 </div>

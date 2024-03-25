@@ -1,7 +1,6 @@
-﻿@model WebApplication1.Models.chiTieu
+﻿@model WebApplication1.Models.chiTietChiTieu
 
 @{
-    
 }
 
 <!DOCTYPE html>
@@ -9,35 +8,35 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Xoá</title>
 </head>
 <body>
     <h3>Bạn chắc chắn muốn xoá?</h3>
     <div>
-        <h4>Chỉ tiêu</h4>
+        <h4>Chi tiết chỉ tiêu</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                Nhóm chỉ tiêu
+                Chỉ tiêu
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.nhomChiTieu.ten)
+                @Html.DisplayFor(model => model.chiTieu.ten)
             </dd>
             <dt>
-                Tên chỉ tiêu
+                Nội dung
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.ten)
+                @Html.DisplayFor(model => model.noiDung)
             </dd>
 
             <dt>
-                Yêu cầu đánh giá
+                Điểm
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.ycDanhGiaKQ)
+                @Html.DisplayFor(model => model.diem)
             </dd>
 
         </dl>

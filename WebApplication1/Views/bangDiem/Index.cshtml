@@ -34,14 +34,15 @@
                     <th style="white-space: nowrap; ">
                         <div style="width: 60px; overflow-x: auto">Tỉnh đoàn chấm điểm</div>
                     </th>
-                    <th>
-                        Yêu cầu trong đánh giá kết quả thực hiện
+                    <th style="white-space: nowrap; ">
+                        <div style="width: 200px; overflow-x: auto">Yêu cầu trong đánh giá kết quả thực hiện</div>
+                            
                     </th>
                     <th>
                         Yêu cầu minh chứng
                     </th>
-                    <th>
-                        <div style="width:90px">Thời gian minh chứng</div>
+                    <th style="white-space: nowrap; ">
+                        <div style="width:90px; overflow-x: auto" ">Thời gian minh chứng</div>
                     </th>
                     <th>
                         <div style="width: 100px; overflow-x: auto">Ban phụ trách</div>
@@ -142,7 +143,9 @@
                     {
                         var base64 = Convert.ToBase64String(item.bangDiem.hinhAnh);
                         var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
-                        <img id="@item.bangDiem.id" width="100" height="100" style="object-fit:cover; text-align:center" src="@imgsrc" onclick="imgClick(@item.bangDiem.id)" />
+                        <div style="text-align: center">
+                            <img id="@item.bangDiem.id" width="100" height="100" style="object-fit:cover; text-align:center" src="@imgsrc" onclick="imgClick(@item.bangDiem.id)" />
+                        </div>
 
                     }
                 </td>

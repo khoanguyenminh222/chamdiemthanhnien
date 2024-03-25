@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\bangDiemController.cs" />
+    <Compile Include="Controllers\chiTietChiTieuController.cs" />
     <Compile Include="Controllers\chiTieuController.cs" />
     <Compile Include="Controllers\loaiTieuChiController.cs" />
     <Compile Include="Controllers\nguoiDungController.cs" />
@@ -258,7 +259,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\nhomChiTieu\Create.cshtml" />
     <Content Include="Views\nhomChiTieu\Delete.cshtml" />
-    <Content Include="Views\nhomChiTieu\Details.cshtml" />
     <Content Include="Views\nhomChiTieu\Edit.cshtml" />
     <Content Include="Views\nhomChiTieu\Index.cshtml" />
     <Content Include="Views\bangDiem\Create.cshtml" />
@@ -266,19 +266,20 @@
     <Content Include="Views\bangDiem\Details.cshtml" />
     <Content Include="Views\bangDiem\Edit.cshtml" />
     <Content Include="Views\bangDiem\Index.cshtml" />
-    <Content Include="Views\chiTieu\Create.cshtml" />
-    <Content Include="Views\chiTieu\Delete.cshtml" />
-    <Content Include="Views\chiTieu\Details.cshtml" />
-    <Content Include="Views\chiTieu\Edit.cshtml" />
-    <Content Include="Views\chiTieu\Index.cshtml" />
     <Content Include="Views\loaiTieuChi\Create.cshtml" />
-    <Content Include="Views\loaiTieuChi\Delete.cshtml" />
-    <Content Include="Views\loaiTieuChi\Details.cshtml" />
     <Content Include="Views\loaiTieuChi\Edit.cshtml" />
     <Content Include="Views\loaiTieuChi\Index.cshtml" />
     <Content Include="Views\nguoiDung\Index.cshtml" />
     <Content Include="Views\nguoiDung\Login.cshtml" />
     <Content Include="Views\nguoiDung\chamDiemLoaiTieuChi.cshtml" />
+    <Content Include="Views\chiTieu\Create.cshtml" />
+    <Content Include="Views\chiTieu\Delete.cshtml" />
+    <Content Include="Views\chiTieu\Edit.cshtml" />
+    <Content Include="Views\chiTieu\Index.cshtml" />
+    <Content Include="Views\chiTietChiTieu\Create.cshtml" />
+    <Content Include="Views\chiTietChiTieu\Delete.cshtml" />
+    <Content Include="Views\chiTietChiTieu\Edit.cshtml" />
+    <Content Include="Views\chiTietChiTieu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

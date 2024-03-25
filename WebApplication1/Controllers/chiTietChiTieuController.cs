@@ -10,97 +10,97 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class chiTieuController : Controller
+    public class chiTietChiTieuController : Controller
     {
         private chamdiemEntities db = new chamdiemEntities();
 
-        // GET: chiTieu
+        // GET: chiTietChiTieu
         public ActionResult Index()
         {
-            var chiTieux = db.chiTieux.Include(c => c.nhomChiTieu);
-            return View(chiTieux.ToList());
+            var chiTietChiTieux = db.chiTietChiTieux.Include(c => c.chiTieu);
+            return View(chiTietChiTieux.ToList());
         }
 
-        // GET: chiTieu/Create
+        // GET: chiTietChiTieu/Create
         public ActionResult Create()
         {
-            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten");
+            ViewBag.fk_loaiChiTieu = new SelectList(db.chiTieux, "iD", "ten");
             return View();
         }
 
-        // POST: chiTieu/Create
+        // POST: chiTietChiTieu/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "iD,ten,fk_loaiChiTieu,ycDanhGiaKQ")] chiTieu chiTieu)
+        public ActionResult Create([Bind(Include = "iD,noiDung,diem,fk_loaiChiTieu")] chiTietChiTieu chiTietChiTieu)
         {
             if (ModelState.IsValid)
             {
-                db.chiTieux.Add(chiTieu);
+                db.chiTietChiTieux.Add(chiTietChiTieu);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
-            return View(chiTieu);
+            ViewBag.fk_loaiChiTieu = new SelectList(db.chiTieux, "iD", "ten", chiTietChiTieu.fk_loaiChiTieu);
+            return View(chiTietChiTieu);
         }
 
-        // GET: chiTieu/Edit/5
+        // GET: chiTietChiTieu/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            chiTieu chiTieu = db.chiTieux.Find(id);
-            if (chiTieu == null)
+            chiTietChiTieu chiTietChiTieu = db.chiTietChiTieux.Find(id);
+            if (chiTietChiTieu == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
-            return View(chiTieu);
+            ViewBag.fk_loaiChiTieu = new SelectList(db.chiTieux, "iD", "ten", chiTietChiTieu.fk_loaiChiTieu);
+            return View(chiTietChiTieu);
         }
 
-        // POST: chiTieu/Edit/5
+        // POST: chiTietChiTieu/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "iD,ten,fk_loaiChiTieu,ycDanhGiaKQ")] chiTieu chiTieu)
+        public ActionResult Edit([Bind(Include = "iD,noiDung,diem,fk_loaiChiTieu")] chiTietChiTieu chiTietChiTieu)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(chiTieu).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(chiTietChiTieu).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
-            return View(chiTieu);
+            ViewBag.fk_loaiChiTieu = new SelectList(db.chiTieux, "iD", "ten", chiTietChiTieu.fk_loaiChiTieu);
+            return View(chiTietChiTieu);
         }
 
-        // GET: chiTieu/Delete/5
+        // GET: chiTietChiTieu/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            chiTieu chiTieu = db.chiTieux.Find(id);
-            if (chiTieu == null)
+            chiTietChiTieu chiTietChiTieu = db.chiTietChiTieux.Find(id);
+            if (chiTietChiTieu == null)
             {
                 return HttpNotFound();
             }
-            return View(chiTieu);
+            return View(chiTietChiTieu);
         }
 
-        // POST: chiTieu/Delete/5
+        // POST: chiTietChiTieu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            chiTieu chiTieu = db.chiTieux.Find(id);
-            db.chiTieux.Remove(chiTieu);
+            chiTietChiTieu chiTietChiTieu = db.chiTietChiTieux.Find(id);
+            db.chiTietChiTieux.Remove(chiTietChiTieu);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

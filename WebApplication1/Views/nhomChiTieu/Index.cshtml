@@ -5,40 +5,48 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Nhóm chỉ tiêu</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Thêm", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered">
     <tr>
+        <th>
+            Tên loại tiêu chí
+        </th>
         <th>
             Tên nhóm chỉ tiêu
         </th>
         <th>
             Tổng đểm
         </th>
-        <th>
-            Tên loại tiêu chí
-        </th>
+
         <th></th>
     </tr>
-
+    @{ 
+        var biendem = 0;
+    }
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @if (item.loaiTieuChi.iD != biendem)
+            {
+                @Html.DisplayFor(modelItem => item.loaiTieuChi.ten)
+                biendem = item.loaiTieuChi.iD;
+            }
+
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ten)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tongDiem)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.loaiTieuChi.ten)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.iD }) |
-            @Html.ActionLink("Details", "Details", new { id=item.iD }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.iD })
+            @Html.ActionLink("Sửa", "Edit", new { id = item.iD }) |
+            @Html.ActionLink("Xoá", "Delete", new { id = item.iD })
         </td>
     </tr>
 }

@@ -26,15 +26,15 @@
                 </th>
                 @if ((int)Session["donvi"] == 2)
                 {
-                    <th><div style="width: 50px">Chi đoàn chấm</div></th>
+                    <th style="white-space: nowrap; "><div style=" width: 60px; overflow-x: auto">Chi đoàn chấm</div></th>
                 }
                 @if ((int)Session["donvi"] == 3)
                 {
-                    <th><div style="width: 50px">Chi đoàn chấm</div></th>
-                    <th><div style="width: 50px">Thành đoàn đoàn chấm</div></th>
+                    <th style="white-space: nowrap; "><div style=" width: 60px; overflow-x: auto">Chi đoàn chấm</div></th>
+                    <th style="white-space: nowrap; "><div style=" width: 60px; overflow-x: auto">Thành đoàn đoàn chấm</div></th>
                 }
-                <th>
-                    <div style="width: 50px">Tự chấm điểm</div>
+                <th style="white-space: nowrap; ">
+                    <div style=" width: 60px; overflow-x: auto">Tự chấm điểm</div>
                 </th>
                 <th>
                     Yêu cầu trong đánh giá kết quả thực hiện
@@ -189,7 +189,7 @@
                             @if (item.bangDiem.id != biendem3)
                             {
                                 <td style="text-align:center">
-                                    <textarea style="width: 500px; height:200px; overflow-x:auto" class="form-control" name="ycMinhChung">@item.bangDiem.ycMinhChung</textarea>
+                                    <textarea style="width: 500px; height:150px; overflow-x:auto" class="form-control" name="ycMinhChung">@item.bangDiem.ycMinhChung</textarea>
                                     @if (item.bangDiem.hinhAnh != null)
                                     {
                                         var base64 = Convert.ToBase64String(item.bangDiem.hinhAnh);
