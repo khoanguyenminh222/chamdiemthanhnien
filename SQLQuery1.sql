@@ -9,8 +9,11 @@ create table loaiTieuChi
 	iD int not null IDENTITY(1,1) primary key,
 	ten nvarchar(100) not null,
 	tongDiem int not null,
+	nam int default Year(getDate())
 )
 go
+ALTER TABLE loaiTieuChi
+add nam int default Year(getDate())
 create table nhomChiTieu
 (
 	iD int not null IDENTITY(1,1) primary key,
@@ -78,32 +81,42 @@ create table giaoChiTieuchoDV
 (
 	id int not null IDENTITY(1,1) primary key,
 	fk_chiTieu int,
-	fk_dmDonVi int,
+	fk_dmDonViChiDoan int,
+	fk_dmDonViThanhDoan int,
+	fk_dmDonViTinhDoan int,
 	foreign key (fk_chiTieu) references chiTieu(iD),
-	foreign key (fk_dmDonVi) references dm_donVi(iD)
+	foreign key (fk_dmDonViChiDoan) references dm_donVi(iD),
+	foreign key (fk_dmDonViThanhDoan) references dm_donVi(iD),
+	foreign key (fk_dmDonViTinhDoan) references dm_donVi(iD)
 )
 go
 create table bangDiem
 (
 	id int not null IDENTITY(1,1) primary key,
 	fk_giaoChiTieu int,
-	diem int,
+	diemCoDinh int,
+	diemChiDoan int default 0,
+	diemThanhDoan int default 0,
+	diemTinhDoan int default 0,
 	ycMinhChung nvarchar(1000),
-	thoiGian date,
+	thoiGian Datetime,
+	yKienPhanHoi nvarchar(1000),
 	banPhuTrach nvarchar(50),
-	hinhAnh image
+	hinhAnh image,
+	trangThai int default 0,--0: chưa đánh giá, 1: chi đoàn đã chấm, 2: thành đoàn đã chấm, 3 tỉnh đoàn đã chấm
 	foreign key (fk_giaoChiTieu) references giaoChiTieuchoDV(id),
 )
 go
-ALTER TABLE bangDiem
-add hinhAnh image 
+
 create table quanHeDonVi
 (
 	iD int not null IDENTITY(1,1) primary key,
-	donViCha int,
-	donViCon int,
-	foreign key (donViCha) references dm_donVi(iD),
-	foreign key (donViCon) references dm_donVi(iD)
+	chiDoan int,
+	thanhDoan int,
+	tinhDoan int,
+	foreign key (chiDoan) references dm_donVi(iD),
+	foreign key (thanhDoan) references dm_donVi(iD),
+	foreign key (tinhDoan) references dm_donVi(iD)
 )
 go
 insert into loaiTieuChi(ten, tongDiem)

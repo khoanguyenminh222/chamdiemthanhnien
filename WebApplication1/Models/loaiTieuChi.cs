@@ -23,6 +23,7 @@ namespace WebApplication1.Models
         public int iD { get; set; }
         public string ten { get; set; }
         public int tongDiem { get; set; }
+        public Nullable<int> nam { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<nhomChiTieu> nhomChiTieux { get; set; }

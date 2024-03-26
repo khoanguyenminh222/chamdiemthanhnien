@@ -15,6 +15,15 @@
     <p>
         @Html.ActionLink("Thêm", "Create")
     </p>
+    @using (Html.BeginForm())
+    {
+        <div class="d-flex align-items-center justify-content-end">
+            <p class="mt-auto mb-auto ">Năm</p>
+            @Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+        </div>
+        
+    }
+
     <table class="table table-bordered">
         <tr>
             <th>
@@ -37,22 +46,22 @@
                 <td>
                     @item.loaiTieuChi.tongDiem
                 </td>
-                @foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
-                {
-                    if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
+                @*@foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
                     {
-                        if (item1.giaoChiTieuchoDV.fk_chiTieu == item.chiTieu.iD)
+                        if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
                         {
-                            <td>@item1.nguoiDung.ten / @item1.donVi.ten</td>
+                            if (item1.giaoChiTieuchoDV.fk_chiTieu == item.chiTieu.iD)
+                            {
+                                <td>@item1.nguoiDung.ten / @item1.donVi.ten</td>
+                            }
                         }
-                    }
 
-                }
-                
+                    }*@
+
                 <td>
                     @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.loaiTieuChi.iD })
                     @*@Html.ActionLink("Details", "Details", new { id = item.iD }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
                 </td>
             </tr>
         }
@@ -60,3 +69,7 @@
     </table>
 </body>
 </html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    
+</script>

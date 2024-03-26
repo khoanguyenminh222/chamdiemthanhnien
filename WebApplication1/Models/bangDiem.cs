@@ -11,17 +11,21 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class bangDiem
     {
         public int id { get; set; }
         public Nullable<int> fk_giaoChiTieu { get; set; }
-        public Nullable<int> diem { get; set; }
+        public Nullable<int> diemCoDinh { get; set; }
+        public Nullable<int> diemChiDoan { get; set; }
+        public Nullable<int> diemThanhDoan { get; set; }
+        public Nullable<int> diemTinhDoan { get; set; }
         public string ycMinhChung { get; set; }
         public Nullable<System.DateTime> thoiGian { get; set; }
+        public string yKienPhanHoi { get; set; }
         public string banPhuTrach { get; set; }
         public byte[] hinhAnh { get; set; }
+        public Nullable<int> trangThai { get; set; }
     
         public virtual giaoChiTieuchoDV giaoChiTieuchoDV { get; set; }
     }

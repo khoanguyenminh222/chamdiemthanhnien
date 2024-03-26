@@ -1,12 +1,170 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\test_vn\\chamDiem\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\views\\loaitieuchi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\loaitieuchi\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\controllers\\loaitieuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\loaitieuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\controllers\\bangdiemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\bangdiemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\models\\dm_donvi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\models\\dm_donvi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\models\\tieuchi_nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\models\\tieuchi_nguoidung.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\views\\loaitieuchi\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\loaitieuchi\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\models\\databangdiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\models\\databangdiem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\loaiTieuChi\\Edit.cshtml",
+              "RelativeDocumentMoniker": "WebApplication1\\Views\\loaiTieuChi\\Edit.cshtml",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\loaiTieuChi\\Edit.cshtml",
+              "RelativeToolTip": "WebApplication1\\Views\\loaiTieuChi\\Edit.cshtml",
+              "ViewState": "AQIAACAAAAAAAAAAAAAiwDYAAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-03-26T14:40:07.335Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "bangDiemController.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\bangDiemController.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Controllers\\bangDiemController.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\bangDiemController.cs",
+              "RelativeToolTip": "WebApplication1\\Controllers\\bangDiemController.cs",
+              "ViewState": "AQIAAJ4AAAAAAAAAAAAAACcAAAA5AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T07:33:17.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "loaiTieuChiController.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\loaiTieuChiController.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Controllers\\loaiTieuChiController.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\loaiTieuChiController.cs",
+              "RelativeToolTip": "WebApplication1\\Controllers\\loaiTieuChiController.cs",
+              "ViewState": "AQIAAMIAAAAAAAAAAAAAAM8AAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T07:12:44.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "dm_donVi.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\dm_donVi.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\dm_donVi.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\dm_donVi.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\dm_donVi.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAQwCIAAAAyAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T13:13:35.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "tieuChi_nguoiDung.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\tieuChi_nguoiDung.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\tieuChi_nguoiDung.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\tieuChi_nguoiDung.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\tieuChi_nguoiDung.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T11:01:33.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "nguoiDungController.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\nguoiDungController.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Controllers\\nguoiDungController.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\nguoiDungController.cs",
+              "RelativeToolTip": "WebApplication1\\Controllers\\nguoiDungController.cs",
+              "ViewState": "AQIAAOcAAAAAAAAAAAAAAAEBAAB3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T01:46:34.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "dataBangDiem.cs",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\dataBangDiem.cs",
+              "RelativeDocumentMoniker": "WebApplication1\\Models\\dataBangDiem.cs",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Models\\dataBangDiem.cs",
+              "RelativeToolTip": "WebApplication1\\Models\\dataBangDiem.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-26T02:33:57.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\loaiTieuChi\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebApplication1\\Views\\loaiTieuChi\\Index.cshtml",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\loaiTieuChi\\Index.cshtml",
+              "RelativeToolTip": "WebApplication1\\Views\\loaiTieuChi\\Index.cshtml",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAAAEcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-03-26T07:13:00.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebApplication1\\Views\\nguoiDung\\Index.cshtml",
+              "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\Index.cshtml",
+              "RelativeToolTip": "WebApplication1\\Views\\nguoiDung\\Index.cshtml",
+              "ViewState": "AQIAACgAAAAAAAAAAAAAAPsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-03-26T02:34:48.804Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

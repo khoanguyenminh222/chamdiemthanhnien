@@ -9,24 +9,27 @@
         <EntityTypeShape EntityType="chamdiemModel.chiTieu" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="chamdiemModel.dm_donVi" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="chamdiemModel.donVi" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="chamdiemModel.giaoChiTieuchoDV" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="chamdiemModel.loaiTieuChi" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="chamdiemModel.nguoiDung" Width="1.5" PointX="3" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="chamdiemModel.nhomChiTieu" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="chamdiemModel.taiKhoan" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
         <AssociationConnector Association="chamdiemModel.FK__chiTietCh__fk_lo__3F466844" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__chiTieu__fk_loai__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_ch__49C3F6B7" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__dm_donVi__fk_ngu__46E78A0C" ManuallyRouted="false" />
-        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_dm__4AB81AF0" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__taiKhoan__fk_dmD__5070F446" ManuallyRouted="false" />
         <AssociationConnector Association="chamdiemModel.FK__nguoiDung__fk_do__440B1D61" ManuallyRouted="false" />
-        <AssociationConnector Association="chamdiemModel.FK__nhomChiTi__fk_lo__398D8EEE" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="chamdiemModel.quanHeDonVi" Width="1.5" PointX="7.5" PointY="10.625" />
-        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__donVi__5CD6CB2B" />
-        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__donVi__5DCAEF64" />
-        <EntityTypeShape EntityType="chamdiemModel.bangDiem" Width="1.5" PointX="9.75" PointY="5" />
-        <AssociationConnector Association="chamdiemModel.FK__bangDiem__fk_gia__4D94879B" />
+        <EntityTypeShape EntityType="chamdiemModel.bangDiem" Width="1.5" PointX="12.75" PointY="5.375" />
+        <EntityTypeShape EntityType="chamdiemModel.giaoChiTieuchoDV" Width="1.5" PointX="10.5" PointY="5.625" />
+        <AssociationConnector Association="chamdiemModel.FK__bangDiem__fk_gia__66603565" />
+        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_ch__5CD6CB2B" />
+        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_dm__5DCAEF64" />
+        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_dm__5EBF139D" />
+        <AssociationConnector Association="chamdiemModel.FK__giaoChiTi__fk_dm__5FB337D6" />
+        <EntityTypeShape EntityType="chamdiemModel.quanHeDonVi" Width="1.5" PointX="7.5" PointY="10.75" />
+        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__chiDo__70DDC3D8" />
+        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__thanh__71D1E811" />
+        <AssociationConnector Association="chamdiemModel.FK__quanHeDon__tinhD__72C60C4A" />
+        <EntityTypeShape EntityType="chamdiemModel.loaiTieuChi" Width="1.5" PointX="0.75" PointY="3.875" />
+        <AssociationConnector Association="chamdiemModel.FK__nhomChiTi__fk_lo__398D8EEE" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -15,10 +15,12 @@ namespace WebApplication1.Models
     public partial class quanHeDonVi
     {
         public int iD { get; set; }
-        public Nullable<int> donViCha { get; set; }
-        public Nullable<int> donViCon { get; set; }
+        public Nullable<int> chiDoan { get; set; }
+        public Nullable<int> thanhDoan { get; set; }
+        public Nullable<int> tinhDoan { get; set; }
     
         public virtual dm_donVi dm_donVi { get; set; }
         public virtual dm_donVi dm_donVi1 { get; set; }
+        public virtual dm_donVi dm_donVi2 { get; set; }
     }
 }

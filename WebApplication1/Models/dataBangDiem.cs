@@ -17,6 +17,5 @@ namespace WebApplication1.Models
         public dm_donVi dm_DonVi;
         public nguoiDung nguoiDung;
         public donVi donVi;
-
     }
 }

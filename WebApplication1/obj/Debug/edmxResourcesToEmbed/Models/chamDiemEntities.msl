@@ -40,24 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="giaoChiTieuchoDVs">
-      <EntityTypeMapping TypeName="chamdiemModel.giaoChiTieuchoDV">
-        <MappingFragment StoreEntitySet="giaoChiTieuchoDV">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="fk_chiTieu" ColumnName="fk_chiTieu" />
-          <ScalarProperty Name="fk_dmDonVi" ColumnName="fk_dmDonVi" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="loaiTieuChis">
-      <EntityTypeMapping TypeName="chamdiemModel.loaiTieuChi">
-        <MappingFragment StoreEntitySet="loaiTieuChi">
-          <ScalarProperty Name="iD" ColumnName="iD" />
-          <ScalarProperty Name="ten" ColumnName="ten" />
-          <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="nguoiDungs">
       <EntityTypeMapping TypeName="chamdiemModel.nguoiDung">
         <MappingFragment StoreEntitySet="nguoiDung">
@@ -90,25 +72,52 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="bangDiems">
+      <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
+        <MappingFragment StoreEntitySet="bangDiem">
+          <ScalarProperty Name="trangThai" ColumnName="trangThai" />
+          <ScalarProperty Name="hinhAnh" ColumnName="hinhAnh" />
+          <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
+          <ScalarProperty Name="yKienPhanHoi" ColumnName="yKienPhanHoi" />
+          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
+          <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
+          <ScalarProperty Name="diemTinhDoan" ColumnName="diemTinhDoan" />
+          <ScalarProperty Name="diemThanhDoan" ColumnName="diemThanhDoan" />
+          <ScalarProperty Name="diemChiDoan" ColumnName="diemChiDoan" />
+          <ScalarProperty Name="diemCoDinh" ColumnName="diemCoDinh" />
+          <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="giaoChiTieuchoDVs">
+      <EntityTypeMapping TypeName="chamdiemModel.giaoChiTieuchoDV">
+        <MappingFragment StoreEntitySet="giaoChiTieuchoDV">
+          <ScalarProperty Name="fk_dmDonViTinhDoan" ColumnName="fk_dmDonViTinhDoan" />
+          <ScalarProperty Name="fk_dmDonViThanhDoan" ColumnName="fk_dmDonViThanhDoan" />
+          <ScalarProperty Name="fk_dmDonViChiDoan" ColumnName="fk_dmDonViChiDoan" />
+          <ScalarProperty Name="fk_chiTieu" ColumnName="fk_chiTieu" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="quanHeDonVis">
       <EntityTypeMapping TypeName="chamdiemModel.quanHeDonVi">
         <MappingFragment StoreEntitySet="quanHeDonVi">
-          <ScalarProperty Name="donViCon" ColumnName="donViCon" />
-          <ScalarProperty Name="donViCha" ColumnName="donViCha" />
+          <ScalarProperty Name="tinhDoan" ColumnName="tinhDoan" />
+          <ScalarProperty Name="thanhDoan" ColumnName="thanhDoan" />
+          <ScalarProperty Name="chiDoan" ColumnName="chiDoan" />
           <ScalarProperty Name="iD" ColumnName="iD" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="bangDiems">
-      <EntityTypeMapping TypeName="chamdiemModel.bangDiem">
-        <MappingFragment StoreEntitySet="bangDiem">
-          <ScalarProperty Name="hinhAnh" ColumnName="hinhAnh" />
-          <ScalarProperty Name="banPhuTrach" ColumnName="banPhuTrach" />
-          <ScalarProperty Name="thoiGian" ColumnName="thoiGian" />
-          <ScalarProperty Name="ycMinhChung" ColumnName="ycMinhChung" />
-          <ScalarProperty Name="diem" ColumnName="diem" />
-          <ScalarProperty Name="fk_giaoChiTieu" ColumnName="fk_giaoChiTieu" />
-          <ScalarProperty Name="id" ColumnName="id" />
+    <EntitySetMapping Name="loaiTieuChis">
+      <EntityTypeMapping TypeName="chamdiemModel.loaiTieuChi">
+        <MappingFragment StoreEntitySet="loaiTieuChi">
+          <ScalarProperty Name="nam" ColumnName="nam" />
+          <ScalarProperty Name="tongDiem" ColumnName="tongDiem" />
+          <ScalarProperty Name="ten" ColumnName="ten" />
+          <ScalarProperty Name="iD" ColumnName="iD" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

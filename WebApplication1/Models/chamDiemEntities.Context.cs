@@ -29,12 +29,12 @@ namespace WebApplication1.Models
         public virtual DbSet<chiTieu> chiTieux { get; set; }
         public virtual DbSet<dm_donVi> dm_donVi { get; set; }
         public virtual DbSet<donVi> donVis { get; set; }
-        public virtual DbSet<giaoChiTieuchoDV> giaoChiTieuchoDVs { get; set; }
-        public virtual DbSet<loaiTieuChi> loaiTieuChis { get; set; }
         public virtual DbSet<nguoiDung> nguoiDungs { get; set; }
         public virtual DbSet<nhomChiTieu> nhomChiTieux { get; set; }
         public virtual DbSet<taiKhoan> taiKhoans { get; set; }
-        public virtual DbSet<quanHeDonVi> quanHeDonVis { get; set; }
         public virtual DbSet<bangDiem> bangDiems { get; set; }
+        public virtual DbSet<giaoChiTieuchoDV> giaoChiTieuchoDVs { get; set; }
+        public virtual DbSet<quanHeDonVi> quanHeDonVis { get; set; }
+        public virtual DbSet<loaiTieuChi> loaiTieuChis { get; set; }
     }
 }

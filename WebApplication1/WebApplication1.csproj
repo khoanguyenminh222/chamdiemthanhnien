@@ -190,6 +190,7 @@
     <Compile Include="Models\taiKhoan.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tieuChi_nguoiDung.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -271,7 +272,6 @@
     <Content Include="Views\loaiTieuChi\Index.cshtml" />
     <Content Include="Views\nguoiDung\Index.cshtml" />
     <Content Include="Views\nguoiDung\Login.cshtml" />
-    <Content Include="Views\nguoiDung\chamDiemLoaiTieuChi.cshtml" />
     <Content Include="Views\chiTieu\Create.cshtml" />
     <Content Include="Views\chiTieu\Delete.cshtml" />
     <Content Include="Views\chiTieu\Edit.cshtml" />
