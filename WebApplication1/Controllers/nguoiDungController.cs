@@ -15,48 +15,33 @@ namespace WebApplication1.Controllers
         private chamdiemEntities db = new chamdiemEntities();
 
         // GET: nguoiDung
-        public ActionResult Index()
+        public ActionResult Index(int? nguoidung, int? year)
         {
+            
             if (Session["dm_DonVi"] == null)
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
-            var dmDonvi = Session["dm_DonVi"];
             
+            var dmDonvi = Session["dm_DonVi"];
 
-            var dataChiTieu = (from bangdiem in db.bangDiems
-                               join giaoChiTieuchoDV in db.giaoChiTieuchoDVs
-                                   on bangdiem.fk_giaoChiTieu equals giaoChiTieuchoDV.id
-                               join dm_donVi in db.dm_donVi
-                                   on giaoChiTieuchoDV.fk_dmDonViChiDoan equals dm_donVi.iD
-                               join nguoiDung in db.nguoiDungs
-                                   on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
-                               join donVi in db.donVis
-                                   on nguoiDung.fk_donVi equals donVi.iD
-                               join chiTieu in db.chiTieux
-                                   on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                               join chiTietChiTieu in db.chiTietChiTieux
-                                   on chiTieu.iD equals chiTietChiTieu.fk_loaiChiTieu
-                               join nhomChiTieu in db.nhomChiTieux
-                                   on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                               join loaiTieuChi in db.loaiTieuChis
-                                   on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi.iD
-                               select new dataBangDiem()
-                               {
-                                   bangDiem = bangdiem,
-                                   giaoChiTieuchoDV = giaoChiTieuchoDV,
-                                   loaiTieuChi = loaiTieuChi,
-                                   nhomChiTieu = nhomChiTieu,
-                                   chiTieu = chiTieu,
-                                   chiTietChiTieu = chiTietChiTieu,
-                                   dm_DonVi = dm_donVi,
-                                   nguoiDung = nguoiDung,
-                                   donVi = donVi,
-                               })
-                            //.Where(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan == getChiDoan.donViCon)
-                            .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
-                            .ThenBy(o => o.chiTieu.iD);
-
+            Console.WriteLine(nguoidung);
+            if (nguoidung == null)
+            {
+                var donvi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi).FirstOrDefault();
+                nguoidung = donvi?.chiDoan;
+            }
+            var yearNow = DateTime.Now.Year;
+            List<int> listYear = new List<int>();
+            for (int ls = yearNow; ls >= 2010; ls--)
+            {
+                listYear.Add(ls);
+            }
+            ViewBag.listYear = new SelectList(listYear);
+            if (year == null)
+            {
+                year = DateTime.Now.Year;
+            }
 
             var dataDiem = (from chTietChiTieu in db.chiTietChiTieux
                             join chiTieu in db.chiTieux
@@ -87,13 +72,26 @@ namespace WebApplication1.Controllers
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
                             })
-                            //.Where(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan == getChiDoan.donViCon)
-
+                            .Where(l=>l.loaiTieuChi.nam==year)
+                            .Where(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan == nguoidung || g.giaoChiTieuchoDV.fk_dmDonViChiDoan==(int)dmDonvi)
+                            
                             .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
-                            .ThenBy(o => o.chiTieu.iD).ThenBy(b => b.bangDiem.fk_giaoChiTieu);
-            ViewBag.dataChiTieu = dataChiTieu.ToList();
-            ViewBag.dataDiem = dataDiem.ToList();
-            return View();
+                            .ThenBy(o => o.chiTieu.iD)
+                            .ThenBy(b => b.bangDiem.fk_giaoChiTieu)
+                            .ToList();
+            var donviCon = (from dm_donVi in db.dm_donVi
+                            join nguoiDung in db.nguoiDungs on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
+                            join quanHeDonVi in db.quanHeDonVis on dm_donVi.iD equals quanHeDonVi.chiDoan
+                            where(quanHeDonVi.tinhDoan==(int)dmDonvi || quanHeDonVi.thanhDoan ==(int)dmDonvi)
+                            select new
+                            {
+                                id=dm_donVi.iD,
+                                ten = nguoiDung.ten,
+                            }).ToList();
+            
+            var listnguoiDung = new SelectList(donviCon, "id", "ten");
+            ViewBag.listnguoiDung = listnguoiDung;
+            return View(dataDiem);
         }
 
         //Login
