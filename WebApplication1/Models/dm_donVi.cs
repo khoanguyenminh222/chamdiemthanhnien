@@ -32,7 +32,8 @@ namespace WebApplication1.Models
         public string dienThoai { get; set; }
         public string diaChi { get; set; }
 
-        public bool Checked { get; set; } = false;
+        public bool Ischecked { get; set; }
+        public bool Already { get; set; } = true;
         public virtual nguoiDung nguoiDung { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<taiKhoan> taiKhoans { get; set; }

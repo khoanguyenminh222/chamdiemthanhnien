@@ -1,4 +1,4 @@
-﻿
+﻿@model  List<WebApplication1.Models.loaiTieuChi>
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,7 +21,7 @@
             <p class="mt-auto mb-auto ">Năm</p>
             @Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
         </div>
-        
+
     }
 
     <table class="table table-bordered">
@@ -37,39 +37,63 @@
             </th>
             <th></th>
         </tr>
-        @foreach (var item in ViewBag.tieuChi_loaiTieuChi)
+        @foreach (var l in Model)
         {
-            <tr>
+            var biendem = 0;
+            <tr class="trTable">
+
                 <td>
-                    @item.loaiTieuChi.ten
+                    @Html.DisplayFor(model => l.ten)
                 </td>
                 <td>
-                    @item.loaiTieuChi.tongDiem
+                    @Html.DisplayFor(model => l.tongDiem)
                 </td>
-                @*@foreach (var item1 in ViewBag.tieuChi_giaoChiTieu)
+                <td class="tdDonVi">
+                    @foreach (var item in ViewBag.lsdm_donvi)
                     {
-                        if (item1.loaiTieuChi.iD == item.loaiTieuChi.iD)
+                        if (l.iD == item.loaiTieuChi.iD && biendem != item.dm_DonVi.iD)
                         {
-                            if (item1.giaoChiTieuchoDV.fk_chiTieu == item.chiTieu.iD)
-                            {
-                                <td>@item1.nguoiDung.ten / @item1.donVi.ten</td>
-                            }
+                            <div>@item.dm_DonVi.nguoiDung.ten / @item.dm_DonVi.nguoiDung.donVi.ten</div>
+                            biendem = item.dm_DonVi.iD;
                         }
 
-                    }*@
 
-                <td>
-                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.loaiTieuChi.iD })
-                    @*@Html.ActionLink("Details", "Details", new { id = item.iD }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.iD })*@
+                    }
                 </td>
+                <td class="d-none">
+                    @Html.ActionLink("Thêm đơn vị", "AddDonVi", new { id = l.iD })
+                </td>
+                <td class="d-none">
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = l.iD })
+                </td>
+
             </tr>
         }
+
+
 
     </table>
 </body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
-    
+    function isEmpty(td) {
+        if (td.text == '' || td.text() == ' ' || td.html() == '&nbsp;' || td.is(":not(:visible)")) {
+            return true;
+        }
+
+        return false;
+    }
+    $("table .trTable").each(function () {
+        $(this).find("td:nth-child(3)").each(function () {
+            if ($(this).text().trim() == "") {
+                $(this).next("td").removeClass("d-none");
+                //console.log($(this).next("td").hide());
+                $(this).remove();
+            } else {
+                $(this).next("td").next("td").removeClass("d-none");
+            }
+            
+        });
+    });
 </script>

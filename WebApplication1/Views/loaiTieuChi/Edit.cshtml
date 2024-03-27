@@ -1,7 +1,7 @@
 ﻿@model WebApplication1.Models.tieuChi_nguoiDung
 
 @{
-    
+
 }
 
 <!DOCTYPE html>
@@ -15,61 +15,106 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
-    <div class="form-horizontal">
-        <h4>Loại tiêu chí</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.loaiTieuChi.iD)
-        <div class="d-flex">
-            <div class="flex-grow-1">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.loaiTieuChi.ten, "Tên loại tiêu chí", htmlAttributes: new { @class = "control-label col-md-2 w-auto" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.loaiTieuChi.ten, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.loaiTieuChi.ten, "", new { @class = "text-danger" })
+
+        <div class="form-horizontal">
+            <h4>Loại tiêu chí</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.loaiTieuChi.iD)
+            <div class="d-flex">
+                <div class="flex-grow-1">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.loaiTieuChi.ten, "Tên loại tiêu chí", htmlAttributes: new { @class = "control-label col-md-2 w-auto" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.loaiTieuChi.ten, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.loaiTieuChi.ten, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.loaiTieuChi.tongDiem, "Tổng điểm", htmlAttributes: new { @class = "control-label col-md-2 w-auto" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.loaiTieuChi.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.loaiTieuChi.tongDiem, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.loaiTieuChi.tongDiem, "Tổng điểm", htmlAttributes: new { @class = "control-label col-md-2 w-auto" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.loaiTieuChi.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.loaiTieuChi.tongDiem, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+                <div class="flex-grow-1">
+                    <p class="fw-bold m-auto">Đơn vị</p>
+                    <input type="checkbox" id="checkAll" />
+                    <label for="checkAll">Chọn tất cả</label><br />
 
-            <div class="flex-grow-1">
-                <p class="fw-bold m-auto">Đơn vị</p>
-                <input type="checkbox" id="checkAll" />
-                <label for="checkAll">Chọn tất cả</label><br />
-
-                @for (int i = 0; i < Model.dm_DonVi.Count; i++)
-                {
-                    @Html.CheckBoxFor(r => Model.dm_DonVi[i].Checked)
+                    @*@for (int i = 0; i < Model.dm_DonVi.Count; i++)
+        {
+            @Html.CheckBoxFor(r => Model.dm_DonVi[i].Ischecked)
             <label>@Model.dm_DonVi[i].nguoiDung.ten</label>
             <span>/</span>
             <label>@Model.dm_DonVi[i].nguoiDung.donVi.ten</label>
             @Html.HiddenFor(h => @Model.dm_DonVi[i].iD)
             @Html.HiddenFor(h => @Model.dm_DonVi[i].nguoiDung.ten)
             <br />
-                    
-                }
+        }*@
+
+                    @for (int i = 0; i < Model.dm_DonVi.Count; i++)
+                    {
+                        if (ViewBag.giaoChiTieu.Count == Model.dm_DonVi.Count)
+                        {
+                            @Html.CheckBoxFor(r => Model.dm_DonVi[i].Already)
+                            //@Html.HiddenFor(h => @Model.dm_DonVi[i].Ischecked, new { @Value = true })
+                            <label>@Model.dm_DonVi[i].nguoiDung.ten</label>
+                            <span>/</span>
+                            <label>@Model.dm_DonVi[i].nguoiDung.donVi.ten</label>
+                            @Html.HiddenFor(h => @Model.dm_DonVi[i].iD)
+                            @Html.HiddenFor(h => @Model.dm_DonVi[i].nguoiDung.ten)
 
 
+                            <br />
+                        }
+                        else
+                        {
+                            foreach (var item in ViewBag.giaoChiTieu)
+                            {
+                                if (Model.dm_DonVi[i].iD == item.giaoChiTieuchoDV.fk_dmDonViChiDoan)
+                                {
+                                    @Html.CheckBoxFor(r => Model.dm_DonVi[i].Already)
+                                    //@Html.HiddenFor(h => @Model.dm_DonVi[i].Ischecked, new { @Value = true })
+                                    <label>@Model.dm_DonVi[i].nguoiDung.ten</label>
+                                    <span>/</span>
+                                    <label>@Model.dm_DonVi[i].nguoiDung.donVi.ten</label>
+                                    @Html.HiddenFor(h => @Model.dm_DonVi[i].iD)
+                                    @Html.HiddenFor(h => @Model.dm_DonVi[i].nguoiDung.ten)
+                                    <br />
+                                }
+                                else
+                                {
+                                    @Html.CheckBoxFor(r => Model.dm_DonVi[i].Ischecked)
+                                    @Html.HiddenFor(h => @Model.dm_DonVi[i].Already, new { @Value = false })
+                                    <label>@Model.dm_DonVi[i].nguoiDung.ten</label>
+                                    <span>/</span>
+                                    <label>@Model.dm_DonVi[i].nguoiDung.donVi.ten</label>
+                                    @Html.HiddenFor(h => @Model.dm_DonVi[i].iD)
+                                    @Html.HiddenFor(h => @Model.dm_DonVi[i].nguoiDung.ten)
+                                    <br />
+                                }
+                            }
+                        }
+
+
+                    }
+
+                </div>
+                <div class="flex-grow-1"></div>
             </div>
-            <div class="flex-grow-1"></div>
-        </div>
-        <br>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lưu" class="btn btn-success" />
+            <br>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Lưu" class="btn btn-success" />
+                </div>
             </div>
         </div>
-    </div>
     }
-    
+
     <div>
         @Html.ActionLink("Quay lại", "Index")
     </div>
