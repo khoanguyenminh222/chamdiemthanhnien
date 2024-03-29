@@ -175,6 +175,7 @@
     <Compile Include="Models\giaoChiTieuchoDV.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\listdataBangDiem.cs" />
     <Compile Include="Models\listTieuChi_DV.cs" />
     <Compile Include="Models\loaiTieuChi.cs">
       <DependentUpon>chamDiemEntities.tt</DependentUpon>

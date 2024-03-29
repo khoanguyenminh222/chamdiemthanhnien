@@ -7,7 +7,10 @@ namespace WebApplication1.Models
 {
     public class chiTieu_chiTiet
     {
-        public chiTieu chiTieu;
-        public List<chiTietChiTieu> chiTietChiTieu;
+        public string tenChiTieu {  get; set; }
+        public string idChiTieu { get; set; }
+
+        public string noiDungChiTieu { get; set; }
+        public int diemChiTieu { get; set; }
     }
 }

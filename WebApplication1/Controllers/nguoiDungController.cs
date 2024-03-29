@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -17,18 +19,18 @@ namespace WebApplication1.Controllers
         // GET: nguoiDung
         public ActionResult Index(int? nguoidung, int? year)
         {
-            
+
             if (Session["dm_DonVi"] == null)
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
-            
+
             var dmDonvi = Session["dm_DonVi"];
 
             Console.WriteLine(nguoidung);
             if (nguoidung == null)
             {
-                var donvi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi).FirstOrDefault();
+                var donvi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi ||x.thanhDoan == (int)dmDonvi).FirstOrDefault();
                 nguoidung = donvi?.chiDoan;
             }
             var yearNow = DateTime.Now.Year;
@@ -72,30 +74,191 @@ namespace WebApplication1.Controllers
                                 nguoiDung = nguoiDung,
                                 donVi = donVi,
                             })
-                            .Where(l=>l.loaiTieuChi.nam==year)
-                            .Where(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan == nguoidung || g.giaoChiTieuchoDV.fk_dmDonViChiDoan==(int)dmDonvi)
-                            
+                            .Where(l => l.loaiTieuChi.nam == year)
+                            .Where(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan == nguoidung || g.giaoChiTieuchoDV.fk_dmDonViChiDoan == (int)dmDonvi)
+
                             .OrderBy(o => o.nhomChiTieu.fk_loaiTieuChi)
                             .ThenBy(o => o.chiTieu.iD)
                             .ThenBy(b => b.bangDiem.fk_giaoChiTieu)
                             .ToList();
+
             var donviCon = (from dm_donVi in db.dm_donVi
                             join nguoiDung in db.nguoiDungs on dm_donVi.fk_nguoiQuanLy equals nguoiDung.iD
                             join quanHeDonVi in db.quanHeDonVis on dm_donVi.iD equals quanHeDonVi.chiDoan
-                            where(quanHeDonVi.tinhDoan==(int)dmDonvi || quanHeDonVi.thanhDoan ==(int)dmDonvi)
+                            where (quanHeDonVi.tinhDoan == (int)dmDonvi || quanHeDonVi.thanhDoan == (int)dmDonvi)
                             select new
                             {
-                                id=dm_donVi.iD,
-                                ten = nguoiDung.ten,
+                                id = dm_donVi.iD,
+                                ten = nguoiDung.ten + "/" + nguoiDung.donVi.ten,
                             }).ToList();
-            
+            string myMessage = TempData["message"] as string;
+            listdataBangDiem listdataBangDiem = new listdataBangDiem()
+            {
+                MyMessage = myMessage,
+                dataBangDiems = dataDiem
+            };
             var listnguoiDung = new SelectList(donviCon, "id", "ten");
+            
             ViewBag.listnguoiDung = listnguoiDung;
-            return View(dataDiem);
+            
+            return View(listdataBangDiem);
         }
 
-        //Login
-        public ActionResult Login()
+        //post index
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult chamDiem(listdataBangDiem data,string submit)
+        {
+            switch (submit)
+            {
+                case "update":
+                    if ((int)Session["donvi"] == 1)
+                    {
+                        foreach (var item in data.dataBangDiems)
+                        {
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                            updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
+                            updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                            DateTime date = DateTime.Today;
+                            updateBangDiem.thoiGian = date.Date;
+                            updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                            if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                            {
+                                // Đọc dữ liệu file thành byte array
+                                using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                {
+                                    updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                }
+                            }
+                            db.SaveChanges();
+                        }
+                        TempData["message"] = "update";
+                    }
+                    if ((int)Session["donvi"] == 2)
+                    {
+                        foreach (var item in data.dataBangDiems)
+                        {
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                            updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
+                            updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                            DateTime date = DateTime.Today;
+                            updateBangDiem.thoiGian = date.Date;
+                            updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
+                            updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                            if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                            {
+                                // Đọc dữ liệu file thành byte array
+                                using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                {
+                                    updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                }
+                            }
+                            db.SaveChanges();
+                        }
+                        TempData["message"] = "update";
+                    }
+                    if ((int)Session["donvi"] == 3)
+                    {
+                        foreach (var item in data.dataBangDiems)
+                        {
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                            updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
+                            DateTime date = DateTime.Today;
+                            updateBangDiem.thoiGian = date.Date;
+                            updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
+                            db.SaveChanges();
+                        }
+                        TempData["message"] = "update";
+                    }
+                    
+                    return RedirectToAction("Index");
+                case "send":
+                    foreach (var item in data.dataBangDiems)
+                    {
+                        var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                        if ((int)Session["donvi"] == 1)
+                        {
+                            if (updateBangDiem.trangThai == 0)
+                            {
+                                updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
+                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                                DateTime date = DateTime.Today;
+                                updateBangDiem.thoiGian = date.Date;
+                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                                {
+                                    // Đọc dữ liệu file thành byte array
+                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                    {
+                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                    }
+                                }
+                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                db.SaveChanges();
+                                TempData["message"] = "send";
+                            }
+                            else
+                            {
+                                TempData["message"] = "fail";
+                                break;
+                            }
+                        }
+                        else if((int)Session["donvi"] == 2)
+                        {
+                            if(updateBangDiem.trangThai == 1)
+                            {
+                                updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
+                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                                DateTime date = DateTime.Today;
+                                updateBangDiem.thoiGian = date.Date;
+                                updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
+                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                                {
+                                    // Đọc dữ liệu file thành byte array
+                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                    {
+                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                    }
+                                }
+                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                db.SaveChanges();
+                                TempData["message"] = "send";
+                            }
+                            else
+                            {
+                                TempData["message"] = "fail";
+                                break;
+                            }
+                        }
+                        else if((int)Session["donvi"] == 3)
+                        {
+                            if (updateBangDiem.trangThai == 2)
+                            {
+                                updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
+                                DateTime date = DateTime.Today;
+                                updateBangDiem.thoiGian = date.Date;
+                                updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
+                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                db.SaveChanges();
+
+                                TempData["message"] = "send";
+                            }
+                            else
+                            {
+                                TempData["message"] = "fail";
+                                break;
+                            }
+                        }
+                        
+                    }
+                    return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
+            //Login
+            public ActionResult Login()
         {
             return View();
         }
@@ -150,11 +313,11 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Login");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
-                                      int iD_chiTieu, string submit, HttpPostedFileBase hinhAnh)
-        {
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
+        //                              int iD_chiTieu, string submit, HttpPostedFileBase hinhAnh)
+        //{
             //var id = Session["idLoaiTieuChi"];
             //switch (submit)
             //{
@@ -261,7 +424,7 @@ namespace WebApplication1.Controllers
 
             //        return RedirectToAction("chamDiemLoaiTieuChi", new {id = id });
             //}
-            return RedirectToAction("Index");
-        }
+            //return RedirectToAction("Index");
+        //}
     }
 }
