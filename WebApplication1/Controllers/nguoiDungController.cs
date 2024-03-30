@@ -119,8 +119,6 @@ namespace WebApplication1.Controllers
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
                             updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
                             updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
-                            DateTime date = DateTime.Today;
-                            updateBangDiem.thoiGian = date.Date;
                             updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
                             if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
                             {
@@ -140,19 +138,7 @@ namespace WebApplication1.Controllers
                         {
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
                             updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
-                            updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
-                            DateTime date = DateTime.Today;
-                            updateBangDiem.thoiGian = date.Date;
-                            updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
                             updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
-                            if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
-                            {
-                                // Đọc dữ liệu file thành byte array
-                                using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
-                                {
-                                    updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
-                                }
-                            }
                             db.SaveChanges();
                         }
                         TempData["message"] = "update";
@@ -163,8 +149,6 @@ namespace WebApplication1.Controllers
                         {
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
                             updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
-                            DateTime date = DateTime.Today;
-                            updateBangDiem.thoiGian = date.Date;
                             updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
                             db.SaveChanges();
                         }
@@ -178,7 +162,8 @@ namespace WebApplication1.Controllers
                         var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
                         if ((int)Session["donvi"] == 1)
                         {
-                            if (updateBangDiem.trangThai == 0)
+                            
+                            if (updateBangDiem.trangThai == 1 || updateBangDiem.trangThai==0)
                             {
                                 updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
@@ -193,25 +178,19 @@ namespace WebApplication1.Controllers
                                         updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
                                     }
                                 }
-                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                updateBangDiem.trangThai = 2;
                                 db.SaveChanges();
                                 TempData["message"] = "send";
-                            }
-                            else
-                            {
-                                TempData["message"] = "fail";
-                                break;
                             }
                         }
                         else if((int)Session["donvi"] == 2)
                         {
-                            if(updateBangDiem.trangThai == 1)
+                            if(updateBangDiem.trangThai == 2 || updateBangDiem.trangThai==3)
                             {
                                 updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
                                 DateTime date = DateTime.Today;
                                 updateBangDiem.thoiGian = date.Date;
-                                updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
                                 updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
                                 if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
                                 {
@@ -221,33 +200,23 @@ namespace WebApplication1.Controllers
                                         updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
                                     }
                                 }
-                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                updateBangDiem.trangThai = 4;
                                 db.SaveChanges();
                                 TempData["message"] = "send";
-                            }
-                            else
-                            {
-                                TempData["message"] = "fail";
-                                break;
                             }
                         }
                         else if((int)Session["donvi"] == 3)
                         {
-                            if (updateBangDiem.trangThai == 2)
+                            if (updateBangDiem.trangThai == 4 || updateBangDiem.trangThai == 5)
                             {
                                 updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
                                 DateTime date = DateTime.Today;
                                 updateBangDiem.thoiGian = date.Date;
                                 updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
-                                updateBangDiem.trangThai = updateBangDiem.trangThai + 1;
+                                updateBangDiem.trangThai = 6;
                                 db.SaveChanges();
 
                                 TempData["message"] = "send";
-                            }
-                            else
-                            {
-                                TempData["message"] = "fail";
-                                break;
                             }
                         }
                         

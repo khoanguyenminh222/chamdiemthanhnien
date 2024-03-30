@@ -20,7 +20,8 @@ namespace WebApplication1.Controllers
         // GET: loaiTieuChi
         public ActionResult Index(int? year)
         {
-            if (Session["dm_DonVi"] == null)
+            int dmDonvi = (int)Session["dm_DonVi"];
+            if (dmDonvi == null)
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
@@ -36,18 +37,56 @@ namespace WebApplication1.Controllers
                 year = DateTime.Now.Year;
             }
             var loaiTieuChi = db.loaiTieuChis.Where(l => l.nam == year).ToList();
-            var lsdm_donvi = (from dm_donVi in db.dm_donVi
-                              join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                              join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                              join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                              join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
-                              select new dataBangDiem
-                              {
-                                  dm_DonVi = dm_donVi,
-                                  loaiTieuChi = loaiTieuChi1,
-                                  giaoChiTieuchoDV = giaoChiTieuchoDV,
-                              }).OrderBy(d => d.giaoChiTieuchoDV.fk_dmDonViChiDoan);
-            ViewBag.lsdm_donvi = lsdm_donvi.ToList();
+            if ((bool)Session["cumTruong"] == true) { 
+                if((int)Session["donvi"] == 2)
+                {
+                    var lsdm_donvi = (from dm_donVi in db.dm_donVi
+                                      join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
+                                      join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                      join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                      select new dataBangDiem
+                                      {
+                                          dm_DonVi = dm_donVi,
+                                          loaiTieuChi = loaiTieuChi1,
+                                          giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                      }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViThanhDoan == dmDonvi)
+                              .OrderBy(d => d.giaoChiTieuchoDV.fk_dmDonViChiDoan);
+                    ViewBag.lsdm_donvi = lsdm_donvi.ToList();
+                }
+                else if((int)Session["donvi"] == 3)
+                {
+                    var lsdm_donvi = (from dm_donVi in db.dm_donVi
+                                      join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
+                                      join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                      join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                      select new dataBangDiem
+                                      {
+                                          dm_DonVi = dm_donVi,
+                                          loaiTieuChi = loaiTieuChi1,
+                                          giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                      }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViTinhDoan == dmDonvi)
+                              .OrderBy(d => d.giaoChiTieuchoDV.fk_dmDonViChiDoan);
+                    ViewBag.lsdm_donvi = lsdm_donvi.ToList();
+                }
+            }
+            else
+            {
+                var lsdm_donvi = (from dm_donVi in db.dm_donVi
+                                  join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
+                                  join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                  join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                  join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                  select new dataBangDiem
+                                  {
+                                      dm_DonVi = dm_donVi,
+                                      loaiTieuChi = loaiTieuChi1,
+                                      giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                  }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViTinhDoan == dmDonvi)
+                              .OrderBy(d => d.giaoChiTieuchoDV.fk_dmDonViChiDoan);
+                ViewBag.lsdm_donvi = lsdm_donvi.ToList();
+            }
             return View(loaiTieuChi);
         }
 
@@ -102,7 +141,7 @@ namespace WebApplication1.Controllers
             }
 
             var dmDonvi = Session["dm_DonVi"];
-            var listQuanHeDonVi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi).ToList();
+            var listQuanHeDonVi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi || x.thanhDoan==(int)dmDonvi).ToList();
             List<dm_donVi> dm = new List<dm_donVi>();
             foreach (var i in listQuanHeDonVi)
             {
@@ -206,18 +245,58 @@ namespace WebApplication1.Controllers
                 dm.Add(db.dm_donVi.Where(x => x.iD == i.chiDoan).FirstOrDefault());
             }
             loaiTieuChi loaiTieuChi = db.loaiTieuChis.Find(id);
-            var giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
-                               join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                               join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                               join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
-                               select new dataBangDiem
-                               {
-                                   giaoChiTieuchoDV = giaoChiTieuchoDV,
-                                   loaiTieuChi = loaiTieuChi1,
-                               }).Where(l => l.loaiTieuChi.iD == id).DistinctBy(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan)
+            if ((bool)Session["cumTruong"] == true)
+            {
+                if ((int)Session["donvi"] == 2)
+                {
+                    var giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                       join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                       join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                       join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                       select new dataBangDiem
+                                       {
+                                           giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                           loaiTieuChi = loaiTieuChi1,
+                                       }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViThanhDoan == (int)dmDonvi)
+                               .Where(l => l.loaiTieuChi.iD == id).DistinctBy(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan)
                                .ToList();
 
-            ViewBag.giaoChiTieu = giaoChiTieu;
+                    ViewBag.giaoChiTieu = giaoChiTieu;
+                }
+                if ((int)Session["donvi"] == 3)
+                {
+                    var giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                       join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                       join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                       join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                       select new dataBangDiem
+                                       {
+                                           giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                           loaiTieuChi = loaiTieuChi1,
+                                       }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViTinhDoan == (int)dmDonvi)
+                               .Where(l => l.loaiTieuChi.iD == id).DistinctBy(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan)
+                               .ToList();
+
+                    ViewBag.giaoChiTieu = giaoChiTieu;
+                }
+            }
+            else
+            {
+                var giaoChiTieu = (from giaoChiTieuchoDV in db.giaoChiTieuchoDVs
+                                   join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
+                                   join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
+                                   join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                   select new dataBangDiem
+                                   {
+                                       giaoChiTieuchoDV = giaoChiTieuchoDV,
+                                       loaiTieuChi = loaiTieuChi1,
+                                   }).Where(g => g.giaoChiTieuchoDV.fk_dmDonViTinhDoan == (int)dmDonvi)
+                               .Where(l => l.loaiTieuChi.iD == id).DistinctBy(g => g.giaoChiTieuchoDV.fk_dmDonViChiDoan)
+                               .ToList();
+
+                ViewBag.giaoChiTieu = giaoChiTieu;
+            }
+                    
             tieuChi_nguoiDung tieuChi_nguoiDung = new tieuChi_nguoiDung()
             {
                 dm_DonVi = dm,
@@ -253,47 +332,47 @@ namespace WebApplication1.Controllers
                             {
                                 if (l.Already == true)
                                 {
-                                    
-                                        if (giao.fk_dmDonViChiDoan == l.iD)
+                                    var giaochitieu = db.giaoChiTieuchoDVs.Where(x=>x.fk_dmDonViChiDoan==l.iD).ToList();
+                                        if(giaochitieu.Count>0)
+                                        //if (giao.fk_dmDonViChiDoan != l.iD)
                                         {
-                                            // có trong bảng giao chỉ tiêu không tạo mới
-                                        }
-                                        else
-                                        {
-                                            //không có trong bảng giao chỉ tiêu=> tạo mới
 
-                                            var quanhedv = db.quanHeDonVis.Where(q => q.chiDoan == l.iD).ToList();
-                                            foreach (var h in quanhedv)
+                                    }
+                                    else
+                                    {
+                                        //không có trong bảng giao chỉ tiêu=> tạo mới
+                                        Console.WriteLine(l.iD);
+                                        var quanhedv = db.quanHeDonVis.Where(q => q.chiDoan == l.iD).ToList();
+                                        foreach (var h in quanhedv)
+                                        {
+                                            giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
+                                            newGiao.fk_chiTieu = chi.iD;
+                                            newGiao.fk_dmDonViChiDoan = l.iD;
+                                            newGiao.fk_dmDonViThanhDoan = h.thanhDoan;
+                                            newGiao.fk_dmDonViTinhDoan = h.tinhDoan;
+                                            db.giaoChiTieuchoDVs.Add(newGiao);
+                                            db.SaveChanges();
+                                            var chitiet = db.chiTietChiTieux.Where(x => x.fk_loaiChiTieu == chi.iD).ToList();
+                                            var maxDiem = 0;
+                                            foreach (var ct in chitiet)
                                             {
-                                                giaoChiTieuchoDV newGiao = new giaoChiTieuchoDV();
-                                                newGiao.fk_chiTieu = chi.iD;
-                                                newGiao.fk_dmDonViChiDoan = l.iD;
-                                                newGiao.fk_dmDonViThanhDoan = h.thanhDoan;
-                                                newGiao.fk_dmDonViTinhDoan = h.tinhDoan;
-                                                db.giaoChiTieuchoDVs.Add(newGiao);
-                                                db.SaveChanges();
-                                                var chitiet = db.chiTietChiTieux.Where(x => x.fk_loaiChiTieu == chi.iD).ToList();
-                                                var maxDiem = 0;
-                                                foreach (var ct in chitiet)
+                                                if (maxDiem < ct.diem)
                                                 {
-                                                    if (maxDiem < ct.diem)
-                                                    {
-                                                        maxDiem = ct.diem;
-                                                    }
+                                                    maxDiem = ct.diem;
                                                 }
-                                                //tạo bảng điểm
-                                                bangDiem newBang = new bangDiem();
-                                                newBang.fk_giaoChiTieu = newGiao.id;
-                                                newBang.diemCoDinh = maxDiem;
-                                                newBang.diemChiDoan = 0;
-                                                newBang.diemThanhDoan = 0;
-                                                newBang.diemTinhDoan = 0;
-                                                newBang.trangThai = 0;
-                                                db.bangDiems.Add(newBang);
-                                                db.SaveChanges();
                                             }
+                                            //tạo bảng điểm
+                                            bangDiem newBang = new bangDiem();
+                                            newBang.fk_giaoChiTieu = newGiao.id;
+                                            newBang.diemCoDinh = maxDiem;
+                                            newBang.diemChiDoan = 0;
+                                            newBang.diemThanhDoan = 0;
+                                            newBang.diemTinhDoan = 0;
+                                            newBang.trangThai = 0;
+                                            db.bangDiems.Add(newBang);
+                                            db.SaveChanges();
                                         }
-                                    
+                                    }
                                 }
                                 else
                                 {
@@ -338,6 +417,7 @@ namespace WebApplication1.Controllers
                                             }
                                         }
                                     }
+                                    Console.WriteLine(l.iD);
                                     if (giao.fk_dmDonViChiDoan == l.iD)
                                     {
                                         var removegiaochitieu1 = db.giaoChiTieuchoDVs.Where(g => g.fk_chiTieu == chi.iD).ToList();

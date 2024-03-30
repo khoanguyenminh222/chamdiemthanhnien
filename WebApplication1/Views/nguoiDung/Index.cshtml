@@ -12,7 +12,7 @@
     <title>Index</title>
 </head>
 <body>
-    @Session["donvi"]
+    <h1>Chấm điểm</h1>
     @using (Html.BeginForm())
     {
         <table>
@@ -111,10 +111,11 @@
                             <td rowspan="@items.Count"><div style="width:300px">@group.Key.ten</div></td>
                             <td>@items[0].chiTietChiTieu.noiDung</td>
                             <td>@items[0].chiTietChiTieu.diem</td>
+                            @* Session 1 *@
                             @if ((int)Session["donvi"] == 1)
                             {
                                 <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemChiDoan" value="@items[0].bangDiem.diemChiDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 4)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemThanhDoan
@@ -126,7 +127,7 @@
                                         0
                                     </td>
                                 }
-                                if (items[0].bangDiem.trangThai >= 3)
+                                if (items[0].bangDiem.trangThai >= 6)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemTinhDoan
@@ -138,87 +139,7 @@
                                         0
                                     </td>
                                 }
-                            }
-                            @if ((int)Session["donvi"] == 2)
-                            {
-                                if (items[0].bangDiem.trangThai >= 1)
-                                {
-                                    <td rowspan="@items.Count">
-                                        @items[0].bangDiem.diemChiDoan
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td rowspan="@items.Count">
-                                        0
-                                    </td>
-                                }
-                                <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemThanhDoan" value="@items[0].bangDiem.diemThanhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
-                                if (items[0].bangDiem.trangThai >= 3)
-                                {
-                                    <td rowspan="@items.Count">
-                                        @items[0].bangDiem.diemTinhDoan
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td rowspan="@items.Count">
-                                        0
-                                    </td>
-                                }
-                            }
-                            @if ((int)Session["donvi"] == 3)
-                            {
-                                if (items[0].bangDiem.trangThai >= 1)
-                                {
-                                    <td rowspan="@items.Count">
-                                        @items[0].bangDiem.diemChiDoan
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td rowspan="@items.Count">
-                                        0
-                                    </td>
-                                }
-                                if (items[0].bangDiem.trangThai >= 2)
-                                {
-                                    <td rowspan="@items.Count">
-                                        @items[0].bangDiem.diemThanhDoan
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td rowspan="@items.Count">
-                                        0
-                                    </td>
-                                }
-                                <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemTinhDoan" value="@items[0].bangDiem.diemTinhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
-                            }
-                            <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
-                            @if ((int)Session["donvi"] == 3)
-                            {
-                                if (items[0].bangDiem.trangThai >= 1)
-                                {
-                                    <td rowspan="@items.Count" style="text-align:center">
-                                        <textarea cols="10" rows="5" class="form-control">@items[0].bangDiem.ycMinhChung</textarea>
-                                        @if (items[0].bangDiem.hinhAnh != null)
-                                        {
-                                            var base64 = Convert.ToBase64String(items[0].bangDiem.hinhAnh);
-                                            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
-                                            <img class="text-center" style="object-fit:cover; width:96px; height:96px" id="@items[0].bangDiem.id" src="@imgsrc" onclick="imgClick(@items[0].bangDiem.id)" />
-                                        }
-
-
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td rowspan="@items.Count"></td>
-                                }
-                            }
-                            else
-                            {
+                                <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
                                 <td rowspan="@items.Count" style="text-align:center">
                                     <textarea cols="10" rows="5" class="form-control" name="dataBangDiems[@count].bangDiem.ycMinhChung">@items[0].bangDiem.ycMinhChung</textarea>
                                     @if (items[0].bangDiem.hinhAnh != null)
@@ -236,18 +157,7 @@
                                                onchange="document.getElementById(@items[0].bangDiem.id).src = window.URL.createObjectURL(this.files[0])">
                                     }
                                 </td>
-                            }
-
-
-                            @if ((int)Session["donvi"] == 3 )
-                            {
-                                <td rowspan="@items.Count">
-                                    <textarea rows="5" class="form-control" name="dataBangDiems[@count].bangDiem.yKienPhanHoi">@items[0].bangDiem.yKienPhanHoi</textarea>
-                                </td>
-                            }
-                            else
-                            {
-                                if (@items[0].bangDiem.trangThai == 3)
+                                if (@items[0].bangDiem.trangThai == 6)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.yKienPhanHoi
@@ -258,17 +168,151 @@
                                     <td rowspan="@items.Count">
                                     </td>
                                 }
+                                <td rowspan="@items.Count">
+                                    <textarea style="width:100px" rows="2" class="form-control" name="dataBangDiems[@count].bangDiem.banPhuTrach">@items[0].bangDiem.banPhuTrach</textarea>
+                                </td>
+
+                                <td rowspan="@items.Count">
+                                    @((items[0].bangDiem.thoiGian != null) ? items[0].bangDiem.thoiGian.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
+                            }
+                            @* Session 2 *@
+                            @if ((int)Session["donvi"] == 2)
+                            {
+                                if (items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.diemChiDoan
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                        0
+                                    </td>
+                                }
+                                <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemThanhDoan" value="@items[0].bangDiem.diemThanhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
+                                if (items[0].bangDiem.trangThai >= 6)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.diemTinhDoan
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                        0
+                                    </td>
+                                }
+                                <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
+                                if (items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count" style="text-align:center">
+                                        <textarea cols="10" rows="5" class="form-control" readonly>@items[0].bangDiem.ycMinhChung</textarea>
+                                        @if (items[0].bangDiem.hinhAnh != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(items[0].bangDiem.hinhAnh);
+                                            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                                            <img class="text-center" style="object-fit:cover; width:96px; height:96px" id="@items[0].bangDiem.id" src="@imgsrc" onclick="imgClick(@items[0].bangDiem.id)" />
+                                        }
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count"></td>
+                                }
+                                if (@items[0].bangDiem.trangThai == 6)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.yKienPhanHoi
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                    </td>
+                                }
+                                if (@items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count">
+                                        <textarea style="width:100px" rows="2" class="form-control" name="dataBangDiems[@count].bangDiem.banPhuTrach">@items[0].bangDiem.banPhuTrach</textarea>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                    </td>
+                                }
+                                <td rowspan="@items.Count">
+                                    @((items[0].bangDiem.thoiGian != null) ? items[0].bangDiem.thoiGian.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
 
                             }
-                            <td rowspan="@items.Count">
-                                <textarea style="width:100px" rows="2" class="form-control" name="dataBangDiems[@count].bangDiem.banPhuTrach">@items[0].bangDiem.banPhuTrach</textarea>
-                            </td>
+                            @* Session 3 *@
+                            @if ((int)Session["donvi"] == 3)
+                            {
+                                if (items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.diemChiDoan
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                        0
+                                    </td>
+                                }
+                                if (items[0].bangDiem.trangThai >= 4)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.diemThanhDoan
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count">
+                                        0
+                                    </td>
+                                }
+                                <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemTinhDoan" value="@items[0].bangDiem.diemTinhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
+                                <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
+                                if (items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count" style="text-align:center">
+                                        <textarea cols="10" rows="5" class="form-control" readonly>@items[0].bangDiem.ycMinhChung</textarea>
+                                        @if (items[0].bangDiem.hinhAnh != null)
+                                        {
+                                            var base64 = Convert.ToBase64String(items[0].bangDiem.hinhAnh);
+                                            var imgsrc = string.Format("data:image/gif;base64,{0}", base64);
+                                            <img class="text-center" style="object-fit:cover; width:96px; height:96px" id="@items[0].bangDiem.id" src="@imgsrc" onclick="imgClick(@items[0].bangDiem.id)" />
+                                        }
 
-                            <td rowspan="@items.Count">
-                                @((items[0].bangDiem.thoiGian != null) ? items[0].bangDiem.thoiGian.Value.ToString("dd/MM/yyyy") : "")
-                            </td>
 
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count"></td>
+                                }
+                                <td rowspan="@items.Count">
+                                    <textarea rows="5" class="form-control" name="dataBangDiems[@count].bangDiem.yKienPhanHoi">@items[0].bangDiem.yKienPhanHoi</textarea>
+                                </td>
+                                if (items[0].bangDiem.trangThai >= 2)
+                                {
+                                    <td rowspan="@items.Count">
+                                        @items[0].bangDiem.banPhuTrach
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td rowspan="@items.Count"></td>
+                                }
 
+                                <td rowspan="@items.Count">
+                                    @((items[0].bangDiem.thoiGian != null) ? items[0].bangDiem.thoiGian.Value.ToString("dd/MM/yyyy") : "")
+                                </td>
+                            }
                         </tr>
                         for (int index = 1; index < items.Count; index++)
                         {
@@ -283,75 +327,86 @@
                 <tfoot>
                     <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
                     <tr>
-                        @foreach (var item in Model.dataBangDiems)
+
+                        @if ((int)Session["donvi"] == 1)
                         {
-                            if ((int)Session["donvi"] == 1)
+                            bool hasItemWithTrangThai = false;
+                            foreach (var item in Model.dataBangDiems)
                             {
-                                if (item.bangDiem.trangThai >= 1)
+
+                                if (item.bangDiem.trangThai == 0 || item.bangDiem.trangThai==1)
                                 {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
-                                    </td>
-                                    break;
+                                    hasItemWithTrangThai = true;
+                                    break; // Nếu tìm thấy một mục có trangThai == 0, thoát khỏi vòng lặp
                                 }
-                                if (item.bangDiem.trangThai == 0)
-                                {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
-                                    </td>
-                                    break;
-                                }
+
                             }
-                            if ((int)Session["donvi"] == 2)
+                            if (hasItemWithTrangThai)
                             {
-                                if (item.bangDiem.trangThai < 1)
-                                {
-                                    <td>
-                                        <button disabled type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
-                                    </td>
-                                    break;
-                                }
-                                if (item.bangDiem.trangThai == 1)
-                                {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
-                                    </td>
-                                    break;
-                                }
-                                if (item.bangDiem.trangThai >= 2)
-                                {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
-                                    </td>
-                                    break;
-                                }
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
+                                </td>
                             }
-                            if ((int)Session["donvi"] == 3)
+                            else
                             {
-                                if (item.bangDiem.trangThai < 2)
-                                {
-                                    <td>
-                                        <button disabled type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
-                                    </td>
-                                    break;
-                                }
-                                if (item.bangDiem.trangThai == 2)
-                                {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
-                                    </td>
-                                    break;
-                                }
-                                if (item.bangDiem.trangThai >= 3)
-                                {
-                                    <td>
-                                        <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
-                                    </td>
-                                    break;
-                                }
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
+                                </td>
                             }
                         }
+                        @if ((int)Session["donvi"] == 2)
+                        {
+                            bool hasItemWithTrangThai = false;
+                            foreach (var item in Model.dataBangDiems)
+                            {
 
+                                if (item.bangDiem.trangThai == 2 || item.bangDiem.trangThai == 3)
+                                {
+                                    hasItemWithTrangThai = true;
+                                    break; // Nếu tìm thấy một mục có trangThai == 2, thoát khỏi vòng lặp
+                                }
+
+                            }
+                            if (hasItemWithTrangThai)
+                            {
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
+                                </td>
+                            }
+                        }
+                        @if ((int)Session["donvi"] == 3)
+                        {
+                            bool hasItemWithTrangThai = false;
+                            foreach (var item in Model.dataBangDiems)
+                            {
+
+                                if (item.bangDiem.trangThai == 4 || item.bangDiem.trangThai == 5)
+                                {
+                                    hasItemWithTrangThai = true;
+                                    break; // Nếu tìm thấy một mục có trangThai == 2, thoát khỏi vòng lặp
+                                }
+
+                            }
+                            if (hasItemWithTrangThai)
+                            {
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
+                                </td>
+                            }
+
+                        }
                     </tr>
 
                 </tfoot>
@@ -403,7 +458,7 @@
     function urlify(text) {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function (url) {
-            return '<a href="' + url + '">' + url + '</a>';
+            return '<a target="_blank" href="' + url + '">' + url + '</a>';
         })
     }
     $("table .trTable .tdDanhGia").each(function (i, e) {

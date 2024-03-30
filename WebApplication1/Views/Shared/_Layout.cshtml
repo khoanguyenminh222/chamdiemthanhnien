@@ -13,17 +13,13 @@
 
             @if ((int)Session["donvi"] == 3 || (bool)Session["cumTruong"] == true)
             {
-                @Html.ActionLink("Bảng điểm", "Index", "bangDiem", new { area = "" }, new { @class = "navbar-brand" })
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li>@Html.ActionLink("Loại tiêu chí", "Index", "loaiTieuChi", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Nhóm chỉ tiêu", "Index", "nhomChiTieu", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Chỉ tiêu", "Index", "chiTieu", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Chi tiết chỉ tiêu", "Index", "chiTietChiTieu", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Giao tiêu chí", "Index", "loaiTieuChi", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Chấm điểm", "Index", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                     <ul class="navbar-nav flex-grow-1 align-items-center justify-content-end">
@@ -39,10 +35,6 @@
                         @if ((int)Session["donvi"] == 3)
                         {
                             <li class="text-white nav-link">Đơn vị: Tỉnh đoàn</li>
-                        }
-                        @if ((int)Session["donvi"] == 4)
-                        {
-                            <li class="text-white nav-link">Đơn vị: admin</li>
                         }
                         <li class="text-white nav-link">@Html.ActionLink("Đăng xuất", "logout", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
@@ -64,10 +56,6 @@
                         @if ((int)Session["donvi"] == 3)
                         {
                             <li class="text-white nav-link">Đơn vị: Tỉnh đoàn</li>
-                        }
-                        @if ((int)Session["donvi"] == 4)
-                        {
-                            <li class="text-white nav-link">Đơn vị: admin</li>
                         }
                         <li class="text-white nav-link">@Html.ActionLink("Đăng xuất", "logout", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
