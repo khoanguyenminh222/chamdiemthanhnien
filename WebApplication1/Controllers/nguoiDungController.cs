@@ -116,43 +116,54 @@ namespace WebApplication1.Controllers
                     {
                         foreach (var item in data.dataBangDiems)
                         {
+                            
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
-                            updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
-                            updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
-                            updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
-                            if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                            if(updateBangDiem.trangThai != 3)
                             {
-                                // Đọc dữ liệu file thành byte array
-                                using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
+                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
                                 {
-                                    updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                    // Đọc dữ liệu file thành byte array
+                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                    {
+                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                    }
                                 }
+                                db.SaveChanges();
+                                TempData["message"] = "update";
                             }
-                            db.SaveChanges();
+                            
                         }
-                        TempData["message"] = "update";
+                        
                     }
                     if ((int)Session["donvi"] == 2)
                     {
                         foreach (var item in data.dataBangDiems)
                         {
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
-                            updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
-                            updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
-                            db.SaveChanges();
+                            if (updateBangDiem.trangThai != 3)
+                            {
+                                updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
+                                db.SaveChanges();
+                                TempData["message"] = "update";
+                            }
                         }
-                        TempData["message"] = "update";
                     }
                     if ((int)Session["donvi"] == 3)
                     {
                         foreach (var item in data.dataBangDiems)
                         {
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
-                            updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
-                            updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
-                            db.SaveChanges();
+                            if (updateBangDiem.trangThai != 3)
+                            {
+                                updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
+                                updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
+                                db.SaveChanges();
+                                TempData["message"] = "update";
+                            }
                         }
-                        TempData["message"] = "update";
                     }
                     
                     return RedirectToAction("Index");
@@ -163,9 +174,31 @@ namespace WebApplication1.Controllers
                         if ((int)Session["donvi"] == 1)
                         {
                             
-                            if (updateBangDiem.trangThai == 1 || updateBangDiem.trangThai==0)
+                            if (updateBangDiem.trangThai==0 || updateBangDiem.trangThai == 1)
                             {
                                 updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
+                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
+                                DateTime date = DateTime.Today;
+                                updateBangDiem.thoiGian = date.Date;
+                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
+                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
+                                {
+                                    // Đọc dữ liệu file thành byte array
+                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
+                                    {
+                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
+                                    }
+                                }
+                                updateBangDiem.trangThai = 1;
+                                db.SaveChanges();
+                                TempData["message"] = "send";
+                            }
+                        }
+                        else if((int)Session["donvi"] == 2)
+                        {
+                            if(updateBangDiem.trangThai == 1 || updateBangDiem.trangThai==2)
+                            {
+                                updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
                                 DateTime date = DateTime.Today;
                                 updateBangDiem.thoiGian = date.Date;
@@ -183,37 +216,15 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "send";
                             }
                         }
-                        else if((int)Session["donvi"] == 2)
-                        {
-                            if(updateBangDiem.trangThai == 2 || updateBangDiem.trangThai==3)
-                            {
-                                updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
-                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
-                                DateTime date = DateTime.Today;
-                                updateBangDiem.thoiGian = date.Date;
-                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
-                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
-                                {
-                                    // Đọc dữ liệu file thành byte array
-                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
-                                    {
-                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
-                                    }
-                                }
-                                updateBangDiem.trangThai = 4;
-                                db.SaveChanges();
-                                TempData["message"] = "send";
-                            }
-                        }
                         else if((int)Session["donvi"] == 3)
                         {
-                            if (updateBangDiem.trangThai == 4 || updateBangDiem.trangThai == 5)
+                            if (updateBangDiem.trangThai == 2 || updateBangDiem.trangThai == 3)
                             {
                                 updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
                                 DateTime date = DateTime.Today;
                                 updateBangDiem.thoiGian = date.Date;
                                 updateBangDiem.yKienPhanHoi = item.bangDiem.yKienPhanHoi;
-                                updateBangDiem.trangThai = 6;
+                                updateBangDiem.trangThai = 3;
                                 db.SaveChanges();
 
                                 TempData["message"] = "send";

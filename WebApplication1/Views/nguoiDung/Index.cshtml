@@ -115,7 +115,7 @@
                             @if ((int)Session["donvi"] == 1)
                             {
                                 <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemChiDoan" value="@items[0].bangDiem.diemChiDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
-                                if (items[0].bangDiem.trangThai >= 4)
+                                if (items[0].bangDiem.trangThai >= 2)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemThanhDoan
@@ -127,7 +127,7 @@
                                         0
                                     </td>
                                 }
-                                if (items[0].bangDiem.trangThai >= 6)
+                                if (items[0].bangDiem.trangThai >= 3)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemTinhDoan
@@ -157,7 +157,7 @@
                                                onchange="document.getElementById(@items[0].bangDiem.id).src = window.URL.createObjectURL(this.files[0])">
                                     }
                                 </td>
-                                if (@items[0].bangDiem.trangThai == 6)
+                                if (@items[0].bangDiem.trangThai == 3)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.yKienPhanHoi
@@ -179,7 +179,7 @@
                             @* Session 2 *@
                             @if ((int)Session["donvi"] == 2)
                             {
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemChiDoan
@@ -192,7 +192,7 @@
                                     </td>
                                 }
                                 <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemThanhDoan" value="@items[0].bangDiem.diemThanhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
-                                if (items[0].bangDiem.trangThai >= 6)
+                                if (items[0].bangDiem.trangThai >= 3)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemTinhDoan
@@ -205,7 +205,7 @@
                                     </td>
                                 }
                                 <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count" style="text-align:center">
                                         <textarea cols="10" rows="5" class="form-control" readonly>@items[0].bangDiem.ycMinhChung</textarea>
@@ -221,7 +221,7 @@
                                 {
                                     <td rowspan="@items.Count"></td>
                                 }
-                                if (@items[0].bangDiem.trangThai == 6)
+                                if (@items[0].bangDiem.trangThai == 3)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.yKienPhanHoi
@@ -232,10 +232,10 @@
                                     <td rowspan="@items.Count">
                                     </td>
                                 }
-                                if (@items[0].bangDiem.trangThai >= 2)
+                                if (@items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count">
-                                        <textarea style="width:100px" rows="2" class="form-control" name="dataBangDiems[@count].bangDiem.banPhuTrach">@items[0].bangDiem.banPhuTrach</textarea>
+                                        <textarea style="width:100px" rows="2" class="form-control" readonly>@items[0].bangDiem.banPhuTrach</textarea>
                                     </td>
                                 }
                                 else
@@ -251,7 +251,7 @@
                             @* Session 3 *@
                             @if ((int)Session["donvi"] == 3)
                             {
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemChiDoan
@@ -263,7 +263,7 @@
                                         0
                                     </td>
                                 }
-                                if (items[0].bangDiem.trangThai >= 4)
+                                if (items[0].bangDiem.trangThai >= 2)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.diemThanhDoan
@@ -277,7 +277,7 @@
                                 }
                                 <td rowspan="@items.Count"><input type="number" class="form-control" name="dataBangDiems[@count].bangDiem.diemTinhDoan" value="@items[0].bangDiem.diemTinhDoan" min="0" max="@items[0].bangDiem.diemCoDinh" required /></td>
                                 <td rowspan="@items.Count" class="tdDanhGia"><div class="divDanhGia" style="width:350px; overflow-x:auto">@group.Key.ycDanhGiaKQ</div></td>
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count" style="text-align:center">
                                         <textarea cols="10" rows="5" class="form-control" readonly>@items[0].bangDiem.ycMinhChung</textarea>
@@ -298,7 +298,7 @@
                                 <td rowspan="@items.Count">
                                     <textarea rows="5" class="form-control" name="dataBangDiems[@count].bangDiem.yKienPhanHoi">@items[0].bangDiem.yKienPhanHoi</textarea>
                                 </td>
-                                if (items[0].bangDiem.trangThai >= 2)
+                                if (items[0].bangDiem.trangThai >= 1)
                                 {
                                     <td rowspan="@items.Count">
                                         @items[0].bangDiem.banPhuTrach
@@ -325,7 +325,7 @@
                     }
                 </tbody>
                 <tfoot>
-                    <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
+                    
                     <tr>
 
                         @if ((int)Session["donvi"] == 1)
@@ -334,7 +334,7 @@
                             foreach (var item in Model.dataBangDiems)
                             {
 
-                                if (item.bangDiem.trangThai == 0 || item.bangDiem.trangThai==1)
+                                if (item.bangDiem.trangThai == 0)
                                 {
                                     hasItemWithTrangThai = true;
                                     break; // Nếu tìm thấy một mục có trangThai == 0, thoát khỏi vòng lặp
@@ -343,15 +343,18 @@
                             }
                             if (hasItemWithTrangThai)
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
                                 </td>
                             }
                             else
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
                                 </td>
+
                             }
                         }
                         @if ((int)Session["donvi"] == 2)
@@ -360,24 +363,29 @@
                             foreach (var item in Model.dataBangDiems)
                             {
 
-                                if (item.bangDiem.trangThai == 2 || item.bangDiem.trangThai == 3)
+                                if (item.bangDiem.trangThai == 1)
                                 {
                                     hasItemWithTrangThai = true;
-                                    break; // Nếu tìm thấy một mục có trangThai == 2, thoát khỏi vòng lặp
+                                    break; // Nếu tìm thấy một mục có trangThai == 1, thoát khỏi vòng lặp
                                 }
+
 
                             }
                             if (hasItemWithTrangThai)
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
                                 </td>
                             }
                             else
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
+
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
                                 </td>
+
                             }
                         }
                         @if ((int)Session["donvi"] == 3)
@@ -386,21 +394,25 @@
                             foreach (var item in Model.dataBangDiems)
                             {
 
-                                if (item.bangDiem.trangThai == 4 || item.bangDiem.trangThai == 5)
+                                if (item.bangDiem.trangThai == 2)
                                 {
                                     hasItemWithTrangThai = true;
-                                    break; // Nếu tìm thấy một mục có trangThai == 2, thoát khỏi vòng lặp
+                                    break; // Nếu tìm thấy một mục có trangThai == 3, thoát khỏi vòng lặp
                                 }
 
                             }
                             if (hasItemWithTrangThai)
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
+
                                 <td>
-                                    <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
+                                    <button type="submit" class="btn btn-success" name="submit" value="send">Phản hồi</button>
                                 </td>
                             }
                             else
                             {
+                                <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
+
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="update">Cập nhật</button>
                                 </td>
