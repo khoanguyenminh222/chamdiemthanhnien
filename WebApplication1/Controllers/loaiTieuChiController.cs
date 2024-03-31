@@ -20,11 +20,12 @@ namespace WebApplication1.Controllers
         // GET: loaiTieuChi
         public ActionResult Index(int? year)
         {
-            int dmDonvi = (int)Session["dm_DonVi"];
-            if (dmDonvi == null)
+            
+            if (Session["dm_DonVi"] == null)
             {
                 return RedirectToAction("Login", "nguoiDung");
             }
+            int dmDonvi = (int)Session["dm_DonVi"];
             var yearNow = DateTime.Now.Year;
             List<int> listYear = new List<int>();
             for (int ls = yearNow; ls >= 2010; ls--)

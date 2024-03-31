@@ -325,7 +325,7 @@
                     }
                 </tbody>
                 <tfoot>
-                    
+
                     <tr>
 
                         @if ((int)Session["donvi"] == 1)
@@ -344,6 +344,8 @@
                             if (hasItemWithTrangThai)
                             {
                                 <button style="position: fixed; top:50%; right: 0px;" type="submit" name="submit" class="btn btn-outline-success" value="update">Lưu</button>
+
+
                                 <td>
                                     <button type="submit" class="btn btn-success" name="submit" value="send">Gửi lên đơn vị</button>
                                 </td>
@@ -450,11 +452,25 @@
             alert('Lưu thành công');
         </script>
     }
+    if (Model.MyMessage == "update1")
+    {
+        <script>
+            // Hiển thị cửa sổ cảnh báo với nội dung là giá trị của myMessage
+            alert('Bảng điểm đã được phản hồi không thể cập nhật');
+        </script>
+    }
     if (Model.MyMessage == "send")
     {
         <script>
             // Hiển thị cửa sổ cảnh báo với nội dung là giá trị của myMessage
             alert('Gửi thành công');
+        </script>
+    }
+    if (Model.MyMessage == "send1")
+    {
+        <script>
+            // Hiển thị cửa sổ cảnh báo với nội dung là giá trị của myMessage
+            alert('Bảng điểm đã được phản hồi không thể gửi');
         </script>
     }
     if (Model.MyMessage == "fail")
@@ -465,6 +481,7 @@
         </script>
     }
 }
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script>
     function urlify(text) {

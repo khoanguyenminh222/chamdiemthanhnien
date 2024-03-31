@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
 using WebApplication1.Models;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace WebApplication1.Controllers
 {
@@ -30,7 +31,7 @@ namespace WebApplication1.Controllers
             Console.WriteLine(nguoidung);
             if (nguoidung == null)
             {
-                var donvi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi ||x.thanhDoan == (int)dmDonvi).FirstOrDefault();
+                var donvi = db.quanHeDonVis.Where(x => x.tinhDoan == (int)dmDonvi || x.thanhDoan == (int)dmDonvi).FirstOrDefault();
                 nguoidung = donvi?.chiDoan;
             }
             var yearNow = DateTime.Now.Year;
@@ -98,16 +99,16 @@ namespace WebApplication1.Controllers
                 dataBangDiems = dataDiem
             };
             var listnguoiDung = new SelectList(donviCon, "id", "ten");
-            
+
             ViewBag.listnguoiDung = listnguoiDung;
-            
+
             return View(listdataBangDiem);
         }
 
         //post index
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult chamDiem(listdataBangDiem data,string submit)
+        public ActionResult chamDiem(listdataBangDiem data, string submit)
         {
             switch (submit)
             {
@@ -116,9 +117,9 @@ namespace WebApplication1.Controllers
                     {
                         foreach (var item in data.dataBangDiems)
                         {
-                            
+
                             var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
-                            if(updateBangDiem.trangThai != 3)
+                            if (updateBangDiem.trangThai != 3)
                             {
                                 updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
@@ -134,9 +135,12 @@ namespace WebApplication1.Controllers
                                 db.SaveChanges();
                                 TempData["message"] = "update";
                             }
-                            
+                            if (TempData["message"] == null)
+                            {
+                                TempData["message"] = "update1";
+                            }
                         }
-                        
+                        return RedirectToAction("Index");
                     }
                     if ((int)Session["donvi"] == 2)
                     {
@@ -150,6 +154,11 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "update";
                             }
                         }
+                        if (TempData["message"] == null)
+                        {
+                            TempData["message"] = "update1";
+                        }
+                        return RedirectToAction("Index");
                     }
                     if ((int)Session["donvi"] == 3)
                     {
@@ -164,17 +173,21 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "update";
                             }
                         }
+                        if (TempData["message"] == null)
+                        {
+                            TempData["message"] = "update1";
+                        }
+                        return RedirectToAction("Index");
                     }
-                    
+                    TempData["message"] = "update1";
                     return RedirectToAction("Index");
                 case "send":
-                    foreach (var item in data.dataBangDiems)
+                    if ((int)Session["donvi"] == 1)
                     {
-                        var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
-                        if ((int)Session["donvi"] == 1)
+                        foreach (var item in data.dataBangDiems)
                         {
-                            
-                            if (updateBangDiem.trangThai==0 || updateBangDiem.trangThai == 1)
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                            if (updateBangDiem.trangThai == 0 || updateBangDiem.trangThai == 1)
                             {
                                 updateBangDiem.diemChiDoan = item.bangDiem.diemChiDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
@@ -194,9 +207,18 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "send";
                             }
                         }
-                        else if((int)Session["donvi"] == 2)
+                        if (TempData["message"] == null)
                         {
-                            if(updateBangDiem.trangThai == 1 || updateBangDiem.trangThai==2)
+                            TempData["message"] = "send1";
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    else if ((int)Session["donvi"] == 2)
+                    {
+                        foreach (var item in data.dataBangDiems)
+                        {
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
+                            if (updateBangDiem.trangThai == 1 || updateBangDiem.trangThai == 2)
                             {
                                 updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
                                 updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
@@ -216,8 +238,17 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "send";
                             }
                         }
-                        else if((int)Session["donvi"] == 3)
+                        if (TempData["message"] == null)
                         {
+                            TempData["message"] = "send1";
+                        }
+                        return RedirectToAction("Index");
+                    }
+                    else if ((int)Session["donvi"] == 3)
+                    {
+                        foreach (var item in data.dataBangDiems)
+                        {
+                            var updateBangDiem = db.bangDiems.Find(item.bangDiem.id);
                             if (updateBangDiem.trangThai == 2 || updateBangDiem.trangThai == 3)
                             {
                                 updateBangDiem.diemTinhDoan = item.bangDiem.diemTinhDoan;
@@ -230,15 +261,20 @@ namespace WebApplication1.Controllers
                                 TempData["message"] = "send";
                             }
                         }
-                        
+                        if (TempData["message"] == null)
+                        {
+                            TempData["message"] = "send1";
+                        }
+                        return RedirectToAction("Index");
                     }
+                    TempData["message"] = "send1";
                     return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
         }
 
-            //Login
-            public ActionResult Login()
+        //Login
+        public ActionResult Login()
         {
             return View();
         }
@@ -272,7 +308,7 @@ namespace WebApplication1.Controllers
                     Session["name"] = data.FirstOrDefault().taiKhoan.ten;
                     Session["donvi"] = data.FirstOrDefault().nguoiDung.fk_donVi;
                     Session["cumTruong"] = data.FirstOrDefault().dm_DonVi.cumTruong;
-                    if ((int)Session["donvi"] == 3 || (bool)Session["cumTruong"]==true)
+                    if ((int)Session["donvi"] == 3 || (bool)Session["cumTruong"] == true)
                     {
                         return RedirectToAction("Index", "loaiTieuChi");
                     }
@@ -298,113 +334,113 @@ namespace WebApplication1.Controllers
         //public ActionResult chamDiem([Bind(Include = "id,fk_giaoChiTieu,diem,ycMinhChung,thoiGian,banPhuTrach")] bangDiem bangDiem,
         //                              int iD_chiTieu, string submit, HttpPostedFileBase hinhAnh)
         //{
-            //var id = Session["idLoaiTieuChi"];
-            //switch (submit)
-            //{
-            //    case "submit":
-            //        //update bảng điểm
-            //        bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
-            //        bdExisted.diem = bangDiem.diem;
-            //        bdExisted.ycMinhChung = bangDiem.ycMinhChung;
-            //        if (hinhAnh != null)
-            //        {
-            //            bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
-            //            hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
-            //            Console.WriteLine(bangDiem.hinhAnh);
-            //            bdExisted.hinhAnh = bangDiem.hinhAnh;
-            //        }
-            //        DateTime date = DateTime.Today;
-            //        bdExisted.thoiGian = date;
-            //        bdExisted.banPhuTrach = bangDiem.banPhuTrach;
-            //        db.SaveChanges();
+        //var id = Session["idLoaiTieuChi"];
+        //switch (submit)
+        //{
+        //    case "submit":
+        //        //update bảng điểm
+        //        bangDiem bdExisted = db.bangDiems.Find(bangDiem.id);
+        //        bdExisted.diem = bangDiem.diem;
+        //        bdExisted.ycMinhChung = bangDiem.ycMinhChung;
+        //        if (hinhAnh != null)
+        //        {
+        //            bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
+        //            hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
+        //            Console.WriteLine(bangDiem.hinhAnh);
+        //            bdExisted.hinhAnh = bangDiem.hinhAnh;
+        //        }
+        //        DateTime date = DateTime.Today;
+        //        bdExisted.thoiGian = date;
+        //        bdExisted.banPhuTrach = bangDiem.banPhuTrach;
+        //        db.SaveChanges();
 
-            //        //kiếm đơn vị cha
-            //        var donVi = Session["dm_DonVi"];
-            //        var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
-            //        if (quanHeDonVi == null)
-            //        {
-            //            // nếu như không có đơn vị cha thì cập nhật điẻm
-            //            bangDiem bd = db.bangDiems.Find(bangDiem.id);
-            //            bd.diem = bangDiem.diem;
-            //            bd.ycMinhChung = bangDiem.ycMinhChung;
-            //            if (hinhAnh != null)
-            //            {
-                            
-            //                Console.WriteLine(bangDiem.hinhAnh);
-            //                bd.hinhAnh = bangDiem.hinhAnh;
-            //            }
-            //            bd.thoiGian = date;
-            //            bd.banPhuTrach = bangDiem.banPhuTrach;
-            //            db.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            //tạo 1 giao chỉ tiêu cho đơn vị cha
-            //            giaoChiTieuchoDV giaoChiTieuchoDV = new giaoChiTieuchoDV();
-            //            giaoChiTieuchoDV.fk_chiTieu = iD_chiTieu;
-            //            giaoChiTieuchoDV.fk_dmDonVi = quanHeDonVi.donViCha;
-            //            db.giaoChiTieuchoDVs.Add(giaoChiTieuchoDV);
-            //            db.SaveChanges();
+        //        //kiếm đơn vị cha
+        //        var donVi = Session["dm_DonVi"];
+        //        var quanHeDonVi = db.quanHeDonVis.Where(q => q.donViCon == (int)donVi).FirstOrDefault();
+        //        if (quanHeDonVi == null)
+        //        {
+        //            // nếu như không có đơn vị cha thì cập nhật điẻm
+        //            bangDiem bd = db.bangDiems.Find(bangDiem.id);
+        //            bd.diem = bangDiem.diem;
+        //            bd.ycMinhChung = bangDiem.ycMinhChung;
+        //            if (hinhAnh != null)
+        //            {
 
-            //            //tạo bảng điểm
-            //            bangDiem bangDiem1 = new bangDiem();
-            //            bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
-            //            bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
-            //            if (hinhAnh != null)
-            //            {
-                            
-            //                Console.WriteLine(bangDiem.hinhAnh);
-            //                bangDiem1.hinhAnh = bangDiem.hinhAnh;
-            //            }
-            //            bangDiem1.thoiGian = date;
-            //            bangDiem1.banPhuTrach = bangDiem.banPhuTrach;
-            //            db.bangDiems.Add(bangDiem1);
-            //            db.SaveChanges();
-            //        }
-            //        return RedirectToAction("chamDiemLoaiTieuChi", new { id = id });
-            //    case "edit":
-            //        //update bảng điểm của chi đoàn
-            //        bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
-            //        bdExisted1.diem = bangDiem.diem;
-            //        bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
-            //        if (hinhAnh != null)
-            //        {
-            //            bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
-            //            hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
-            //            Console.WriteLine(bangDiem.hinhAnh);
-            //            bdExisted1.hinhAnh = bangDiem.hinhAnh;
-            //        }
-            //        DateTime date1 = DateTime.Today;
-            //        bdExisted1.thoiGian = date1;
-            //        bdExisted1.banPhuTrach = bangDiem.banPhuTrach;
-            //        db.SaveChanges();
+        //                Console.WriteLine(bangDiem.hinhAnh);
+        //                bd.hinhAnh = bangDiem.hinhAnh;
+        //            }
+        //            bd.thoiGian = date;
+        //            bd.banPhuTrach = bangDiem.banPhuTrach;
+        //            db.SaveChanges();
+        //        }
+        //        else
+        //        {
+        //            //tạo 1 giao chỉ tiêu cho đơn vị cha
+        //            giaoChiTieuchoDV giaoChiTieuchoDV = new giaoChiTieuchoDV();
+        //            giaoChiTieuchoDV.fk_chiTieu = iD_chiTieu;
+        //            giaoChiTieuchoDV.fk_dmDonVi = quanHeDonVi.donViCha;
+        //            db.giaoChiTieuchoDVs.Add(giaoChiTieuchoDV);
+        //            db.SaveChanges();
 
-            //        //update bảng điểm của các đon vị cha
-            //        var giaoChiTieuList = db.giaoChiTieuchoDVs.Where(g => g.fk_chiTieu == iD_chiTieu).ToList();
-            //        foreach(var bd in db.bangDiems)
-            //        {
-            //            foreach(var giao in giaoChiTieuList)
-            //            {
-            //                if (bd.fk_giaoChiTieu == giao.id)
-            //                {
-            //                    bd.ycMinhChung = bangDiem.ycMinhChung;
-            //                    if (hinhAnh != null)
-            //                    {
-                                    
-            //                        Console.WriteLine(bangDiem.hinhAnh);
-            //                        bd.hinhAnh = bangDiem.hinhAnh;
-            //                    }
-            //                    bd.thoiGian = date1;
-            //                    bd.banPhuTrach = bangDiem.banPhuTrach;
-            //                    db.Entry(bd).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
-            //                }
-            //            }
-            //        }
-            //        db.SaveChanges();
+        //            //tạo bảng điểm
+        //            bangDiem bangDiem1 = new bangDiem();
+        //            bangDiem1.fk_giaoChiTieu = giaoChiTieuchoDV.id;
+        //            bangDiem1.ycMinhChung = bangDiem.ycMinhChung;
+        //            if (hinhAnh != null)
+        //            {
 
-            //        return RedirectToAction("chamDiemLoaiTieuChi", new {id = id });
-            //}
-            //return RedirectToAction("Index");
+        //                Console.WriteLine(bangDiem.hinhAnh);
+        //                bangDiem1.hinhAnh = bangDiem.hinhAnh;
+        //            }
+        //            bangDiem1.thoiGian = date;
+        //            bangDiem1.banPhuTrach = bangDiem.banPhuTrach;
+        //            db.bangDiems.Add(bangDiem1);
+        //            db.SaveChanges();
+        //        }
+        //        return RedirectToAction("chamDiemLoaiTieuChi", new { id = id });
+        //    case "edit":
+        //        //update bảng điểm của chi đoàn
+        //        bangDiem bdExisted1 = db.bangDiems.Find(bangDiem.id);
+        //        bdExisted1.diem = bangDiem.diem;
+        //        bdExisted1.ycMinhChung = bangDiem.ycMinhChung;
+        //        if (hinhAnh != null)
+        //        {
+        //            bangDiem.hinhAnh = new byte[hinhAnh.ContentLength];
+        //            hinhAnh.InputStream.Read(bangDiem.hinhAnh, 0, hinhAnh.ContentLength);
+        //            Console.WriteLine(bangDiem.hinhAnh);
+        //            bdExisted1.hinhAnh = bangDiem.hinhAnh;
+        //        }
+        //        DateTime date1 = DateTime.Today;
+        //        bdExisted1.thoiGian = date1;
+        //        bdExisted1.banPhuTrach = bangDiem.banPhuTrach;
+        //        db.SaveChanges();
+
+        //        //update bảng điểm của các đon vị cha
+        //        var giaoChiTieuList = db.giaoChiTieuchoDVs.Where(g => g.fk_chiTieu == iD_chiTieu).ToList();
+        //        foreach(var bd in db.bangDiems)
+        //        {
+        //            foreach(var giao in giaoChiTieuList)
+        //            {
+        //                if (bd.fk_giaoChiTieu == giao.id)
+        //                {
+        //                    bd.ycMinhChung = bangDiem.ycMinhChung;
+        //                    if (hinhAnh != null)
+        //                    {
+
+        //                        Console.WriteLine(bangDiem.hinhAnh);
+        //                        bd.hinhAnh = bangDiem.hinhAnh;
+        //                    }
+        //                    bd.thoiGian = date1;
+        //                    bd.banPhuTrach = bangDiem.banPhuTrach;
+        //                    db.Entry(bd).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+        //                }
+        //            }
+        //        }
+        //        db.SaveChanges();
+
+        //        return RedirectToAction("chamDiemLoaiTieuChi", new {id = id });
+        //}
+        //return RedirectToAction("Index");
         //}
     }
 }

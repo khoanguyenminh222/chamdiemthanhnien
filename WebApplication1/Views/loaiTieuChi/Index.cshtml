@@ -21,56 +21,59 @@
         </div>
 
     }
-
-    <table class="table table-bordered">
-        <tr>
-            <th>
-                Loại tiêu chí
-            </th>
-            <th>
-                Tổng điểm
-            </th>
-            <th>
-                Đơn vị tiếp nhận
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var l in Model)
-        {
-            var biendem = 0;
-            <tr class="trTable">
-
-                <td>
-                    @Html.DisplayFor(model => l.ten)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => l.tongDiem)
-                </td>
-                <td class="tdDonVi">
-                    @foreach (var item in ViewBag.lsdm_donvi)
-                    {
-                        if (l.iD == item.loaiTieuChi.iD && biendem != item.dm_DonVi.iD)
-                        {
-                            <div>@item.dm_DonVi.nguoiDung.ten / @item.dm_DonVi.nguoiDung.donVi.ten</div>
-                            biendem = item.dm_DonVi.iD;
-                        }
-
-
-                    }
-                </td>
-                <td class="d-none">
-                    @Html.ActionLink("Thêm đơn vị", "AddDonVi", new { id = l.iD })
-                </td>
-                <td class="d-none">
-                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = l.iD })
-                </td>
-
+    @using (Html.BeginForm("checkAll", "loaiTieuChi", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Loại tiêu chí
+                </th>
+                <th>
+                    Tổng điểm
+                </th>
+                <th>
+                    Đơn vị tiếp nhận
+                </th>
+                <th></th>
             </tr>
-        }
+            @{
+                var count = 0;
+            }
+            @foreach (var l in Model)
+            {
+                var biendem = 0;
+                <tr class="trTable">
+                    <td>
+                        @Html.DisplayFor(model => l.ten)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => l.tongDiem)
+                    </td>
+                    <td class="tdDonVi">
+                        @foreach (var item in ViewBag.lsdm_donvi)
+                        {
+                            if (l.iD == item.loaiTieuChi.iD && biendem != item.dm_DonVi.iD)
+                            {
+                                <div>@item.dm_DonVi.nguoiDung.ten / @item.dm_DonVi.nguoiDung.donVi.ten</div>
+                                biendem = item.dm_DonVi.iD;
+                            }
 
 
+                        }
+                    </td>
+                    <td class="d-none">
+                        @Html.ActionLink("Thêm đơn vị", "AddDonVi", new { id = l.iD })
+                    </td>
+                    <td class="d-none">
+                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = l.iD })
+                    </td>
 
-    </table>
+                </tr>
+                count += 1;
+            }
+        </table>
+    }
 </body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -91,7 +94,7 @@
             } else {
                 $(this).next("td").next("td").removeClass("d-none");
             }
-            
+
         });
     });
 </script>
