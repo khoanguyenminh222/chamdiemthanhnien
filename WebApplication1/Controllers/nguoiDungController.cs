@@ -221,18 +221,9 @@ namespace WebApplication1.Controllers
                             if (updateBangDiem.trangThai == 1 || updateBangDiem.trangThai == 2)
                             {
                                 updateBangDiem.diemThanhDoan = item.bangDiem.diemThanhDoan;
-                                updateBangDiem.ycMinhChung = item.bangDiem.ycMinhChung;
                                 DateTime date = DateTime.Today;
                                 updateBangDiem.thoiGian = date.Date;
-                                updateBangDiem.banPhuTrach = item.bangDiem.banPhuTrach;
-                                if (item.bangDiem.HinhAnhFile != null && item.bangDiem.HinhAnhFile.ContentLength > 0)
-                                {
-                                    // Đọc dữ liệu file thành byte array
-                                    using (var binaryReader = new BinaryReader(item.bangDiem.HinhAnhFile.InputStream))
-                                    {
-                                        updateBangDiem.hinhAnh = binaryReader.ReadBytes(item.bangDiem.HinhAnhFile.ContentLength);
-                                    }
-                                }
+                                
                                 updateBangDiem.trangThai = 2;
                                 db.SaveChanges();
                                 TempData["message"] = "send";

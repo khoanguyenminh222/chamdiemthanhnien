@@ -11,8 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-
+    
     public partial class bangDiem
     {
         public int id { get; set; }
@@ -27,8 +26,7 @@ namespace WebApplication1.Models
         public string banPhuTrach { get; set; }
         public byte[] hinhAnh { get; set; }
         public Nullable<int> trangThai { get; set; }
-        public HttpPostedFileBase HinhAnhFile { get; set; }
-
+    
         public virtual giaoChiTieuchoDV giaoChiTieuchoDV { get; set; }
     }
 }

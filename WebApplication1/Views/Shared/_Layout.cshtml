@@ -36,6 +36,10 @@
                         {
                             <li class="text-white nav-link">Đơn vị: Tỉnh đoàn</li>
                         }
+                        @if ((bool)Session["cumTruong"] == true)
+                        {
+                            <li class="text-white nav-link">Cụm trưởng</li>
+                        }
                         <li class="text-white nav-link">@Html.ActionLink("Đăng xuất", "logout", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                 </div>

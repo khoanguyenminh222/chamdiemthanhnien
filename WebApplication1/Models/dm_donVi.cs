@@ -11,7 +11,7 @@ namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
-
+    
     public partial class dm_donVi
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,15 +25,13 @@ namespace WebApplication1.Models
             this.quanHeDonVis1 = new HashSet<quanHeDonVi>();
             this.quanHeDonVis2 = new HashSet<quanHeDonVi>();
         }
-
+    
         public int iD { get; set; }
         public int fk_nguoiQuanLy { get; set; }
         public Nullable<bool> cumTruong { get; set; }
         public string dienThoai { get; set; }
         public string diaChi { get; set; }
-
-        public bool Ischecked { get; set; }
-        public bool Already { get; set; } = true;
+    
         public virtual nguoiDung nguoiDung { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<taiKhoan> taiKhoans { get; set; }

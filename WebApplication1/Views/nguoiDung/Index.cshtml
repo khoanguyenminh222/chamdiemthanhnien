@@ -95,14 +95,14 @@
                         if (items[0].loaiTieuChi.iD != j)
                         {
                             <tr>
-                                <td colspan="11">@items[0].loaiTieuChi.iD. @items[0].loaiTieuChi.ten (@items[0].loaiTieuChi.tongDiem)</td>
+                                <td colspan="11">@(j+1). @items[0].loaiTieuChi.ten (@items[0].loaiTieuChi.tongDiem)</td>
                             </tr>
                             j = items[0].loaiTieuChi.iD;
                         }
                         if (items[0].nhomChiTieu.iD != x)
                         {
                             <tr>
-                                <td colspan="11">@items[0].nhomChiTieu.iD. @items[0].nhomChiTieu.ten (@items[0].nhomChiTieu.tongDiem)</td>
+                                <td colspan="11">@(x+1). @items[0].nhomChiTieu.ten (@items[0].nhomChiTieu.tongDiem)</td>
                             </tr>
                             x = items[0].nhomChiTieu.iD;
                         }
