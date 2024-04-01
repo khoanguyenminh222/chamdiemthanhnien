@@ -3,19 +3,19 @@
   "WorkspaceRootPath": "D:\\test_vn\\chamDiem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\controllers\\loaitieuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\loaitieuchicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\controllers\\nguoidungcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\views\\nguoidung\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|d:\\test_vn\\chamdiem\\webapplication1\\models\\dm_donvi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|D:\\test_vn\\chamDiem\\webapplication1\\models\\dm_donvi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D811E392-0F6D-49A3-BF93-790684D4D035}|WebApplication1\\WebApplication1.csproj|solutionrelative:webapplication1\\models\\dm_donvi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -29,11 +29,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "loaiTieuChiController.cs",
               "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\loaiTieuChiController.cs",
               "RelativeDocumentMoniker": "WebApplication1\\Controllers\\loaiTieuChiController.cs",
@@ -46,20 +46,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\Index.cshtml",
               "RelativeDocumentMoniker": "WebApplication1\\Views\\nguoiDung\\Index.cshtml",
               "ToolTip": "D:\\test_vn\\chamDiem\\WebApplication1\\Views\\nguoiDung\\Index.cshtml",
               "RelativeToolTip": "WebApplication1\\Views\\nguoiDung\\Index.cshtml",
-              "ViewState": "AQIAAIAAAAAAAAAAAAAAABYAAAAsAAAA",
+              "ViewState": "AQIAAE0AAAAAAAAAAAAAAGgAAACGAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-04-01T01:17:47.893Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "nguoiDungController.cs",
               "DocumentMoniker": "D:\\test_vn\\chamDiem\\WebApplication1\\Controllers\\nguoiDungController.cs",
               "RelativeDocumentMoniker": "WebApplication1\\Controllers\\nguoiDungController.cs",
@@ -67,8 +67,7 @@
               "RelativeToolTip": "WebApplication1\\Controllers\\nguoiDungController.cs",
               "ViewState": "AQIAAMQAAAAAAAAAAAAkwNgAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T01:17:06.373Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T01:17:06.373Z"
             },
             {
               "$type": "Document",
@@ -80,8 +79,7 @@
               "RelativeToolTip": "WebApplication1\\Models\\dm_donVi.cs",
               "ViewState": "AQIAAA4AAAAAAAAAAAAxwCIAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-01T01:15:58.166Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T01:15:58.166Z"
             },
             {
               "$type": "Document",
@@ -90,8 +88,7 @@
               "DocumentMoniker": "ViewDataWindow_MSSQL__/DESKTOP_U3VQCBH/chamdiem/True/SqlTable/dbo.bangDiem.sql",
               "ToolTip": "dbo.bangDiem [Data]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000826|",
-              "WhenOpened": "2024-04-01T00:31:13.095Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-01T00:31:13.095Z"
             }
           ]
         }
