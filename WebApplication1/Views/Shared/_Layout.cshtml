@@ -23,7 +23,7 @@
                         <li>@Html.ActionLink("Chấm điểm", "Index", "nguoiDung", new { area = "" }, new { @class = "nav-link" })</li>
                     </ul>
                     <ul class="navbar-nav flex-grow-1 align-items-center justify-content-end">
-                        <li class="text-white nav-link">Tài khoản: @Session["name"]</li>
+                        <li class="text-white nav-link">Tài khoản: @Session["ngDungTen"]</li>
                         @if ((int)Session["donvi"] == 1)
                         {
                             <li class="text-white nav-link">Đơn vị: Chi đoàn</li>
@@ -48,7 +48,7 @@
             {
                 <div class="d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 align-items-center justify-content-end">
-                        <li class="text-white nav-link">Tài khoản: @Session["name"]</li>
+                        <li class="text-white nav-link">Tài khoản: @Session["ngDungTen"]</li>
                         @if ((int)Session["donvi"] == 1)
                         {
                             <li class="text-white nav-link">Đơn vị: Chi đoàn</li>

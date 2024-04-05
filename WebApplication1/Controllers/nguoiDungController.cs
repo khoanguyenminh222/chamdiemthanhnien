@@ -296,6 +296,7 @@ namespace WebApplication1.Controllers
                 if (data.Count() > 0)
                 {
                     Session["dm_DonVi"] = data.FirstOrDefault().taiKhoan.fk_dmDonVi;
+                    Session["ngDungTen"] = data.FirstOrDefault().nguoiDung.ten;
                     Session["name"] = data.FirstOrDefault().taiKhoan.ten;
                     Session["donvi"] = data.FirstOrDefault().nguoiDung.fk_donVi;
                     Session["cumTruong"] = data.FirstOrDefault().dm_DonVi.cumTruong;
