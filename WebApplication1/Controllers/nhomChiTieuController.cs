@@ -48,11 +48,15 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "iD,ten,tongDiem,fk_loaiTieuChi")] nhomChiTieu nhomChiTieu)
+        public ActionResult Create([Bind(Include = "iD,fk_loaiTieuChi")] nhomChiTieu nhomChiTieu, List<nhomChiTieu> nhomChiTieuList)
         {
             if (ModelState.IsValid)
             {
-                db.nhomChiTieux.Add(nhomChiTieu);
+                foreach (var n in nhomChiTieuList)
+                {
+                    n.fk_loaiTieuChi = nhomChiTieu.fk_loaiTieuChi;
+                    db.nhomChiTieux.Add(n);
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

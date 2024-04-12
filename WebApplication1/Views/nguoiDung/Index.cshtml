@@ -13,26 +13,35 @@
 </head>
 <body>
     <h1>Chấm điểm</h1>
-    @using (Html.BeginForm())
-    {
-        <table>
-            <tr>
-                <td>Năm</td>
-                <td>@Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto" })</td>
-            </tr>
-            @if ((int)Session["donvi"] != 1)
+    <div class="d-flex justify-content-between">
+        <div>
+            @using (Html.BeginForm())
             {
-                <tr>
-                    <td>Đơn vị</td>
-                    <td>@Html.DropDownList("nguoiDung", (IEnumerable<SelectListItem>)ViewBag.listnguoiDung, new { @class = "form-control w-auto" })</td>
-                </tr>
+                <table>
+                    <tr>
+                        <td>Năm</td>
+                        <td>@Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto" })</td>
+                    </tr>
+                    @if ((int)Session["donvi"] != 1)
+                    {
+                        <tr>
+                            <td>Đơn vị</td>
+                            <td>@Html.DropDownList("nguoiDung", (IEnumerable<SelectListItem>)ViewBag.listnguoiDung, new { @class = "form-control w-auto" })</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td><input type="submit" class="btn btn-outline-primary w-100 h-25" value="Chọn" /></td>
+                    </tr>
+                </table>
             }
-            <tr>
-                <td><input type="submit" class="btn btn-outline-primary w-100 h-25" value="Chọn" /></td>
-            </tr>
-        </table>
-    }
-
+        </div>
+        <div>
+            @using (Html.BeginForm("ExportToExcel", "Export", FormMethod.Post, new { id = "exportForm" }))
+            {
+                <button type="button" onclick="showConfirmation()">Xuất file excel</button>
+            }
+        </div>
+    </div>
     <div class="overflow-auto" style="height: 80vh">
         <table class="table table-bordered" id="table" width="100%">
 
@@ -483,7 +492,19 @@
 }
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+@{ 
+    int year = (int)TempData["year"];
+}
 <script>
+    function showConfirmation() {
+        // Hiển thị cửa sổ cảnh báo với nút "Huỷ" và "Lưu"
+        if (confirm(`Dữ liệu sẽ được xuất năm @year. Bạn có muốn tiếp tục không?`)) {
+            // Nếu người dùng chọn "Lưu", gửi form
+            document.getElementById('exportForm').submit();
+        } else {
+            // Nếu người dùng chọn "Huỷ", không làm gì cả
+        }
+    }
     function urlify(text) {
         var urlRegex = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlRegex, function (url) {

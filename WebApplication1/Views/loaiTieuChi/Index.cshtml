@@ -15,12 +15,18 @@
     <h1>Giao tiêu chí</h1>
     @using (Html.BeginForm())
     {
-        <div class="d-flex align-items-center justify-content-end">
-            <p class="mt-auto mb-auto ">Năm</p>
-            @Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                @Html.ActionLink("Thêm", "Create")
+            </div>
+            <div>
+                <p class="mt-auto mb-auto ">Năm</p>
+                @Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+            </div>
         </div>
 
     }
+    
     @using (Html.BeginForm("checkAll", "loaiTieuChi", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
@@ -73,7 +79,7 @@
                 count += 1;
             }
         </table>
-    }
+                }
 </body>
 </html>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

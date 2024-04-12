@@ -45,7 +45,8 @@ namespace WebApplication1.Controllers
             {
                 year = DateTime.Now.Year;
             }
-
+            TempData["year"] = year;
+            Console.WriteLine(TempData["year"]);
             var dataDiem = (from chTietChiTieu in db.chiTietChiTieux
                             join chiTieu in db.chiTieux
                                 on chTietChiTieu.fk_loaiChiTieu equals chiTieu.iD

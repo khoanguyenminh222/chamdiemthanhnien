@@ -22,24 +22,14 @@
             @Html.ValidationMessageFor(model => model.fk_loaiTieuChi, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div id="nhomChiTieuContainer">
+        <!-- Dùng JavaScript để thêm các field nhập liệu cho từng nhóm chỉ tiêu -->
+    </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.ten, "Nhóm tiêu chí", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
+        <div class="col-md-offset-2 col-md-10">
+            <button type="button" onclick="addNhomChiTieuField()" class="btn btn-primary">Thêm nhóm chỉ tiêu mới</button>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.tongDiem,"Tổng điểm", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.tongDiem, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Thêm" class="btn btn-success" />
@@ -51,3 +41,27 @@
 <div>
     @Html.ActionLink("Quay lại", "Index")
 </div>
+
+
+<script>
+        function addNhomChiTieuField() {
+            var container = document.getElementById('nhomChiTieuContainer');
+            var index = container.children.length;
+            var html = `
+                <div class="nhomChiTieuRow d-flex my-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-lg-10">Nhóm chỉ tiêu ${index + 1}</label>
+                        <div class="col-md-10">
+                            <input type="text" name="nhomChiTieuList[${index}].ten" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2 col-lg-10">Tổng điểm</label>
+                        <div class="col-md-10">
+                            <input type="number" name="nhomChiTieuList[${index}].tongDiem" class="form-control" required />
+                        </div>
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', html);
+        }
+</script>

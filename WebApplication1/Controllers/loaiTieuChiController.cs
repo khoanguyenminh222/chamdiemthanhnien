@@ -43,9 +43,7 @@ namespace WebApplication1.Controllers
                 {
                     var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                       join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                                      join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                                      join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                                      join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
                                       select new dataBangDiem
                                       {
                                           dm_DonVi = dm_donVi,
@@ -59,9 +57,7 @@ namespace WebApplication1.Controllers
                 {
                     var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                       join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                                      join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                                      join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                                      join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
                                       select new dataBangDiem
                                       {
                                           dm_DonVi = dm_donVi,
@@ -76,9 +72,8 @@ namespace WebApplication1.Controllers
             {
                 var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                   join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                                  join chiTieu in db.chiTieux on giaoChiTieuchoDV.fk_chiTieu equals chiTieu.iD
-                                  join nhomChiTieu in db.nhomChiTieux on chiTieu.fk_loaiChiTieu equals nhomChiTieu.iD
-                                  join loaiTieuChi1 in db.loaiTieuChis on nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
+                                  
+                                  join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
                                   select new dataBangDiem
                                   {
                                       dm_DonVi = dm_donVi,
@@ -109,6 +104,8 @@ namespace WebApplication1.Controllers
         // GET: loaiTieuChi/Create
         public ActionResult Create()
         {
+            List<int> years = Enumerable.Range(DateTime.Now.Year - 5, 6).ToList();
+            ViewBag.Years = new SelectList(years);
             return View();
         }
 
@@ -117,7 +114,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "iD,ten,tongDiem")] loaiTieuChi loaiTieuChi)
+        public ActionResult Create([Bind(Include = "iD,ten,tongDiem,nam")] loaiTieuChi loaiTieuChi)
         {
             if (ModelState.IsValid)
             {
