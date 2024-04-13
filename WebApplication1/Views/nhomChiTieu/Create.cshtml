@@ -7,47 +7,55 @@
 
 <h2>Thêm mới</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h4>Nhóm chỉ tiêu</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.fk_loaiTieuChi, "Loại tiêu chí", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("fk_loaiTieuChi", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.fk_loaiTieuChi, "", new { @class = "text-danger" })
+
+    <div class="form-horizontal">
+        <h4>Nhóm chỉ tiêu</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Chọn năm:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("selectedYear", ViewBag.YearsList as SelectList, "-- Chọn năm --", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Chọn loại tiêu chí:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="fk_loaiTieuChi" name="fk_loaiTieuChi" class="form-control">
+                    <option>-- Chọn loại tiêu chí --</option>
+                </select>
+            </div>
+        </div>
+        <div id="nhomChiTieuContainer">
+            <!-- Dùng JavaScript để thêm các field nhập liệu cho từng nhóm chỉ tiêu -->
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" onclick="addNhomChiTieuField()" class="btn btn-primary">Thêm nhóm chỉ tiêu mới</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-success" />
+            </div>
         </div>
     </div>
-    <div id="nhomChiTieuContainer">
-        <!-- Dùng JavaScript để thêm các field nhập liệu cho từng nhóm chỉ tiêu -->
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="button" onclick="addNhomChiTieuField()" class="btn btn-primary">Thêm nhóm chỉ tiêu mới</button>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Thêm" class="btn btn-success" />
-        </div>
-    </div>
-</div>
 }
 
 <div>
     @Html.ActionLink("Quay lại", "Index")
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-        function addNhomChiTieuField() {
-            var container = document.getElementById('nhomChiTieuContainer');
-            var index = container.children.length;
-            var html = `
+    function addNhomChiTieuField() {
+        var container = document.getElementById('nhomChiTieuContainer');
+        var index = container.children.length;
+        var html = `
                 <div class="nhomChiTieuRow d-flex my-4">
                     <div class="form-group">
                         <label class="control-label col-md-2 col-lg-10">Nhóm chỉ tiêu ${index + 1}</label>
@@ -62,6 +70,34 @@
                         </div>
                     </div>
                 </div>`;
-            container.insertAdjacentHTML('beforeend', html);
-        }
+        container.insertAdjacentHTML('beforeend', html);
+    }
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi của dropdown chọn năm
+        $('#selectedYear').change(function () {
+            var selectedYear = $(this).val();
+
+            // Gửi yêu cầu AJAX để lấy danh sách loại tiêu chí dựa trên năm được chọn
+            $.ajax({
+                url: '/nhomChiTieu/GetLoaiTieuChi',
+                method: "get",
+                data: { selectedYear: selectedYear },
+                success: function (response) {
+                    // Xóa tất cả các option trong dropdown chọn loại tiêu chí
+                    $('#fk_loaiTieuChi').empty();
+                    // Thêm các option mới dựa trên danh sách loại tiêu chí nhận được từ server
+                    $.each(response, function (index, item) {
+                        $('#fk_loaiTieuChi').append($('<option>', {
+                            value: item.iD,
+                            text: item.ten
+                        }));
+                    });
+                },
+                failed: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        });
+    });
 </script>

@@ -1,54 +1,97 @@
 ﻿@model WebApplication1.Models.nhomChiTieu
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    
 }
 
-<h2>Chỉnh sửa</h2>
+<!DOCTYPE html>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Nhóm tiêu chí</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.iD)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.fk_loaiTieuChi, "Loại tiêu chí", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("fk_loaiTieuChi", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.fk_loaiTieuChi, "", new { @class = "text-danger" })
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        
+        <div class="form-horizontal">
+            <h4>nhomChiTieu</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.iD)
+            <div class="form-group">
+                @Html.Label("Chọn năm:", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("selectedYear", ViewBag.YearsList as SelectList, "-- Chọn năm --", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.tongDiem, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tongDiem, "", new { @class = "text-danger" })
+                </div>
+            </div>
+    
+            <div class="form-group">
+                @Html.LabelFor(model => model.fk_loaiTieuChi, "Loại Tiêu Chí", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.fk_loaiTieuChi, null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.fk_loaiTieuChi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ten, "Nhóm chỉ tiêu", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.tongDiem, "Tổng điểm", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.tongDiem, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lưu" class="btn btn-success" />
-            </div>
-        </div>
+    }
+    
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-}
+</body>
+</html>
 
-<div>
-    @Html.ActionLink("Quay lại", "Index")
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Lắng nghe sự kiện thay đổi của dropdown chọn năm
+        $('#selectedYear').change(function () {
+            var selectedYear = $(this).val();
+
+            // Gửi yêu cầu AJAX để lấy danh sách loại tiêu chí dựa trên năm được chọn
+            $.ajax({
+                url: '/nhomChiTieu/GetLoaiTieuChi',
+                method: "get",
+                data: { selectedYear: selectedYear },
+                success: function (response) {
+                    // Xóa tất cả các option trong dropdown chọn loại tiêu chí
+                    $('#fk_loaiTieuChi').empty();
+                    // Thêm các option mới dựa trên danh sách loại tiêu chí nhận được từ server
+                    $.each(response, function (index, item) {
+                        $('#fk_loaiTieuChi').append($('<option>', {
+                            value: item.iD,
+                            text: item.ten
+                        }));
+                    });
+                },
+                failed: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        });
+    });
+</script>

@@ -51,7 +51,7 @@
                 var biendem = 0;
                 <tr class="trTable">
                     <td>
-                        @Html.DisplayFor(model => l.ten)
+                        <a href="/loaiTieuChi/EditLoaiTieuChi/@l.iD" class="link">@Html.DisplayFor(model => l.ten)</a>
                     </td>
                     <td>
                         @Html.DisplayFor(model => l.tongDiem)
@@ -104,3 +104,14 @@
         });
     });
 </script>
+
+<style>
+    .link {
+        text-decoration: none;
+        color: black;
+    }
+    .link:hover {
+        text-decoration: underline; /* Gạch chân khi hover */
+        color: blue; /* Màu văn bản khi hover */
+    }
+</style>

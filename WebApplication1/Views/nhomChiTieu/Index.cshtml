@@ -6,10 +6,20 @@
 }
 
 <h2>Nhóm chỉ tiêu</h2>
+@using (Html.BeginForm())
+{
+    <div class="d-flex align-items-center justify-content-between">
+        <div>
+            @Html.ActionLink("Thêm", "Create")
+        </div>
+        <div>
+            <p class="mt-auto mb-auto ">Năm</p>
+            @Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+        </div>
+    </div>
 
-<p>
-    @Html.ActionLink("Thêm", "Create")
-</p>
+}
+
 <table class="table table-bordered">
     <tr>
         <th>
@@ -24,31 +34,32 @@
 
         <th></th>
     </tr>
-    @{ 
+    @{
         var biendem = 0;
     }
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @if (item.loaiTieuChi.iD != biendem)
-            {
-                @Html.DisplayFor(modelItem => item.loaiTieuChi.ten)
-                biendem = item.loaiTieuChi.iD;
-            }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @if (item.loaiTieuChi.iD != biendem)
+                {
+                    @Html.DisplayFor(modelItem => item.loaiTieuChi.ten)
+                    biendem = item.loaiTieuChi.iD;
+                }
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ten)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tongDiem)
-        </td>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tongDiem)
+            </td>
 
-        <td>
-            @Html.ActionLink("Sửa", "Edit", new { id = item.iD }) |
-            @Html.ActionLink("Xoá", "Delete", new { id = item.iD })
-        </td>
-    </tr>
-}
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.iD }) |
+                @Html.ActionLink("Xoá", "Delete", new { id = item.iD })
+            </td>
+        </tr>
+    }
 
 </table>

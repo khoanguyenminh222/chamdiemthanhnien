@@ -15,9 +15,20 @@ namespace WebApplication1.Controllers
         private chamdiemEntities db = new chamdiemEntities();
 
         // GET: nhomChiTieu
-        public ActionResult Index()
+        public ActionResult Index(int? year)
         {
-            var nhomChiTieux = db.nhomChiTieux.Include(n => n.loaiTieuChi).OrderBy(l=>l.loaiTieuChi.iD);
+            var distinctYears = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+
+            // Chọn năm mặc định là năm hiện tại nếu chưa có giá trị được chọn
+            if (year == null || !distinctYears.Contains(year.Value))
+            {
+                year = DateTime.Now.Year;
+            }
+
+            // Đưa danh sách năm vào ViewBag
+            ViewBag.listYear = new SelectList(distinctYears, year);
+            var loaiTieuChi = db.loaiTieuChis.Where(l => l.nam == year).ToList();
+            var nhomChiTieux = db.nhomChiTieux.Include(n => n.loaiTieuChi).Where(n => n.loaiTieuChi.nam == year).OrderBy(l => l.loaiTieuChi.iD).ToList();
             return View(nhomChiTieux.ToList());
         }
 
@@ -39,6 +50,18 @@ namespace WebApplication1.Controllers
         // GET: nhomChiTieu/Create
         public ActionResult Create()
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
+            var years = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+            var yearsList = years.Select(year => new SelectListItem
+            {
+                Text = year.ToString(),
+                Value = year.ToString()
+            });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.YearsList = new SelectList(yearsList, "Value", "Text");
             ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten");
             return View();
         }
@@ -61,13 +84,22 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten", nhomChiTieu.fk_loaiTieuChi);
             return View(nhomChiTieu);
         }
-
+        public ActionResult GetLoaiTieuChi(int selectedYear)
+        {
+            var loaiTieuChis = db.loaiTieuChis.Where(l => l.nam == selectedYear)
+                .Select(l => new { iD = l.iD, ten = l.ten })
+                .ToList();
+            return Json(loaiTieuChis, JsonRequestBehavior.AllowGet);
+        }
         // GET: nhomChiTieu/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -77,7 +109,15 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten", nhomChiTieu.fk_loaiTieuChi);
+            var years = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+            var yearsList = years.Select(year => new SelectListItem
+            {
+                Text = year.ToString(),
+                Value = year.ToString()
+            });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.YearsList = new SelectList(yearsList, "Value", "Text");
+            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis.ToList(), "iD", "ten");
             return View(nhomChiTieu);
         }
 
@@ -88,13 +128,21 @@ namespace WebApplication1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "iD,ten,tongDiem,fk_loaiTieuChi")] nhomChiTieu nhomChiTieu)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    db.Entry(nhomChiTieu).State = EntityState.Modified;
-            //    db.SaveChanges();
-            //    return RedirectToAction("Index");
-            //}
-            //ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten", nhomChiTieu.fk_loaiTieuChi);
+            if (ModelState.IsValid)
+            {
+                db.Entry(nhomChiTieu).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            var years = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+            var yearsList = years.Select(year => new SelectListItem
+            {
+                Text = year.ToString(),
+                Value = year.ToString()
+            });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.YearsList = new SelectList(yearsList, "Value", "Text");
+            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten", nhomChiTieu.fk_loaiTieuChi);
             return View(nhomChiTieu);
         }
 

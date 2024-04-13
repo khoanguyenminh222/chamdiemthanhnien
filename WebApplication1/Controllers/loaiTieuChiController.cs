@@ -26,17 +26,16 @@ namespace WebApplication1.Controllers
                 return RedirectToAction("Login", "nguoiDung");
             }
             int dmDonvi = (int)Session["dm_DonVi"];
-            var yearNow = DateTime.Now.Year;
-            List<int> listYear = new List<int>();
-            for (int ls = yearNow; ls >= 2010; ls--)
-            {
-                listYear.Add(ls);
-            }
-            ViewBag.listYear = new SelectList(listYear);
-            if (year == null)
+            var distinctYears = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+
+            // Chọn năm mặc định là năm hiện tại nếu chưa có giá trị được chọn
+            if (year == null || !distinctYears.Contains(year.Value))
             {
                 year = DateTime.Now.Year;
             }
+
+            // Đưa danh sách năm vào ViewBag
+            ViewBag.listYear = new SelectList(distinctYears, year);
             var loaiTieuChi = db.loaiTieuChis.Where(l => l.nam == year).ToList();
             if ((bool)Session["cumTruong"] == true) { 
                 if((int)Session["donvi"] == 2)
@@ -104,7 +103,11 @@ namespace WebApplication1.Controllers
         // GET: loaiTieuChi/Create
         public ActionResult Create()
         {
-            List<int> years = Enumerable.Range(DateTime.Now.Year - 5, 6).ToList();
+            int currentYear = DateTime.Now.Year;
+
+            // Tạo danh sách năm bắt đầu từ năm hiện tại trừ đi 6 năm và thêm 2 năm
+            List<int> years = Enumerable.Range(currentYear - 5, 6).ToList();
+            years.AddRange(new[] { currentYear + 1, currentYear + 2 });
             ViewBag.Years = new SelectList(years);
             return View();
         }
@@ -442,6 +445,53 @@ namespace WebApplication1.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        // GET: loaiTieuChi/EditLoaiTieuChi/5
+        public ActionResult EditLoaiTieuChi(int? id)
+        {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            loaiTieuChi loaiTieuChi = db.loaiTieuChis.Find(id);
+            if (loaiTieuChi == null)
+            {
+                return HttpNotFound();
+            }
+            int currentYear = DateTime.Now.Year;
+
+            // Tạo danh sách năm bắt đầu từ năm hiện tại trừ đi 6 năm và thêm 2 năm
+            List<int> years = Enumerable.Range(currentYear - 5, 6).ToList();
+            years.AddRange(new[] { currentYear + 1, currentYear + 2 });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.Years = new SelectList(years);
+            return View(loaiTieuChi);
+        }
+
+        // POST: loaiChiTieu/EditLoaiTieuChi/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditLoaiTieuChi([Bind(Include = "iD,ten,tongDiem,nam")] loaiTieuChi loaiTieuChi)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(loaiTieuChi).State = (System.Data.Entity.EntityState)System.Data.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            int currentYear = DateTime.Now.Year;
+            List<int> years = Enumerable.Range(currentYear - 5, 6).ToList();
+            years.AddRange(new[] { currentYear + 1, currentYear + 2 });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.Years = new SelectList(years);
+            return View(loaiTieuChi);
         }
 
         // GET: loaiTieuChi/Delete/5

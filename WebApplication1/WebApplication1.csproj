@@ -314,6 +314,7 @@
     <Content Include="Views\chiTietChiTieu\Edit.cshtml" />
     <Content Include="Views\chiTietChiTieu\Index.cshtml" />
     <Content Include="Views\loaiTieuChi\AddDonVi.cshtml" />
+    <Content Include="Views\loaiTieuChi\EditLoaiTieuChi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
