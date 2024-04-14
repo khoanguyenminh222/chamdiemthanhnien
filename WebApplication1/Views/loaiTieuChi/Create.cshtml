@@ -9,7 +9,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
+    <title>Tạo mới</title>
 </head>
 <body>
     @using (Html.BeginForm()) 
@@ -17,11 +17,11 @@
         @Html.AntiForgeryToken()
         
         <div class="form-horizontal">
-            <h4>loaiTieuChi</h4>
+            <h4>Loại tiêu chí</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.ten, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ten, "Loại tiêu chí", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.ten, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
@@ -29,7 +29,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.tongDiem, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.tongDiem, "Tổng điểm", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.tongDiem, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.tongDiem, "", new { @class = "text-danger" })
@@ -37,7 +37,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.nam, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.nam, "Năm", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.nam, (SelectList)ViewBag.Years, "Chọn năm", new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.nam, "", new { @class = "text-danger" })
@@ -46,14 +46,14 @@
     
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Lưu" class="btn btn-default" />
                 </div>
             </div>
         </div>
     }
     
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Quay lại", "Index")
     </div>
 </body>
 </html>

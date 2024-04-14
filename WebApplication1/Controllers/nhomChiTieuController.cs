@@ -93,6 +93,20 @@ namespace WebApplication1.Controllers
                 .ToList();
             return Json(loaiTieuChis, JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetNhomChiTieu(int selectedLoaiTieuChi)
+        {
+            var nhomChiTieu = db.nhomChiTieux.Where(l => l.fk_loaiTieuChi == selectedLoaiTieuChi)
+                .Select(l => new { iD = l.iD, ten = l.ten })
+                .ToList();
+            return Json(nhomChiTieu, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetChiTieu(int selectedChiTieu)
+        {
+            var chiTieu = db.chiTieux.Where(l => l.fk_loaiChiTieu == selectedChiTieu)
+                .Select(l => new { iD = l.iD, ten = l.ten })
+                .ToList();
+            return Json(chiTieu, JsonRequestBehavior.AllowGet);
+        }
         // GET: nhomChiTieu/Edit/5
         public ActionResult Edit(int? id)
         {

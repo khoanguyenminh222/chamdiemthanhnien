@@ -20,18 +20,15 @@
                 <table>
                     <tr>
                         <td>Năm</td>
-                        <td>@Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto" })</td>
+                        <td>@Html.DropDownList("year", (SelectList)ViewBag.listYear, htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })</td>
                     </tr>
                     @if ((int)Session["donvi"] != 1)
                     {
                         <tr>
                             <td>Đơn vị</td>
-                            <td>@Html.DropDownList("nguoiDung", (IEnumerable<SelectListItem>)ViewBag.listnguoiDung, new { @class = "form-control w-auto" })</td>
+                            <td>@Html.DropDownList("nguoiDung", (IEnumerable<SelectListItem>)ViewBag.listnguoiDung, new { @class = "form-control w-auto", onchange = "this.form.submit();" })</td>
                         </tr>
                     }
-                    <tr>
-                        <td><input type="submit" class="btn btn-outline-primary w-100 h-25" value="Chọn" /></td>
-                    </tr>
                 </table>
             }
         </div>

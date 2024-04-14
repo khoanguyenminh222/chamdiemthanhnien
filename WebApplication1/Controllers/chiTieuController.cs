@@ -15,15 +15,60 @@ namespace WebApplication1.Controllers
         private chamdiemEntities db = new chamdiemEntities();
 
         // GET: chiTieu
-        public ActionResult Index()
+        public ActionResult Index(int? year, int? loaiTieuChi)
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
+            var distinctYears = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+
+            // Chọn năm mặc định là năm hiện tại nếu chưa có giá trị được chọn hoặc giá trị được chọn không có trong danh sách các năm khả dụng
+            if (year == null || !distinctYears.Contains(year.Value))
+            {
+                year = DateTime.Now.Year;
+            }
+
+            // Đưa danh sách năm vào ViewBag
+            ViewBag.listYear = new SelectList(distinctYears, year);
+
+            // Lấy danh sách các loại tiêu chí từ cơ sở dữ liệu
+            var loaiTieuChiList = db.loaiTieuChis.Where(l => l.nam == year).ToList();
+
+            // Đưa danh sách các loại tiêu chí vào ViewBag
+            ViewBag.loaiTieuChiList = new SelectList(loaiTieuChiList, "ID", "Ten", loaiTieuChi);
+
+            // Lọc dữ liệu theo năm nếu có giá trị được chọn
             var chiTieux = db.chiTieux.Include(c => c.nhomChiTieu);
+            if (year != null)
+            {
+                chiTieux = chiTieux.Where(c => c.nhomChiTieu.loaiTieuChi.nam == year);
+            }
+
+            // Lọc dữ liệu theo loại tiêu chí nếu có giá trị được chọn
+            if (loaiTieuChi != null)
+            {
+                chiTieux = chiTieux.Where(c => c.nhomChiTieu.loaiTieuChi.iD == loaiTieuChi);
+            }
             return View(chiTieux.ToList());
         }
 
         // GET: chiTieu/Create
         public ActionResult Create()
         {
+            if (Session["dm_DonVi"] == null)
+            {
+                return RedirectToAction("Login", "nguoiDung");
+            }
+            var years = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+            var yearsList = years.Select(year => new SelectListItem
+            {
+                Text = year.ToString(),
+                Value = year.ToString()
+            });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.YearsList = new SelectList(yearsList, "Value", "Text");
+            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten");
             ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten");
             return View();
         }
@@ -33,16 +78,28 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "iD,ten,fk_loaiChiTieu,ycDanhGiaKQ")] chiTieu chiTieu)
+        public ActionResult Create([Bind(Include = "iD, fk_loaiChiTieu")] chiTieu chiTieu, List<chiTieu> chiTieuList)
         {
             if (ModelState.IsValid)
             {
-                db.chiTieux.Add(chiTieu);
+                foreach (var n in chiTieuList)
+                {
+                    n.fk_loaiChiTieu = chiTieu.fk_loaiChiTieu;
+                    db.chiTieux.Add(n);
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten", chiTieu.fk_loaiChiTieu);
+            var years = db.loaiTieuChis.Select(l => l.nam).Distinct().ToList();
+            var yearsList = years.Select(year => new SelectListItem
+            {
+                Text = year.ToString(),
+                Value = year.ToString()
+            });
+            // Truyền danh sách các năm vào ViewBag
+            ViewBag.YearsList = new SelectList(yearsList, "Value", "Text");
+            ViewBag.fk_loaiTieuChi = new SelectList(db.loaiTieuChis, "iD", "ten");
+            ViewBag.fk_loaiChiTieu = new SelectList(db.nhomChiTieux, "iD", "ten");
             return View(chiTieu);
         }
 

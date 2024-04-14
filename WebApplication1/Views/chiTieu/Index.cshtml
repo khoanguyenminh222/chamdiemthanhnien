@@ -12,9 +12,20 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Tạo mới", "Create")
-    </p>
+    <div>
+        @Html.ActionLink("Thêm", "Create")
+    </div>
+    @using (Html.BeginForm())
+    {
+        <div class="d-flex align-items-center justify-content-end my-2">
+            <div class="mx-2">
+                @Html.DropDownList("year", (SelectList)ViewBag.listYear, "-- Chọn năm --", htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+            </div>
+            <div>
+                @Html.DropDownList("loaiTieuChi", (SelectList)ViewBag.loaiTieuChiList, "-- Chọn loại tiêu chí --", htmlAttributes: new { @class = "form-control w-auto", onchange = "this.form.submit();" })
+            </div>
+        </div>
+    }
     <table class="table table-bordered">
         <tr>
             <th>

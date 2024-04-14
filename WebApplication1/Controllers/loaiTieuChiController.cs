@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
                 {
                     var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                       join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
                                       select new dataBangDiem
                                       {
                                           dm_DonVi = dm_donVi,
@@ -56,7 +56,7 @@ namespace WebApplication1.Controllers
                 {
                     var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                       join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
-                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
+                                      join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
                                       select new dataBangDiem
                                       {
                                           dm_DonVi = dm_donVi,
@@ -72,7 +72,7 @@ namespace WebApplication1.Controllers
                 var lsdm_donvi = (from dm_donVi in db.dm_donVi
                                   join giaoChiTieuchoDV in db.giaoChiTieuchoDVs on dm_donVi.iD equals giaoChiTieuchoDV.fk_dmDonViChiDoan
                                   
-                                  join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.iD equals loaiTieuChi1.iD
+                                  join loaiTieuChi1 in db.loaiTieuChis on giaoChiTieuchoDV.chiTieu.nhomChiTieu.fk_loaiTieuChi equals loaiTieuChi1.iD
                                   select new dataBangDiem
                                   {
                                       dm_DonVi = dm_donVi,

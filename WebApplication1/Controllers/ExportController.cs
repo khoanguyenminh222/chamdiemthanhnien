@@ -16,7 +16,11 @@ namespace WebApplication1.Controllers
         private chamdiemEntities db = new chamdiemEntities();
         public ActionResult ExportToExcel()
         {
-            int tinhDoanId = (int)Session["dm_DonVi"]; // Lấy giá trị tinhDoanId từ Session
+            int id = (int)Session["dm_DonVi"];
+            var quanHeDonVi = db.quanHeDonVis.FirstOrDefault(q => q.chiDoan == id || q.thanhDoan == id || q.tinhDoan == id);
+            int tinhDoanId = (int)quanHeDonVi.tinhDoan;
+           
+            
             IEnumerable<dynamic> totalScores = CalculateTotalScoresByChiDoan(tinhDoanId); // Gọi hàm CalculateTotalScoresByChiDoan
             Console.WriteLine(totalScores);
             

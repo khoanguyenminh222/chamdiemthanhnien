@@ -23,31 +23,38 @@
         <h4>Thêm chỉ tiêu</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        <div class="form-group">
+            @Html.Label("Chọn năm:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("selectedYear", ViewBag.YearsList as SelectList, "-- Chọn năm --", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Chọn loại tiêu chí:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="fk_loaiTieuChi" name="fk_loaiTieuChi" class="form-control" required>
+                    <option value="">-- Chọn loại tiêu chí --</option>
+                </select>
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.fk_loaiChiTieu, "Nhóm chỉ tiêu", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("fk_loaiChiTieu", null, htmlAttributes: new { @class = "form-control", @style = "width:800px" })
-                @Html.ValidationMessageFor(model => model.fk_loaiChiTieu, "", new { @class = "text-danger" })
+                <select id="fk_loaiChiTieu" name="fk_loaiChiTieu" class="form-control" required>
+                    <option value="">-- Chọn nhóm chỉ tiêu --</option>
+                </select>
             </div>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ten, "Tên chỉ tiêu", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.ten, 10, 50, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ten, "", new { @class = "text-danger" })
+        <div id="chitieu-container">
+
+        </div>
+        <div class="form-group mt-1">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Thêm chỉ tiêu" class="btn btn-outline-primary" onclick="addChiTieu()" />
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ycDanhGiaKQ, "Yêu cầu đánh giá", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.ycDanhGiaKQ, 10, 50, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ycDanhGiaKQ, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
+        <div class="form-group mt-4">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Thêm" class="btn btn-success" />
             </div>
@@ -56,3 +63,101 @@
     }
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+
+    function addChiTieu() {
+        var container = document.getElementById("chitieu-container");
+        var index = container.children.length;
+        var html = `
+            <div class="chiTieuRow d-flex mt-3">
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-lg-10">Tên chỉ tiêu ${index + 1} :</label>
+                    <div class="col-md-10">
+                        <textarea rows="5" cols="50" name="chiTieuList[${index}].ten" class="form-control" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-lg-10">Yêu cầu đánh giá:</label>
+                    <div class="col-md-10">
+                        <textarea rows="5" cols="50" name="chiTieuList[${index}].ycDanhGiaKQ" class="form-control" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="" onclick="removeChiTieuField(this)">Xóa</button>
+                </div>
+            </div>`;
+        container.insertAdjacentHTML('beforeend', html);
+    }
+    function removeChiTieuField(button) {
+        // Lấy phần tử cha của nút xóa, tức là div chứa nhóm chỉ tiêu
+        var chiTieuRow = button.closest('.chiTieuRow');
+        // Xóa nhóm chỉ tiêu khỏi DOM
+        chiTieuRow.remove();
+    }
+    $(document).ready(function () {
+        $('#selectedYear').change(function () {
+            loadLoaiTieuChi();
+        });
+        $('#fk_loaiTieuChi').change(function () {
+            loadNhomChiTieu();
+        });
+    });
+    
+        function loadLoaiTieuChi() {
+            var selectedYear = document.getElementById("selectedYear").value;
+            $.ajax({
+                url: '/nhomChiTieu/GetLoaiTieuChi',
+                method: "get",
+                data: { selectedYear: selectedYear },
+                success: function (response) {
+                    // Xóa tất cả các option trong dropdown chọn loại tiêu chí
+                    $('#fk_loaiTieuChi').empty();
+                    // Thêm các option mới dựa trên danh sách loại tiêu chí nhận được từ server
+                    $('#fk_loaiTieuChi').append($('<option>', {
+                        value: "",
+                        text: "-- Chọn loại tiêu chí --"
+                    }));
+                    $.each(response, function (index, item) {
+                        $('#fk_loaiTieuChi').append($('<option>', {
+                            value: item.iD,
+                            text: item.ten
+                        }));
+                    });
+                },
+                failed: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+
+        function loadNhomChiTieu() {
+            var selectedLoaiTieuChi = document.getElementById("fk_loaiTieuChi").value;
+            $.ajax({
+                url: '/nhomChiTieu/GetNhomChiTieu',
+                method: "get",
+                data: { selectedLoaiTieuChi: selectedLoaiTieuChi },
+                success: function (response) {
+                    // Xóa tất cả các option trong dropdown chọn loại tiêu chí
+                    $('#fk_loaiChiTieu').empty();
+                    // Thêm các option mới dựa trên danh sách loại tiêu chí nhận được từ server
+                    $('#fk_loaiChiTieu').append($('<option>', {
+                        value: "",
+                        text: "-- Chọn nhóm chỉ tiêu --"
+                    }));
+                    $.each(response, function (index, item) {
+                        $('#fk_loaiChiTieu').append($('<option>', {
+                            value: item.iD,
+                            text: item.ten
+                        }));
+                    });
+                },
+                failed: function (xhr, ajaxOptions, thrownError) {
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+        }
+</script>
